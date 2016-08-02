@@ -33,11 +33,10 @@
 
 		.state('alghw', {
 			url: '/alg/hw',
-			// parent: 'geohw',
 			templateUrl: '/views/alghw.html',
 			controller: function($scope, $rootScope, mainService) {
-				console.log('skipped',$rootScope.skipped);
-				mainService.getAlg($rootScope.skipped).then(function(data) {
+				console.log('skipped',$rootScope.algSkipped);
+				mainService.updateAndGetAlg($rootScope.algSkipped).then(function(data) {
 					$scope.algData = data
 					console.log(data);
 				})
@@ -55,8 +54,8 @@
 			// parent: 'geohw',
 			templateUrl: '/views/geohw.html',
 			controller: function($scope, $rootScope, mainService) {
-				console.log('skipped',$rootScope.skipped);
-				mainService.getGeo($rootScope.skipped).then(function(data) {
+				console.log('skipped',$rootScope.geoSkipped);
+				mainService.updateAndGetGeo($rootScope.geoSkipped).then(function(data) {
 					$scope.geoData = data
 					console.log(data);
 				})
@@ -74,14 +73,14 @@
 			// parent: 'geohw',
 			templateUrl: '/views/alg2hw.html',
 			controller: function($scope, $rootScope, mainService) {
-				console.log('skipped',$rootScope.skipped);
-				mainService.getAlg2($rootScope.skipped).then(function(data) {
+				console.log('skipped',$rootScope.alg2Skipped);
+				mainService.updateAndGetAlg2($rootScope.alg2Skipped).then(function(data) {
 					$scope.alg2Data = data
 					console.log(data);
 				})
 			}
 		})
 
-		$urlRouterProvider.otherwise('/geo')
+		$urlRouterProvider.otherwise('/alg')
 	}
 })();

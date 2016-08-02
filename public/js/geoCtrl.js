@@ -8,7 +8,9 @@
 	geoCtrl.$inject = ['$scope', '$rootScope'];
 
 	function geoCtrl($scope, $rootScope) {
-		$rootScope.skipped = [];
+		if (!$rootScope.geoSkipped) {
+			$rootScope.geoSkipped = [];
+		}
 	
 		$scope.lessons = [];
 		for (var i = 1; i <= 120; i++) {
@@ -21,17 +23,21 @@
 		}
 
 		$scope.updateSkipped = function(lesson) {
-			var idx = $rootScope.skipped.indexOf(lesson);
+			var idx = $rootScope.geoSkipped.indexOf(lesson);
 			if (idx > -1) {
-				$rootScope.skipped.splice(idx, 1)
+				$rootScope.geoSkipped.splice(idx, 1)
 			}
 			else {
-				$rootScope.skipped.push(lesson)
+				$rootScope.geoSkipped.push(lesson)
 			}
 		}
 
 		$scope.printSkipped = function() {
-			console.log($rootScope.skipped);
+			console.log($rootScope.geoSkipped);
+		}
+
+		$scope.reset = function() {
+			$rootScope.geoSkipped = [];
 		}
 
 	}

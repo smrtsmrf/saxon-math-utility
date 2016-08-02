@@ -8,22 +8,34 @@
 	mainService.$inject = ['$http'];
 
 	function mainService($http) {
-		this.getAlg = function (skippedLessons) {
-			return $http.get('/api/alg?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
+		this.updateAndGetAlg = function (skippedLessons) {
+			return $http.put('/api/alg?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
 				return results.data;
 			})
 		}
 
-		this.getGeo = function(skippedLessons) {
-			return $http.get('/api/geo?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
+		this.updateAndGetGeo = function(skippedLessons) {
+			return $http.put('/api/geo?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
 					return results.data;
 			})
 		}
 
-		this.getAlg2 = function(skippedLessons) {
-			return $http.get('/api/alg2?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
+		this.updateAndGetAlg2 = function(skippedLessons) {
+			return $http.put('/api/alg2?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
 					return results.data;
 			})
 		}
+
+		// this.resetAlg = function() {
+		// 	return $http.put('/api/alg/reset');
+		// }
+
+		// this.resetGeo = function() {
+		// 	return $http.put('/api/geo/reset');
+		// }
+
+		// this.resetAlg2 = function() {
+		// 	return $http.put('/api/alg2/reset');
+		// }
 	}
 })();

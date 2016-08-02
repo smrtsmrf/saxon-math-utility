@@ -8,7 +8,9 @@
 	algCtrl.$inject = ['$scope', '$rootScope'];
 
 	function algCtrl($scope, $rootScope) {
-		$rootScope.skipped = [];
+		if (!$rootScope.algSkipped) {
+			$rootScope.algSkipped = [];
+		}
 	
 		$scope.lessons = [];
 		for (var i = 1; i <= 120; i++) {
@@ -21,17 +23,21 @@
 		}
 
 		$scope.updateSkipped = function(lesson) {
-			var idx = $rootScope.skipped.indexOf(lesson);
+			var idx = $rootScope.algSkipped.indexOf(lesson);
 			if (idx > -1) {
-				$rootScope.skipped.splice(idx, 1)
+				$rootScope.algSkipped.splice(idx, 1)
 			}
 			else {
-				$rootScope.skipped.push(lesson)
+				$rootScope.algSkipped.push(lesson)
 			}
 		}
 
 		$scope.printSkipped = function() {
-			console.log($rootScope.skipped);
+			console.log($rootScope.algSkipped);
+		}
+
+		$scope.reset = function() {
+			$rootScope.algSkipped = [];
 		}
 
 	}

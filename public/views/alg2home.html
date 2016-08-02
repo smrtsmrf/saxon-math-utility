@@ -1,26 +1,30 @@
-<h1>Remove the lessons you want to skip and click update to generate the HW list</h1>
-
+<h1 class="text-center">Remove the lessons you want to skip and click update to generate the HW list</h1>
+{{alg2Skipped}}
 <div id="main_container">
 	<div id="sidebar">
 		<div>
-			<a ui-sref="alghome">Algebra</a>
+			<a ui-sref="alghome" ui-sref-active="active">Algebra</a>
 		</div>
 		<div>
-			<a ui-sref="geohome">Geometry</a>
+			<a ui-sref="geohome" ui-sref-active="active">Geometry</a>
 		</div>
 		<div>
-			<a ui-sref="alg2home">Algebra II</a>
+			<a ui-sref="alg2home" ui-sref-active="active">Algebra II</a>
+			<button class="btn btn-success" ng-click="reset()">Reset</button>
 		</div>
 	</div>
 
-	<div id="buttons" ng-repeat="lesson in lessons">
-		<button ng-click="remove(); updateSkipped(lesson)" ng-class="{'btn-primary' : !show}" class="btn btn-primary">{{lesson}} <i class="fa fa-times-circle" aria-hidden="true"></i></button>
+	<div id="buttons">
+		<div ng-repeat="lesson in lessons">
+			<button ng-click="show = !show; updateSkipped(lesson)" ng-class="{'btn-primary' : show, 'btn-primary' : alg2Skipped.indexOf(lesson) === -1}" class="btn">{{lesson}} <i class="fa fa-times-circle" aria-hidden="true"></i></button>
+		</div>
+		<div id="update_div" ng-click="printSkipped()">
+			<button id="update" ui-sref="alg2hw" class="btn btn-danger">Update HW</button>
+		</div>
 	</div>
 </div>
 
-<div ng-click="printSkipped()">
-	<button ui-sref="alg2hw" class="btn btn-danger">Update HW list</button>
-</div>
+
 
 
 
