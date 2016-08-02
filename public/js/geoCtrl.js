@@ -1,44 +1,46 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-	  .module('saxonApp')
-	  .controller('geoCtrl', geoCtrl);
+    angular
+        .module('saxonApp')
+        .controller('geoCtrl', geoCtrl);
 
-	geoCtrl.$inject = ['$scope', '$rootScope'];
+    geoCtrl.$inject = ['$scope', '$rootScope'];
 
-	function geoCtrl($scope, $rootScope) {
-		if (!$rootScope.geoSkipped) {
-			$rootScope.geoSkipped = [];
-		}
-	
-		$scope.lessons = [];
-		for (var i = 1; i <= 120; i++) {
-			$scope.lessons.push(i)
-		};
+    function geoCtrl($scope, $rootScope) {
+        if (!$rootScope.geoSkipped) {
+            $rootScope.geoSkipped = [];
+        }
 
-		$scope.show = true;
-		$scope.remove = function(idx) {
-			$scope.show = !$scope.show;
-		}
+        $scope.lessons = [];
+        for (var i = 1; i <= 120; i++) {
+            $scope.lessons.push(i)
+        };
 
-		$scope.updateSkipped = function(lesson) {
-			var idx = $rootScope.geoSkipped.indexOf(lesson);
-			if (idx > -1) {
-				$rootScope.geoSkipped.splice(idx, 1)
-			}
-			else {
-				$rootScope.geoSkipped.push(lesson)
-			}
-		}
+        $scope.show = true;
+        $scope.remove = function(idx) {
+            $scope.show = !$scope.show;
+        }
 
-		$scope.printSkipped = function() {
-			console.log($rootScope.geoSkipped);
-		}
+        $scope.updateSkipped = function(lesson) {
+            var idx = $rootScope.geoSkipped.indexOf(lesson);
+            if (idx > -1) {
+                $rootScope.geoSkipped.splice(idx, 1)
+            } else {
+                $rootScope.geoSkipped.push(lesson)
+                $rootScope.geoSkipped.sort(function(a, b) {
+                    return a - b;
+                })
+            }
+        }
 
-		$scope.reset = function() {
-			$rootScope.geoSkipped = [];
-		}
+        $scope.printSkipped = function() {
+            console.log($rootScope.geoSkipped);
+        }
 
-	}
+        $scope.reset = function() {
+            $rootScope.geoSkipped = [];
+        }
+
+    }
 })();

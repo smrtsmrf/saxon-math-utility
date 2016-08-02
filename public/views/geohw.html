@@ -1,4 +1,34 @@
 <h1>Geometry HW</h1>
 <button class="btn btn-primary" ui-sref="geohome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
 Skipped: {{geoSkipped}}
-<div ng-repeat="geo in geoData">L{{geo.lessonNum}} #{{geo.problemNum}} Ref: {{geo.lessonRef}} Assigned:{{geo.assigned}}</div>
+<section class="assigned">
+	<div>
+		<h2>Assigned</h2>
+		<div ng-repeat="geo in geoAssignedData | orderObjectBy: 'lesson'">
+			<strong>L{{geo.lesson}}: </strong>{{geo.problems}}
+		</div>
+	</div>
+	<div>
+		<h2>Skipped</h2>
+		<div ng-repeat="geo in geoSkippedData | orderObjectBy: 'lesson'">
+			<strong>L{{geo.lesson}}: </strong>{{geo.problems}}
+		</div>
+	</div>
+</section>
+
+<!-- <div class="assigned">
+	<div>
+		<h2>Assigned</h2>
+		<div ng-repeat="geo in geoAssignedData">L{{geo.lessonNum}} #{{geo.problemNum}} Ref: {{geo.lessonRef}} Assigned:{{geo.assigned}}
+		</div>
+	</div>
+
+	<div>
+		<h2>Skipped</h2>
+		<div ng-repeat="geo in geoSkippedData">L{{geo.lessonNum}} #{{geo.problemNum}} Ref: {{geo.lessonRef}} Assigned:{{geo.assigned}}
+		</div>
+	</div>
+</div> -->
+
+
+

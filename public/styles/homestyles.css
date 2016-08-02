@@ -47,3 +47,24 @@ a {
 .active {
 	color: red;
 }
+
+.assigned {
+	display: flex;
+	justify-content: space-around;
+	/*text-align: center;*/
+}
+
+.data {
+	display: inline-block
+}
+
+/*.columns {
+	width: 45%;
+	
+}
+
+.col-wrapper {
+	display: flex;
+	justify-content: space-around;
+	text-align: center;
+}*/

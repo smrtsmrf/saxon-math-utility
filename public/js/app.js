@@ -1,86 +1,91 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-	  .module('saxonApp', [
-	      'ui.router'
-	  ]);
+    angular
+        .module('saxonApp', [
+            'ui.router'
+        ]);
 })();
 
 
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-	  .module('saxonApp')
-	  .config(saxonAppConfig);
+    angular
+        .module('saxonApp')
+        .config(saxonAppConfig);
 
-	saxonAppConfig.$inject = ['$stateProvider','$urlRouterProvider'];
+    saxonAppConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-	function saxonAppConfig($stateProvider,$urlRouterProvider) {
-		$stateProvider
-		.state('login', {
-			url: '/', 
-			templateUrl: '/views/login.html',
-			controller: 'loginCtrl'
-		})
+    function saxonAppConfig($stateProvider, $urlRouterProvider) {
+        $stateProvider
+            .state('login', {
+                url: '/',
+                templateUrl: '/views/login.html',
+                controller: 'loginCtrl'
+            })
 
-		.state('alghome', {
-			url: '/alg',
-			templateUrl: './views/alghome.html', 
-			controller: 'algCtrl'
-		})
+        .state('alghome', {
+            url: '/alg',
+            templateUrl: './views/alghome.html',
+            controller: 'algCtrl'
+        })
 
-		.state('alghw', {
-			url: '/alg/hw',
-			templateUrl: '/views/alghw.html',
-			controller: function($scope, $rootScope, mainService) {
-				console.log('skipped',$rootScope.algSkipped);
-				mainService.updateAndGetAlg($rootScope.algSkipped).then(function(data) {
-					$scope.algData = data
-					console.log(data);
-				})
-			}
-		})
+        .state('alghw', {
+            url: '/alg/hw',
+            templateUrl: '/views/alghw.html',
+            controller: 'algHWCtrl'
+        })
 
-		.state('geohome', {
-			url: '/geo',
-			templateUrl: './views/geohome.html', 
-			controller: 'geoCtrl'
-		})
+        .state('geohome', {
+            url: '/geo',
+            templateUrl: './views/geohome.html',
+            controller: 'geoCtrl'
+        })
 
-		.state('geohw', {
-			url: '/geo/hw',
-			// parent: 'geohw',
-			templateUrl: '/views/geohw.html',
-			controller: function($scope, $rootScope, mainService) {
-				console.log('skipped',$rootScope.geoSkipped);
-				mainService.updateAndGetGeo($rootScope.geoSkipped).then(function(data) {
-					$scope.geoData = data
-					console.log(data);
-				})
-			}
-		})
+        .state('geohw', {
+            url: '/geo/hw',
+            templateUrl: '/views/geohw.html',
+            controller: 'geoHWCtrl'
+        })
 
-		.state('alg2home', {
-			url: '/alg2',
-			templateUrl: './views/alg2home.html', 
-			controller: 'alg2Ctrl'
-		})
+        .state('alg2home', {
+            url: '/alg2',
+            templateUrl: './views/alg2home.html',
+            controller: 'alg2Ctrl'
+        })
 
-		.state('alg2hw', {
-			url: '/alg2/hw',
-			// parent: 'geohw',
-			templateUrl: '/views/alg2hw.html',
-			controller: function($scope, $rootScope, mainService) {
-				console.log('skipped',$rootScope.alg2Skipped);
-				mainService.updateAndGetAlg2($rootScope.alg2Skipped).then(function(data) {
-					$scope.alg2Data = data
-					console.log(data);
-				})
-			}
-		})
+        .state('alg2hw', {
+            url: '/alg2/hw',
+            templateUrl: '/views/alg2hw.html',
+            controller: 'alg2HWCtrl'
+        })
+        
+        $urlRouterProvider.otherwise('/alg')
+    }
+})();
 
-		$urlRouterProvider.otherwise('/alg')
-	}
+(function() {
+
+    'use strict';
+
+    angular
+        .module('saxonApp')
+        .filter('orderObjectBy', orderObjectByFilter);
+
+    // orderObjectByFilter.$inject = [''];
+
+    function orderObjectByFilter() {
+        return function(items, field, reverse) {
+            var filtered = [];
+            angular.forEach(items, function(item) {
+                filtered.push(item);
+            });
+            filtered.sort(function(a, b) {
+                return (a[field] > b[field] ? 1 : -1);
+            })
+            if (reverse) filtered.reverse();
+            return filtered;
+        }
+    }
 })();

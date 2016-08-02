@@ -1,4 +1,69 @@
 <h1>Algebra HW</h1>
 <button class="btn btn-primary" ui-sref="alghome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
 Skipped: {{algSkipped}}
-<div ng-repeat="alg in algData">L{{alg.lessonNum}} #{{alg.problemNum}} Ref: {{alg.lessonRef}} Assigned:{{alg.assigned}}</div>
+<section class="assigned">
+	<div>
+		<h2>Assigned</h2>
+		<div ng-repeat="alg in algAssignedData | orderObjectBy: 'lesson'">
+			<strong>L{{alg.lesson}}: </strong>{{alg.problems}}
+		</div>
+	</div>
+	<div>
+		<h2>Skipped</h2>
+		<div ng-repeat="alg in algSkippedData | orderObjectBy: 'lesson'">
+			<strong>L{{alg.lesson}}: </strong>{{alg.problems}}
+		</div>
+	</div>
+</section>
+
+
+
+<!-- <section class="assigned">
+	<div>
+		<h2>Assigned</h2>
+		<div ng-repeat="num in lessonNums">
+			<h3>L{{num}}</h3>
+			<div class="data" ng-repeat="alg in algAssignedData | filter: {lessonNum: num}:true">
+				{{alg.problemNum}}{{$last ? '' : ', '}}
+			</div>
+			
+		</div>
+	</div>
+
+	<div>
+		<h2>Skipped</h2>
+		<div ng-repeat="num in lessonNums">
+			<h3>L{{num}}</h3>
+			<div class="data" ng-repeat="alg in algSkippedData | filter: {lessonNum: num}:true">
+				 {{alg.problemNum}}{{$last ? '' : ', '}}
+ 
+			</div>
+		</div>
+	</div>
+</section> -->
+
+<!-- <div class="assigned">
+	
+	<div><div ng-repeat="num in lessonNums">
+			<h2>Assigned</h2>
+			<h3>L{{num}}</h3>
+			<div ng-repeat="alg in algAssignedData | filter: {lessonNum: num}:true">
+				L{{alg.lessonNum}} #{{alg.problemNum}} Ref: {{alg.lessonRef}} Assigned:{{alg.assigned}}
+			</div>
+			<h2>Skipped</h2>
+			<h3>L{{num}}</h3>
+			<div ng-repeat="alg in algSkippedData | filter: {lessonNum: num}:true">
+				L{{alg.lessonNum}} #{{alg.problemNum}} Ref: {{alg.lessonRef}} Assigned:{{alg.assigned}}
+			</div>
+		</div></div>
+	
+</div> -->
+
+<!-- <div ng-repeat="alg in algAssignedData | groupBy: 'lessonNum'">L{{alg.lessonNum}} #{{alg.problemNum}} Ref: {{alg.lessonRef}} Assigned:{{alg.assigned}}
+		</div> -->
+
+	<!-- <div>
+		<h2>Skipped</h2>
+		<div ng-repeat="alg in algSkippedData">L{{alg.lessonNum}} #{{alg.problemNum}} Ref: {{alg.lessonRef}} Assigned:{{alg.assigned}}
+		</div>
+	</div> -->
