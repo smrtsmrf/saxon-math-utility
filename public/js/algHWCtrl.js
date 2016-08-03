@@ -9,6 +9,7 @@
 
     function algHWCtrl($scope, $rootScope, mainService) {
         console.log('skipped', $rootScope.algSkipped);
+        if (!$rootScope.algSkipped) $rootScope.algSkipped = '';
         mainService.updateAndGetAlg($rootScope.algSkipped).then(function(data) {
 
             $scope.algAssignedData = {};

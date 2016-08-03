@@ -21,9 +21,10 @@ button {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	font-size: 3vw;
+	font-size: 2vw;
 	width: 15vw;
 	height: 50vh;
+	text-align: center;
 }
 
 #main_container {
@@ -45,26 +46,36 @@ a {
 }
 
 .active {
-	color: red;
+	color: #5cb85c;
 }
 
 .assigned {
 	display: flex;
 	justify-content: space-around;
-	/*text-align: center;*/
+	width: 70vw;
 }
 
 .data {
-	display: inline-block
+	display: inline-block;
 }
 
-/*.columns {
-	width: 45%;
-	
-}
-
-.col-wrapper {
+#login {
 	display: flex;
-	justify-content: space-around;
-	text-align: center;
-}*/
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 90vh;
+}
+
+input {
+	margin: 2px 0;
+	width: 20vw !important;
+}
+
+#container {
+	display: flex;
+}
+
+#hw {
+	width: 85vw;	
+}

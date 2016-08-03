@@ -8,7 +8,9 @@
     geoHWCtrl.$inject = ['$scope', '$rootScope', 'mainService'];
 
     function geoHWCtrl($scope, $rootScope, mainService) {
+    	if (!$rootScope.geoSkipped) $rootScope.geoSkipped = '';
         mainService.updateAndGetGeo($rootScope.geoSkipped).then(function(data) {
+
 
             $scope.geoAssignedData = {};
             $scope.geoSkippedData = {};

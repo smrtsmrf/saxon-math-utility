@@ -1,4 +1,44 @@
-<h1>Algebra II HW</h1>
+<h1 class="text-center"><a ui-sref="alg2home">Algebra II HW</a></h1>
+<!-- <button class="btn btn-primary" ui-sref="alghome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button> -->
+<p class="text-center">Skipped Lessons: {{alg2Skipped}}</p>
+<div id="container">
+	<div id="sidebar">
+		<div>
+			<a ui-sref="alghw" ui-sref-active="active">Algebra</a>
+		</div>
+		<div>
+			<a ui-sref="geohw" ui-sref-active="active">Geometry</a>
+		</div>
+		<div>
+			<a ui-sref="alg2hw" ui-sref-active="active">Algebra II</a>
+		</div>
+		<div>
+			<a ui-sref="login">Logout</a>
+		</div>
+	</div>
+
+
+
+<!-- <div id="hw"> -->
+	<section class="assigned">
+	<div>
+		<h2>Assigned</h2>
+		<div ng-repeat="alg2 in alg2AssignedData | orderObjectBy: 'lesson'">
+			<strong>L{{alg2.lesson}}: </strong>{{alg2.problems}}
+		</div>
+	</div>
+	<div>
+		<h2>Skipped</h2>
+		<div ng-repeat="alg2 in alg2SkippedData | orderObjectBy: 'lesson'">
+			<strong>L{{alg2.lesson}}: </strong>{{alg2.problems}}
+		</div>
+	</div>
+</section>
+<!-- </div> -->
+</div>
+
+
+<!-- <h1>Algebra II HW</h1>
 <button class="btn btn-primary" ui-sref="alg2home"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
 Skipped: {{alg2Skipped}}
 <section class="assigned">
@@ -14,7 +54,7 @@ Skipped: {{alg2Skipped}}
 			<strong>L{{alg2.lesson}}: </strong>{{alg2.problems}}
 		</div>
 	</div>
-</section>
+</section> -->
 
 <!-- <div class="assigned">
 	<div>

@@ -1,1 +1,10 @@
-login.html
+<!-- <section id="login-wrapper"> -->
+	<div id="login">
+		<input class="form-control" type="text" ng-model="user.username" placeholder="username" required>
+		<input class="form-control" type="password" ng-model="user.password" placeholder="password" required>
+		<br>
+		<button class="btn btn-primary" ng-click="login()" ng-disabled="!user.password || !user.username">Login</button>
+		<br>
+		<a ui-sref="signup">Teachers and administrators click here to register</a>
+	</div>
+<!-- </section> -->

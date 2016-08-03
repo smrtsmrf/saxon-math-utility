@@ -22,7 +22,15 @@
             .state('login', {
                 url: '/',
                 templateUrl: '/views/login.html',
-                controller: 'loginCtrl'
+                controller: function($scope, $state) {
+                	$scope.login = function() {
+                		$state.go('alghw');
+                	}
+                }
+            })
+
+            .state('signup', {
+            	url: '/signup'
             })
 
         .state('alghome', {
@@ -61,7 +69,7 @@
             controller: 'alg2HWCtrl'
         })
         
-        $urlRouterProvider.otherwise('/alg')
+        $urlRouterProvider.otherwise('/')
     }
 })();
 

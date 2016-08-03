@@ -1,7 +1,26 @@
-<h1>Algebra HW</h1>
-<button class="btn btn-primary" ui-sref="alghome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
-Skipped: {{algSkipped}}
-<section class="assigned">
+<h1 class="text-center"><a ui-sref="alghome">Algebra HW</a></h1>
+<!-- <button class="btn btn-primary" ui-sref="alghome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button> -->
+<p class="text-center">Skipped Lessons: {{algSkipped}}</p>
+<div id="container">
+	<div id="sidebar">
+		<div>
+			<a ui-sref="alghw" ui-sref-active="active">Algebra</a>
+		</div>
+		<div>
+			<a ui-sref="geohw" ui-sref-active="active">Geometry</a>
+		</div>
+		<div>
+			<a ui-sref="alg2hw" ui-sref-active="active">Algebra II</a>
+		</div>
+		<div>
+			<a ui-sref="login">Logout</a>
+		</div>
+	</div>
+
+
+
+<!-- <div id="hw"> -->
+	<section class="assigned">
 	<div>
 		<h2>Assigned</h2>
 		<div ng-repeat="alg in algAssignedData | orderObjectBy: 'lesson'">
@@ -15,8 +34,8 @@ Skipped: {{algSkipped}}
 		</div>
 	</div>
 </section>
-
-
+<!-- </div> -->
+</div>
 
 <!-- <section class="assigned">
 	<div>

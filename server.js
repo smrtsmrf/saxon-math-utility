@@ -2,7 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var mongoose = require('mongoose');
-var GeoProblem = require('./models/GeoProblem');
+var session = require('express-session');
+var config = require('./config.json');
 var algCtrl = require('./controllers/algCtrl');
 var geoCtrl = require('./controllers/geoCtrl');
 var alg2Ctrl = require('./controllers/alg2Ctrl');
@@ -16,6 +17,12 @@ var app = express();
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(express.static(__dirname + '/public/'));
+// app.use(session({secret: config.sessionSecret}))
+app.use(session({
+  secret: config.sessionSecret,
+  saveUninitialized: true,
+  resave: true
+}));
 
 app.listen(port, function () {
 	console.log('server running on port', port);
@@ -25,7 +32,15 @@ mongoose.connect('mongodb://localhost:27017/saxon', function (err) {
 	if (err) throw err;
 });
 
-mongoose.set('debug', true)
+// mongoose.set('debug', true)
+
+// inside endpoint do req.session.skipped = req.body
+// store session data in database? how?
+// 
+
+
+ // need endpoint that returns skipped lessons
+ // findById
 
 // get requests - A/T/S 
 app.get('/api/alg', algCtrl.index)
