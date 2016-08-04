@@ -24,10 +24,10 @@
                 $scope.geoSkippedData[j].problems = [];
 
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].lessonNum == j && data[i].assigned == true) {
-                        $scope.geoAssignedData[j].problems.push(data[i].problemNum)
-                    } else if (data[i].lessonNum == j && data[i].assigned == false) {
-                        $scope.geoSkippedData[j].problems.push(data[i].problemNum)
+                    if (data[i].problems.lessonNum == j && data[i].problems.assigned == true) {
+                        $scope.geoAssignedData[j].problems.push(data[i].problems.problemNum)
+                    } else if (data[i].problems.lessonNum == j && data[i].problems.assigned == false) {
+                        $scope.geoSkippedData[j].problems.push(data[i].problems.problemNum)
                     }
                 }
 

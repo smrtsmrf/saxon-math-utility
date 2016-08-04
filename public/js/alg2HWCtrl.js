@@ -26,10 +26,10 @@
                 $scope.alg2SkippedData[j].problems = [];
 
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].lessonNum == j && data[i].assigned == true) {
-                        $scope.alg2AssignedData[j].problems.push(data[i].problemNum)
-                    } else if (data[i].lessonNum == j && data[i].assigned == false) {
-                        $scope.alg2SkippedData[j].problems.push(data[i].problemNum)
+                    if (data[i].problems.lessonNum == j && data[i].problems.assigned == true) {
+                        $scope.alg2AssignedData[j].problems.push(data[i].problems.problemNum)
+                    } else if (data[i].problems.lessonNum == j && data[i].problems.assigned == false) {
+                        $scope.alg2SkippedData[j].problems.push(data[i].problems.problemNum)
                     }
                 }
 

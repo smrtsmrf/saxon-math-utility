@@ -11,7 +11,7 @@
         console.log('skipped', $rootScope.algSkipped);
         if (!$rootScope.algSkipped) $rootScope.algSkipped = '';
         mainService.updateAndGetAlg($rootScope.algSkipped).then(function(data) {
-
+            console.log('data.length',data.length);
             $scope.algAssignedData = {};
             $scope.algSkippedData = {};
 
@@ -24,10 +24,10 @@
                 $scope.algSkippedData[j].problems = [];
 
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].lessonNum == j && data[i].assigned == true) {
-                        $scope.algAssignedData[j].problems.push(data[i].problemNum)
-                    } else if (data[i].lessonNum == j && data[i].assigned == false) {
-                        $scope.algSkippedData[j].problems.push(data[i].problemNum)
+                    if (data[i].problems.lessonNum == j && data[i].problems.assigned == true) {
+                        $scope.algAssignedData[j].problems.push(data[i].problems.problemNum)
+                    } else if (data[i].problems.lessonNum == j && data[i].problems.assigned == false) {
+                        $scope.algSkippedData[j].problems.push(data[i].problems.problemNum)
                     }
                 }
 
