@@ -1,4 +1,6 @@
-<h1 class="text-center"><a ui-sref="alghome">Algebra HW</a></h1>
+Account Type: {{accountType}}
+<h1 ng-if="accountType!='student'" class="text-center"><a ui-sref="alghome">Algebra HW</a></h1>
+<h1 ng-if="accountType=='student'" class="text-center">Algebra HW</h1>
 <!-- <button class="btn btn-primary" ui-sref="alghome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button> -->
 <p class="text-center">Skipped Lessons: {{algSkipped}}</p>
 <div id="container">

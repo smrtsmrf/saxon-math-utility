@@ -5,9 +5,12 @@
         .module('saxonApp')
         .controller('algCtrl', algCtrl);
 
-    algCtrl.$inject = ['$scope', '$rootScope'];
+    algCtrl.$inject = ['$scope', '$rootScope', '$state'];
 
-    function algCtrl($scope, $rootScope) {
+    function algCtrl($scope, $rootScope, $state) {
+        // this doesn't quite work
+        // if ($rootScope.accountType == 'student') $state.go('alg')
+
         if (!$rootScope.algSkipped) {
             $rootScope.algSkipped = [];
         }

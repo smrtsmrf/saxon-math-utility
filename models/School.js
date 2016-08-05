@@ -3,7 +3,9 @@ var Schema = mongoose.Schema;
 var problemSchema = require('./Problem');
 
 var schoolSchema = new Schema ({
-	name: String,
+	name: {type: String, required: true},
+	city: {type: String, required: true},
+	state: {type: String, required: true},
 	problems: [problemSchema]
 })
 

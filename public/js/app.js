@@ -22,15 +22,13 @@
             .state('login', {
                 url: '/',
                 templateUrl: '/views/login.html',
-                controller: function($scope, $state) {
-                	$scope.login = function() {
-                		$state.go('alghw');
-                	}
-                }
+                controller: 'loginCtrl'
             })
 
             .state('signup', {
-            	url: '/signup'
+                url: '/signup',
+                templateUrl: '/views/signup.html', 
+                controller: 'signupCtrl'
             })
 
         .state('alghome', {

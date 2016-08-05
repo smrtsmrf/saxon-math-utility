@@ -47,6 +47,7 @@ a {
 
 .active {
 	color: #5cb85c;
+	font-weight: bold;
 }
 
 .assigned {

@@ -1,5 +1,6 @@
-<h1 class="text-center"><a ui-sref="geohome">Geometry HW</a></h1>
-<!-- <button class="btn btn-primary" ui-sref="geohome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button> -->
+Account Type: {{accountType}}
+<h1 ng-if="accountType!='student'" class="text-center"><a ui-sref="geohome">Geometry HW</a></h1>
+<h1 ng-if="accountType=='student'" class="text-center">Geometry HW</h1><!-- <button class="btn btn-primary" ui-sref="geohome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button> -->
 <p class="text-center">Skipped Lessons: {{geoSkipped}}</p>
 <div id="container">
 	<div id="sidebar">

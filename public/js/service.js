@@ -8,55 +8,26 @@
     mainService.$inject = ['$http'];
 
     function mainService($http) {
-        // this.updateAndGetAlg = function(skippedLessons) {
-        //     return $http.put('/api/alg?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
-        //         return results.data;
-        //     })
-        // }
-        
-        this.updateAndGetAlg = function(skippedLessons) {
-            return $http.put('/api/schools/ALA/alg?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
+
+        this.createSchoolAndUsers = function(user) {
+            return $http.post('/api/schools', user).then(function(result) {
+                return result;
+            })
+        }
+
+        this.login = function(user) {
+            return $http.post('/api/login', user).then(function(response) {
+                console.log(response);
+                return response.data;
+            });
+        }
+
+        this.updateAndGetHW = function(skippedLessons, school_id, sub) {
+            return $http.put('/api/schools/' + school_id + '/' + sub + '?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
                 console.log(results);
                 return results.data;
             })
         }
 
-        // this.updateAndGetGeo = function(skippedLessons) {
-        //     return $http.put('/api/geo?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
-        //         return results.data;
-        //     })
-        // }
-
-        this.updateAndGetGeo = function(skippedLessons) {
-            return $http.put('/api/schools/ALA/geo?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
-                console.log(results);
-                return results.data;
-            })
-        }
-
-        // this.updateAndGetAlg2 = function(skippedLessons) {
-        //     return $http.put('/api/alg2?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
-        //         return results.data;
-        //     })
-        // }
-        
-        this.updateAndGetAlg2 = function(skippedLessons) {
-            return $http.put('/api/schools/ALA/alg2?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
-                console.log(results);
-                return results.data;
-            })
-        }
-
-        // this.resetAlg = function() {
-        // 	return $http.put('/api/alg/reset');
-        // }
-
-        // this.resetGeo = function() {
-        // 	return $http.put('/api/geo/reset');
-        // }
-
-        // this.resetAlg2 = function() {
-        // 	return $http.put('/api/alg2/reset');
-        // }
     }
 })();

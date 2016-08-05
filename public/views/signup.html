@@ -1,0 +1,50 @@
+<section>
+	<form ng-submit="signup(user)">
+		<h2>School Info</h2>
+		<input class="form-control" type="text" ng-model="user.school.name" placeholder="School Name" required autofocus>
+		<input class="form-control" type="text" ng-model="user.school.city" placeholder="City" required >
+		State:
+		<select class="input-medium" ng-model="user.school.state" ng-options="opt.value as opt.name for opt in options">
+		</select>
+
+		<h2>Create an Account</h2>
+		Role:
+		<select class="input-medium" ng-model="user.user.type" ng-init="user.user.type='teacher'">
+			<option value="admin">Admin</option>
+			<option value="teacher">Teacher</option>
+		</select>
+		<input class="form-control" type="text" ng-model="user.user.username" placeholder="username" required>
+		<input class="form-control" type="password" ng-model="user.user.password" placeholder="password" required>
+		
+		<div ng-if="user.user.type=='admin'">
+			<h2>Create Student Accounts</h2>
+			Role:
+			<select class="input-medium" ng-model="user.alg.type" ng-init="user.alg.type='student'">
+				<option value="student">Student</option>
+			</select>
+			<input class="form-control" type="text" ng-model="user.alg.username" placeholder="{{user.school.name}}alg" required>
+			<input class="form-control" type="text" ng-model="user.alg.password" placeholder="student password" required>
+
+			Role:
+			<select class="input-medium" ng-model="user.geo.type" ng-init="user.geo.type='student'">
+				<option value="student">Student</option>
+			</select>
+			<input class="form-control" type="text" ng-model="user.geo.username" placeholder="{{user.school.name}}geo" required>
+			<input class="form-control" type="text" ng-model="user.geo.password" placeholder="student password" required>
+
+			Role:
+			<select class="input-medium" ng-model="user.alg2.type" ng-init="user.alg2.type='student'">
+				<option value="student">Student</option>
+			</select>
+			<input class="form-control" type="text" ng-model="user.alg2.username" placeholder="{{user.school.name}}alg2" required>
+			<input class="form-control" type="text" ng-model="user.alg2.password" placeholder="student password" required>
+		</div>
+
+
+		<input type="submit" value="Signup">
+
+		
+
+	</form>
+	<br>
+</section>
