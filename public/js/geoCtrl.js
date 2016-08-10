@@ -5,9 +5,9 @@
         .module('saxonApp')
         .controller('geoCtrl', geoCtrl);
 
-    geoCtrl.$inject = ['$scope', '$rootScope'];
+    geoCtrl.$inject = ['$scope', '$rootScope','mainService', '$state'];
 
-    function geoCtrl($scope, $rootScope) {
+    function geoCtrl($scope, $rootScope, mainService, $state) {
         if (!$rootScope.geoSkipped) {
             $rootScope.geoSkipped = [];
         }
@@ -36,6 +36,12 @@
 
         $scope.printSkipped = function() {
             console.log($rootScope.geoSkipped);
+        }
+
+        $scope.storeSkipped = function(subject) {
+            mainService.storeSkipped(subject, $rootScope.geoSkipped, $rootScope.school_id).then(function() {
+                $state.go(subject+'hw')
+            });
         }
 
         $scope.reset = function() {

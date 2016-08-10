@@ -22,7 +22,7 @@
 			<button ng-click="show = !show; updateSkipped(lesson)" ng-class="{'btn-primary' : show, 'btn-primary' : alg2Skipped.indexOf(lesson) === -1}" class="btn">{{lesson}} <i class="fa fa-times-circle" aria-hidden="true"></i></button>
 		</div>
 		<div id="update_div" ng-click="printSkipped()">
-			<button id="update" ui-sref="alg2hw" class="btn btn-danger">Update HW</button>
+			<button id="update" class="btn btn-danger" ng-click="storeSkipped('alg2')">Update HW</button>
 		</div>
 	</div>
 </div>

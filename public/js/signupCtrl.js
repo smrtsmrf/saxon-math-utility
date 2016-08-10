@@ -8,15 +8,23 @@
 	signupCtrl.$inject = ['$scope', 'mainService', '$state'];
 
 	function signupCtrl($scope, mainService, $state) {
+		$scope.userAvailable = function(username) {
+			mainService.userAvailable(username).then(function(user) {
+				if (user[0].available === false) {
+					alert('Username not available')
+				}
+				else {
+					alert('The username is yours!')
+				}
+			})
+		}
+
 		$scope.signup = function(user) {
-			console.log('yay');
-			console.log($scope.user);
 			mainService.createSchoolAndUsers(user).then(function(data) {
 				// change this to a modal
 				alert('accounts created!');
 				$state.go('login')
 			});
-
 		}
 
 

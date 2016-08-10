@@ -5,12 +5,9 @@
         .module('saxonApp')
         .controller('algCtrl', algCtrl);
 
-    algCtrl.$inject = ['$scope', '$rootScope', '$state'];
+    algCtrl.$inject = ['$scope', '$rootScope', '$state', 'mainService'];
 
-    function algCtrl($scope, $rootScope, $state) {
-        // this doesn't quite work
-        // if ($rootScope.accountType == 'student') $state.go('alg')
-
+    function algCtrl($scope, $rootScope, $state, mainService) {
         if (!$rootScope.algSkipped) {
             $rootScope.algSkipped = [];
         }
@@ -39,6 +36,13 @@
 
         $scope.printSkipped = function() {
             console.log($rootScope.algSkipped);
+        }
+
+        $scope.storeSkipped = function(subject) {
+            mainService.storeSkipped(subject, $rootScope.algSkipped, $rootScope.school_id).then(function() {
+                $state.go(subject+'hw')
+            });
+            
         }
 
         $scope.reset = function() {

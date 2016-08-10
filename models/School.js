@@ -6,7 +6,12 @@ var schoolSchema = new Schema ({
 	name: {type: String, required: true},
 	city: {type: String, required: true},
 	state: {type: String, required: true},
-	problems: [problemSchema]
+	algProblems: [problemSchema], 
+	geoProblems: [problemSchema], 
+	alg2Problems: [problemSchema], 
+	algSkipped: Array,
+	geoSkipped: Array,
+	alg2Skipped: Array
 })
 
 module.exports = mongoose.model('School', schoolSchema)

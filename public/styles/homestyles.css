@@ -60,6 +60,10 @@ a {
 	display: inline-block;
 }
 
+#available {
+	width: 20vw;
+}
+
 #login {
 	display: flex;
 	flex-direction: column;

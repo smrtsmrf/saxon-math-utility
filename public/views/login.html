@@ -1,5 +1,5 @@
 <!-- <section id="login-wrapper"> -->
-	<form id="login" ng-submit="login(user)">
+	<form id="login" ng-submit="login(user); getSkipped()">
 
 		<input class="form-control" type="text" ng-model="user.username" placeholder="username" required autofocus>
 		<input class="form-control" type="password" ng-model="user.password" placeholder="password" required>

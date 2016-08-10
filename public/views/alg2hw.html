@@ -1,6 +1,6 @@
-Account Type: {{accountType}}
+User: {{username}}
 <h1 ng-if="accountType!='student'" class="text-center"><a ui-sref="alg2home">Algebra II HW</a></h1>
-<h1 ng-if="accountType=='student'" class="text-center">Algebra II HW</h1><!-- <button class="btn btn-primary" ui-sref="alghome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button> -->
+<h1 ng-if="accountType=='student'" class="text-center">Algebra II HW</h1>
 <p class="text-center">Skipped Lessons: {{alg2Skipped}}</p>
 <div id="container">
 	<div id="sidebar">
@@ -18,30 +18,6 @@ Account Type: {{accountType}}
 		</div>
 	</div>
 
-
-
-<!-- <div id="hw"> -->
-	<section class="assigned">
-	<div>
-		<h2>Assigned</h2>
-		<div ng-repeat="alg2 in alg2AssignedData | orderObjectBy: 'lesson'">
-			<strong>L{{alg2.lesson}}: </strong>{{alg2.problems}}
-		</div>
-	</div>
-	<div>
-		<h2>Skipped</h2>
-		<div ng-repeat="alg2 in alg2SkippedData | orderObjectBy: 'lesson'">
-			<strong>L{{alg2.lesson}}: </strong>{{alg2.problems}}
-		</div>
-	</div>
-</section>
-<!-- </div> -->
-</div>
-
-
-<!-- <h1>Algebra II HW</h1>
-<button class="btn btn-primary" ui-sref="alg2home"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
-Skipped: {{alg2Skipped}}
 <section class="assigned">
 	<div>
 		<h2>Assigned</h2>
@@ -55,18 +31,5 @@ Skipped: {{alg2Skipped}}
 			<strong>L{{alg2.lesson}}: </strong>{{alg2.problems}}
 		</div>
 	</div>
-</section> -->
-
-<!-- <div class="assigned">
-	<div>
-		<h2>Assigned</h2>
-		<div ng-repeat="alg2 in alg2AssignedData">L{{alg2.lessonNum}} #{{alg2.problemNum}} Ref: {{alg2.lessonRef}} Assigned:{{alg2.assigned}}
-		</div>
-	</div>
-
-	<div>
-		<h2>Skipped</h2>
-		<div ng-repeat="alg2 in alg2SkippedData">L{{alg2.lessonNum}} #{{alg2.problemNum}} Ref: {{alg2.lessonRef}} Assigned:{{alg2.assigned}}
-		</div>
-	</div>
-</div> -->
+</section>
+</div>

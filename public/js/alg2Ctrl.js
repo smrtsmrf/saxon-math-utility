@@ -5,9 +5,9 @@
         .module('saxonApp')
         .controller('alg2Ctrl', alg2Ctrl);
 
-    alg2Ctrl.$inject = ['$scope', '$rootScope', 'mainService'];
+    alg2Ctrl.$inject = ['$scope', '$rootScope', '$state', 'mainService'];
 
-    function alg2Ctrl($scope, $rootScope, mainService) {
+    function alg2Ctrl($scope, $rootScope, $state, mainService) {
         if (!$rootScope.alg2Skipped) {
             $rootScope.alg2Skipped = [];
         }
@@ -27,7 +27,7 @@
             if (idx > -1) {
                 $rootScope.alg2Skipped.splice(idx, 1)
             } else {
-                $rootScope.alg2Skipped.push(lesson);
+                $rootScope.alg2Skipped.push(lesson)
                 $rootScope.alg2Skipped.sort(function(a, b) {
                     return a - b;
                 })
@@ -38,9 +38,16 @@
             console.log($rootScope.alg2Skipped);
         }
 
+        $scope.storeSkipped = function(subject) {
+            console.log('storing alg2');
+            mainService.storeSkipped(subject, $rootScope.alg2Skipped, $rootScope.school_id).then(function() {
+                $state.reload(subject+'hw')
+                $state.go(subject+'hw')
+            });
+        }
+
         $scope.reset = function() {
             $rootScope.alg2Skipped = [];
-            // mainService.resetAlg2();
         }
 
     }

@@ -9,11 +9,11 @@
 
 		<h2>Create an Account</h2>
 		Role:
-		<select class="input-medium" ng-model="user.user.type" ng-init="user.user.type='teacher'">
+		<select class="input-medium" ng-model="user.user.type" ng-init="user.user.type='teacher'"> 
 			<option value="admin">Admin</option>
 			<option value="teacher">Teacher</option>
 		</select>
-		<input class="form-control" type="text" ng-model="user.user.username" placeholder="username" required>
+		<input class="form-control" type="text" ng-model="user.user.username" placeholder="username" required> <button id="available" class="btn btn-success" ng-click="userAvailable(user.user.username)">Check Availability</button>
 		<input class="form-control" type="password" ng-model="user.user.password" placeholder="password" required>
 		
 		<div ng-if="user.user.type=='admin'">
@@ -22,22 +22,25 @@
 			<select class="input-medium" ng-model="user.alg.type" ng-init="user.alg.type='student'">
 				<option value="student">Student</option>
 			</select>
-			<input class="form-control" type="text" ng-model="user.alg.username" placeholder="{{user.school.name}}alg" required>
-			<input class="form-control" type="text" ng-model="user.alg.password" placeholder="student password" required>
+			<input class="form-control" type="text" ng-model="user.alg.username" placeholder="{{user.school.name}}alg">
+			<button id="available" class="btn btn-success" ng-click="userAvailable(user.alg.username)">Check Availability</button>
+			<input class="form-control" type="text" ng-model="user.alg.password" placeholder="student password">
 
 			Role:
 			<select class="input-medium" ng-model="user.geo.type" ng-init="user.geo.type='student'">
 				<option value="student">Student</option>
 			</select>
-			<input class="form-control" type="text" ng-model="user.geo.username" placeholder="{{user.school.name}}geo" required>
-			<input class="form-control" type="text" ng-model="user.geo.password" placeholder="student password" required>
+			<input class="form-control" type="text" ng-model="user.geo.username" placeholder="{{user.school.name}}geo">
+			<button id="available" class="btn btn-success" ng-click="userAvailable(user.geo.username)">Check Availability</button>
+			<input class="form-control" type="text" ng-model="user.geo.password" placeholder="student password">
 
 			Role:
 			<select class="input-medium" ng-model="user.alg2.type" ng-init="user.alg2.type='student'">
 				<option value="student">Student</option>
 			</select>
-			<input class="form-control" type="text" ng-model="user.alg2.username" placeholder="{{user.school.name}}alg2" required>
-			<input class="form-control" type="text" ng-model="user.alg2.password" placeholder="student password" required>
+			<input class="form-control" type="text" ng-model="user.alg2.username" placeholder="{{user.school.name}}alg2">
+			<button id="available" class="btn btn-success" ng-click="userAvailable(user.alg2.username)">Check Availability</button>
+			<input class="form-control" type="text" ng-model="user.alg2.password" placeholder="student password">
 		</div>
 
 

@@ -25,11 +25,11 @@
                 controller: 'loginCtrl'
             })
 
-            .state('signup', {
-                url: '/signup',
-                templateUrl: '/views/signup.html', 
-                controller: 'signupCtrl'
-            })
+        .state('signup', {
+            url: '/signup',
+            templateUrl: '/views/signup.html',
+            controller: 'signupCtrl'
+        })
 
         .state('alghome', {
             url: '/alg',
@@ -66,7 +66,13 @@
             templateUrl: '/views/alg2hw.html',
             controller: 'alg2HWCtrl'
         })
-        
+
+        .state('admin', {
+            url:'/admin',
+            templateUrl: '/views/admin.html',
+            controller: 'adminCtrl'
+        })
+
         $urlRouterProvider.otherwise('/')
     }
 })();
