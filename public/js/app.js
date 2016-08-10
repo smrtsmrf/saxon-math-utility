@@ -7,6 +7,17 @@
         ]);
 })();
 
+(function() {
+    'use strict';
+
+    angular
+      .module('saxonApp')
+      .run(function($rootScope, $state) {
+          $rootScope.$on('$stateChangeError', function(e, toState, toParams, fromState, fromParams, error){
+                        if (error == "Not Authorized") $state.go($state.current.name)
+                    })
+      })
+})();
 
 (function() {
     'use strict';
@@ -34,7 +45,21 @@
         .state('alghome', {
             url: '/alg',
             templateUrl: './views/alghome.html',
-            controller: 'algCtrl'
+            controller: 'algCtrl',
+            resolve: {
+                security: ['$http', '$q', function($http, $q) {
+                    var deferred = $q.defer();
+                    return $http.get('/api/isAuthed').then(function(auth) {
+                        var type = auth.data;
+                        if (type !== 'admin') {
+                            deferred.reject('Not Authorized')
+                        } else {
+                            deferred.resolve();
+                        }
+                        return deferred.promise;
+                    })
+                }]
+            }
         })
 
         .state('alghw', {
@@ -46,7 +71,21 @@
         .state('geohome', {
             url: '/geo',
             templateUrl: './views/geohome.html',
-            controller: 'geoCtrl'
+            controller: 'geoCtrl',
+            resolve: {
+                security: ['$http', '$q', function($http, $q) {
+                    var deferred = $q.defer();
+                    return $http.get('/api/isAuthed').then(function(auth) {
+                        var type = auth.data;
+                        if (type !== 'admin') {
+                            deferred.reject('Not Authorized')
+                        } else {
+                            deferred.resolve();
+                        }
+                        return deferred.promise;
+                    })
+                }]
+            }
         })
 
         .state('geohw', {
@@ -58,7 +97,21 @@
         .state('alg2home', {
             url: '/alg2',
             templateUrl: './views/alg2home.html',
-            controller: 'alg2Ctrl'
+            controller: 'alg2Ctrl',
+            resolve: {
+                security: ['$http', '$q', function($http, $q) {
+                    var deferred = $q.defer();
+                    return $http.get('/api/isAuthed').then(function(auth) {
+                        var type = auth.data;
+                        if (type !== 'admin') {
+                            deferred.reject('Not Authorized')
+                        } else {
+                            deferred.resolve();
+                        }
+                        return deferred.promise;
+                    })
+                }]
+            }
         })
 
         .state('alg2hw', {
@@ -68,9 +121,23 @@
         })
 
         .state('admin', {
-            url:'/admin',
+            url: '/admin',
             templateUrl: '/views/admin.html',
-            controller: 'adminCtrl'
+            controller: 'adminCtrl',
+            resolve: {
+                security: ['$http', '$q', function($http, $q) {
+                    var deferred = $q.defer();
+                    return $http.get('/api/isAuthed').then(function(auth) {
+                        var type = auth.data;
+                        if (type !== 'admin') {
+                            deferred.reject('Not Authorized')
+                        } else {
+                            deferred.resolve();
+                        }
+                        return deferred.promise;
+                    })
+                }]
+            }
         })
 
         $urlRouterProvider.otherwise('/')

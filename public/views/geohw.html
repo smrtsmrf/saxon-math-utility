@@ -1,7 +1,11 @@
-User: {{username}}
-<h1 ng-if="accountType!='student'" class="text-center"><a ui-sref="geohome">Geometry HW</a></h1>
-<h1 ng-if="accountType=='student'" class="text-center">Geometry HW</h1><!-- <button class="btn btn-primary" ui-sref="geohome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button> -->
+User: {{user.username}}
+Type: {{user.accountType}}
+<h1 ng-if="user.accountType!='student'" class="text-center"><a ui-sref="geohome">Geometry HW</a></h1>
+
+<h1 ng-if="user.accountType=='student'" class="text-center">Geometry HW</h1>
+
 <p class="text-center">Skipped Lessons: {{geoSkipped}}</p>
+
 <div id="container">
 	<div id="sidebar">
 		<div>
@@ -14,13 +18,10 @@ User: {{username}}
 			<a ui-sref="alg2hw" ui-sref-active="active">Algebra II</a>
 		</div>
 		<div>
-			<a ui-sref="login">Logout</a>
+			<a ui-sref="login" ng-click="logout()">Logout</a>
 		</div>
 	</div>
 
-
-
-<!-- <div id="hw"> -->
 	<section class="assigned">
 	<div>
 		<h2>Assigned</h2>
@@ -35,43 +36,4 @@ User: {{username}}
 		</div>
 	</div>
 </section>
-<!-- </div> -->
 </div>
-
-
-
-
-<!-- <h1>Geometry HW</h1>
-<button class="btn btn-primary" ui-sref="geohome"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
-Skipped: {{geoSkipped}}
-<section class="assigned">
-	<div>
-		<h2>Assigned</h2>
-		<div ng-repeat="geo in geoAssignedData | orderObjectBy: 'lesson'">
-			<strong>L{{geo.lesson}}: </strong>{{geo.problems}}
-		</div>
-	</div>
-	<div>
-		<h2>Skipped</h2>
-		<div ng-repeat="geo in geoSkippedData | orderObjectBy: 'lesson'">
-			<strong>L{{geo.lesson}}: </strong>{{geo.problems}}
-		</div>
-	</div>
-</section> -->
-
-<!-- <div class="assigned">
-	<div>
-		<h2>Assigned</h2>
-		<div ng-repeat="geo in geoAssignedData">L{{geo.lessonNum}} #{{geo.problemNum}} Ref: {{geo.lessonRef}} Assigned:{{geo.assigned}}
-		</div>
-	</div>
-
-	<div>
-		<h2>Skipped</h2>
-		<div ng-repeat="geo in geoSkippedData">L{{geo.lessonNum}} #{{geo.problemNum}} Ref: {{geo.lessonRef}} Assigned:{{geo.assigned}}
-		</div>
-	</div>
-</div> -->
-
-
-

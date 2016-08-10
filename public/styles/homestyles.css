@@ -84,3 +84,7 @@ input {
 #hw {
 	width: 85vw;	
 }
+
+.delete {
+	width: 10vw;
+}

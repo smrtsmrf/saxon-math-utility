@@ -13,7 +13,7 @@
 			<option value="admin">Admin</option>
 			<option value="teacher">Teacher</option>
 		</select>
-		<input class="form-control" type="text" ng-model="user.user.username" placeholder="username" required> <button id="available" class="btn btn-success" ng-click="userAvailable(user.user.username)">Check Availability</button>
+		<input class="form-control" type="text" ng-model="user.user.username" placeholder="username" required> <button type="button" id="available" class="btn btn-success" ng-click="userAvailable(user.user.username)">Check Availability</button>
 		<input class="form-control" type="password" ng-model="user.user.password" placeholder="password" required>
 		
 		<div ng-if="user.user.type=='admin'">
@@ -23,7 +23,7 @@
 				<option value="student">Student</option>
 			</select>
 			<input class="form-control" type="text" ng-model="user.alg.username" placeholder="{{user.school.name}}alg">
-			<button id="available" class="btn btn-success" ng-click="userAvailable(user.alg.username)">Check Availability</button>
+			<button type="button" id="available" class="btn btn-success" ng-click="userAvailable(user.alg.username)">Check Availability</button>
 			<input class="form-control" type="text" ng-model="user.alg.password" placeholder="student password">
 
 			Role:
@@ -31,7 +31,7 @@
 				<option value="student">Student</option>
 			</select>
 			<input class="form-control" type="text" ng-model="user.geo.username" placeholder="{{user.school.name}}geo">
-			<button id="available" class="btn btn-success" ng-click="userAvailable(user.geo.username)">Check Availability</button>
+			<button type="button" id="available" class="btn btn-success" ng-click="userAvailable(user.geo.username)">Check Availability</button>
 			<input class="form-control" type="text" ng-model="user.geo.password" placeholder="student password">
 
 			Role:
@@ -39,12 +39,12 @@
 				<option value="student">Student</option>
 			</select>
 			<input class="form-control" type="text" ng-model="user.alg2.username" placeholder="{{user.school.name}}alg2">
-			<button id="available" class="btn btn-success" ng-click="userAvailable(user.alg2.username)">Check Availability</button>
+			<button type="button" id="available" class="btn btn-success" ng-click="userAvailable(user.alg2.username)">Check Availability</button>
 			<input class="form-control" type="text" ng-model="user.alg2.password" placeholder="student password">
 		</div>
 
 
-		<input type="submit" value="Signup">
+		<button class="btn btn-primary" type="submit" value="Signup">Signup</button>
 
 		
 

@@ -16,7 +16,7 @@ module.exports = {
 	}, 
 
 	create: function(req, res, next) {
-		School.findOne({name: req.body.school.name}, function(err, existingSchool) {
+		School.findOne({name: req.body.school.name, city: req.body.school.city, state: req.body.school.state}, function(err, existingSchool) {
 			if (!existingSchool) {
 				var newSchool = new School(req.body.school);
 
@@ -67,6 +67,7 @@ module.exports = {
 					err ? res.status(500).send(err) : res.send(new_school);
 				})
 			} else {
+				req.body.user.password = bcrypt.hashSync(req.body.user.password, saltRounds);
 				var newUser = new User(req.body.user)
 				newUser.school_id = existingSchool._id;
 				newUser.save(function(err, user) {
@@ -82,7 +83,39 @@ module.exports = {
 				err ? res.status(500).send(err) : res.send(user);
 			})
 		})
+	}, 
+
+	update: function(req, res, next) {
+		School.findByIdAndUpdate({_id: req.params.id}, req.body, function(err, school) {
+			school.algProblems.forEach( function(elem, idx) {
+				if (elem.assigned == false) {
+					elem.assigned = true;
+				}
+			});
+			school.geoProblems.forEach( function(elem, idx) {
+				if (elem.assigned == false) {
+					elem.assigned = true;
+				}
+			});
+			school.alg2Problems.forEach( function(elem, idx) {
+				if (elem.assigned == false) {
+					elem.assigned = true;
+				}
+			});
+			school.save()
+
+			err ? res.status(500).send(err) : res.send(school);
+		})
 	}
+
+	// storeSkipped: function(req, res, next) {
+	// 	var update = {};
+	// 	update[req.params.subject+'Skipped'] = req.body.skipped;
+	// 	School.findByIdAndUpdate({_id: req.params.id}, update, function(err, school) {
+	// 		// err ? res.status(500).send(err) : res.send(req.body.skipped);
+	// 		next();
+	// 	})
+	// },
 
 
 

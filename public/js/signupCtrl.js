@@ -9,7 +9,9 @@
 
 	function signupCtrl($scope, mainService, $state) {
 		$scope.userAvailable = function(username) {
-			mainService.userAvailable(username).then(function(user) {
+			if (!username) alert('Invalid username');
+			else {
+				mainService.findUsers('?username='+username).then(function(user) {
 				if (user[0].available === false) {
 					alert('Username not available')
 				}
@@ -17,6 +19,8 @@
 					alert('The username is yours!')
 				}
 			})
+			}
+			
 		}
 
 		$scope.signup = function(user) {

@@ -1,7 +1,11 @@
-User: {{username}}
-<h1 ng-if="accountType!='student'" class="text-center"><a ui-sref="alghome">Algebra HW</a></h1>
-<h1 ng-if="accountType=='student'" class="text-center">Algebra HW</h1>
+User: {{user.username}}
+Type: {{user.accountType}}
+<h1 ng-if="user.accountType!='student'" class="text-center"><a ui-sref="alghome">Algebra HW</a></h1>
+
+<h1 ng-if="user.accountType=='student'" class="text-center">Algebra HW</h1>
+
 <p class="text-center">Skipped Lessons: {{algSkipped}}</p>
+
 <div id="container">
 	<div id="sidebar">
 		<div>
@@ -14,7 +18,7 @@ User: {{username}}
 			<a ui-sref="alg2hw" ui-sref-active="active">Algebra II</a>
 		</div>
 		<div>
-			<a ui-sref="login">Logout</a>
+			<a ui-sref="login" ng-click="logout()">Logout</a>
 		</div>
 	</div>
 

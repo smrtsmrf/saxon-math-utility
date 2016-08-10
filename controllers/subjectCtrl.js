@@ -49,17 +49,6 @@ module.exports = {
 		})
 	},
 
-	getSkipped: function(req, res, next) {
-		School.findById({_id: req.params.id},function(err, school) {
-			err ? res.status(500).send(err) : res.send(school[req.params.subject+'Skipped']);
-		})
-	},
-
-	// index: function(req, res, next) {
-	// 	School.findById({_id: req.params.id}, function(err, school) {
-	// 		err ? res.status(500).send(err) : res.send(school[req.params.subject+'Problems']);
-	// 	}),
-
 	getAllHW: function(req, res, next) {
 		School.findById({_id: req.params.id}, function(err, school) {
 			err ? res.status(500).send(err) : res.send(

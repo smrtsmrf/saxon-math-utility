@@ -1,5 +1,5 @@
 <h1 class="text-center">Remove the lessons you want to skip and click update to generate the HW list</h1>
-<!-- {{geoSkipped}} -->
+
 <div id="main_container">
 	<div id="sidebar">
 		<div>
@@ -13,7 +13,7 @@
 			<a ui-sref="alg2home" ui-sref-active="active">Algebra II</a>
 		</div>
 		<div>
-			<a ui-sref="login">Logout</a>
+			<a ui-sref="login" ng-click="logout()">Logout</a>
 		</div>
 	</div>
 
@@ -21,20 +21,8 @@
 		<div ng-repeat="lesson in lessons">
 			<button ng-click="show = !show; updateSkipped(lesson)" ng-class="{'btn-primary' : show, 'btn-primary' : geoSkipped.indexOf(lesson) === -1}" class="btn">{{lesson}} <i class="fa fa-times-circle" aria-hidden="true"></i></button>
 		</div>
-		<div id="update_div" ng-click="printSkipped()">
+		<div id="update_div">
 			<button id="update" class="btn btn-danger" ng-click="storeSkipped('geo')">Update HW</button>
 		</div>
 	</div>
 </div>
-
-
-
-
-
-<!-- add a reset button. or undo -->
-
-
-
-<!-- <div ng-repeat="geo in geoData">{{geo.lessonNum}} {{geo.problemNum}} {{geo.lessonRef}} {{geo.assigned}}</div> -->
-
-<!-- ng or ui grid? like itunes and pokemon app -->

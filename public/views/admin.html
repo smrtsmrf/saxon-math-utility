@@ -1,1 +1,33 @@
-admin.html
+<nav>
+	<ul>
+		<li><a ui-sref="alghome">Modify Algebra</a></li>
+		<li><a ui-sref="alghw">Algebra HW</a></li>
+		<li><a ui-sref="geohome">Modify Geometry</a></li>
+		<li><a ui-sref="geohw">Geometry HW</a></li>
+		<li><a ui-sref="alg2home">Modify Algebra II</a></li>
+		<li><a ui-sref="alghw">Algebra II HW</a></li>
+		<li><a ui-sref="login" ng-click="logout()">Logout</a></li>
+	</ul>
+</nav>
+
+
+<section>
+<h1>Users</h1>
+	<h3>Admin</h3>
+	<section ng-repeat="user in users | filter: {type: 'admin'}">
+		{{user.username}} <button ng-click="delete(user.username)" class="btn btn-danger delete">Delete  <i class="fa fa-times-circle" aria-hidden="true"></i></button>
+	</section>
+	<h3>Teachers</h3>
+	<section ng-repeat="user in users | filter: {type: 'teacher'}">
+		{{user.username}} <button ng-click="delete(user.username)" class="btn btn-danger delete">Delete  <i class="fa fa-times-circle" aria-hidden="true"></i></button>
+	</section>
+	<h3>Students</h3>
+	<section ng-repeat="user in users | filter: {type: 'student'}">
+		{{user.username}} <button ng-click="delete(user.username)" class="btn btn-danger delete">Delete  <i class="fa fa-times-circle" aria-hidden="true"></i></button>
+	</section>
+</section>
+
+<section>
+	<h3>Reset All HW</h3>
+	<button ng-click="reset()" class="btn btn-danger">Reset All HW</button>
+</section>

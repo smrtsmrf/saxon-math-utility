@@ -72,16 +72,20 @@ app.delete('/api/schools/:name', schoolCtrl.destroy);
 //-------------------------------- login - called in loginCtrl............................................//
 app.post('/api/login', userCtrl.login);
 
+app.get('/api/logout', userCtrl.logout);
+
+app.get('/api/isAuthed', userCtrl.isAuthed);
+
 // ------------ get all or one (query) users - called in signupCtrl..................................//
 app.get('/api/users', userCtrl.index);
 
 // ------------------------ delete user NOT USED IN FRONT END........................................//
-app.delete('/api/schools/:id/users/:username', userCtrl.destroy);
+app.delete('/api/users/:username', userCtrl.destroy);
 
 
 
 // ----------------------- update school/subject - called in HW Ctrls.......................................//
-app.put('/api/schools/:id/:subject', subjectCtrl.update)
+// app.put('/api/schools/:id/:subject', subjectCtrl.update)
 // app.put('/api/schools/:name/:subject', subjectCtrl.update, subjectCtrl.index)
 
 // -------------------- store school/subjectSkipped - called in subCtrls...................................//
@@ -97,7 +101,7 @@ app.get('/api/schools/:id/allHW', subjectCtrl.getAllHW);
 // ---------------------------------- reset school/subject..............................................//
 
 
-// app.put('/api/schools/:name/:subject/reset', subjectCtrl.reset)
+app.put('/api/schools/:id/reset', schoolCtrl.update)
 
 
 // ---------------------------------- get school/subject..............................................//

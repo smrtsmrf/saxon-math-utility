@@ -5,153 +5,97 @@
         .module('saxonApp')
         .service('mainService', mainService);
 
-    mainService.$inject = ['$http', '$state'];
+    mainService.$inject = ['$http'];
 
-    function mainService($http, $state) {
-
-
-        var myFunctions = {
-
-            userAvailable: function(username) {
-            return $http.get('api/users?username=' + username).then(function(response) {
-                console.log(response);
-                return response.data;
-            })
-        },
-
-        createSchoolAndUsers: function(user) {
-            return $http.post('/api/schools', user).then(function(result) {
-                return result;
-            })
-        },
-
-        login: function(user) {
-            return $http.post('/api/login', user).then(function(response) {
-                console.log(response.data);
-                return response.data;
-            });
-        },
-
-        allSkippedData: null,
-        // function getHW(school_id) {
-        getAllHW: function(school_id) {
-
-            return $http.get('/api/schools/' + school_id + '/allHW').then(function(results) {
-                console.log(results);
-                myFunctions.allSkippedData = results.data;
-                // console.log('algskippeddata', algSkippedData);
-                return myFunctions.allSkippedData;
-            })
-        },
-
-        // returnData: function() {
-        //     console.log('inside fn allskippeddata', myFunctions.allSkippedData);
-        //     return myFunctions.allSkippedData;
-        // },   
-
-        storeSkipped: function(subject, skippedLessons, school_id) {
-            console.log('subject', subject);
-            console.log('skippedLessons', skippedLessons);
-            console.log('school_id', school_id);
-            return $http.put('/api/schools/' + school_id + '/' + subject + '/skipped', {
-                skipped: skippedLessons
-            }).then(function() {
-                return myFunctions.getAllHW(school_id);
-            })
-        }
-
-        }
-        return myFunctions;
-
-
-        // -----------------------------------------------------
-
+    function mainService($http) {
         
+        var lessonButtons = []
+        for (var i = 1; i <= 120; i++) {
+            lessonButtons.push(i)
+        };
 
-// ----------------------
-// this.userAvailable = function(username) {
-//             return $http.get('api/users?username=' + username).then(function(response) {
-//                 console.log(response);
-//                 return response.data;
-//             })
-//         }
+        var serviceFns = {
 
-//         this.createSchoolAndUsers = function(user) {
-//             return $http.post('/api/schools', user).then(function(result) {
-//                 return result;
-//             })
-//         }
+            lessons: lessonButtons,
 
-//         this.login = function(user) {
-//             return $http.post('/api/login', user).then(function(response) {
-//                 console.log(response.data);
-//                 return response.data;
-//             });
-//         }
+            // userAvailable: function(username) {
+            //     return $http.get('api/users?username=' + username).then(function(response) {
+            //         // console.log(response);
+            //         return response.data;
+            //     })
+            // },
 
-//         var allSkippedData;
-//         // function getHW(school_id) {
-//         this.getAllHW = function(school_id) {
+            findUsers: function(query) {
+                return $http.get('api/users'+query).then(function(response) {
+                    // console.log(response);
+                    return response.data;
+                })
+            },
 
-//             return $http.get('/api/schools/' + school_id + '/allHW').then(function(results) {
-//                 console.log(results);
-//                 allSkippedData = results.data;
-//                 // console.log('algskippeddata', algSkippedData);
-//                 return allSkippedData;
-//             })
-//         }
+            createSchoolAndUsers: function(user) {
+                return $http.post('/api/schools', user).then(function(result) {
+                    return result;
+                })
+            },
 
-//         this.returnData = function() {
-//             console.log('inside fn allskippeddata', allSkippedData);
-//             return allSkippedData;
-//         }   
+            login: function(user) {
+                return $http.post('/api/login', user).then(function(response) {
+                    // console.log(response.data);
+                    return response.data;
+                });
+            },
 
-//         this.storeSkipped = function(subject, skippedLessons, school_id) {
-//             return $http.put('/api/schools/' + school_id + '/' + subject + '/skipped', {
-//                 skipped: skippedLessons
-//             }).then(function() {
-//                 getHW(school_id);
-//             })
-//         }
+            logout: function() {
+                return $http.get('/api/logout')
+            },
 
+            allSkippedData: null,
 
+            getAllHW: function(school_id) {
+                return $http.get('/api/schools/' + school_id + '/allHW').then(function(results) {
+                    // console.log(results);
+                    serviceFns.allSkippedData = results.data;
+                    return serviceFns.allSkippedData;
+                })
+            },
 
+            storeSkipped: function(subject, skippedLessons, school_id) {
+                return $http.put('/api/schools/' + school_id + '/' + subject + '/skipped', {
+                    skipped: skippedLessons
+                }).then(function() {
+                    return serviceFns.getAllHW(school_id);
+                })
+            }, 
 
+            deleteUser: function(username) {
+                return $http.delete('/api/users/'+username).then(function(response) {
+                    var user = response.data
+                    return serviceFns.findUsers('?school_id='+user.school_id)
+                })
+            }, 
 
+            resetAllHW: function(school_id) {
+                var reset = {
+                    algSkipped: [], geoSkipped: [], alg2Skipped: []
+                    };
+                return $http.put('/api/schools/'+school_id+'/reset', reset).then(function() {
+                    return serviceFns.getAllHW(school_id);
+                })
 
+                // return $http.put('/api/schools/' + school_id + '/alg/skipped', {skipped: []}).then(function() {
+                //     return $http.put('/api/schools/' + school_id + '/geo/skipped', {skipped: []}).then(function() {
+                //         return $http.put('/api/schools/' + school_id + '/alg2/skipped', {skipped: []})
+                //     }).then(function() {
+                //         return serviceFns.getAllHW(school_id);
+                //     })
+                // })
 
+                // serviceFns.storeSkipped('alg', [], school_id);
+                // serviceFns.storeSkipped('geo', [], school_id);
+                // serviceFns.storeSkipped('alg2', [], school_id);
+            }
 
-
-// -----------------------
-
-        //  this.getSkipped = function(subject, school_id) {
-        //     return $http.get('/api/schools/' + school_id + '/' + subject + '/skipped').then(function() {
-        //         getHW(school_id);
-        //     })
-        // }
-        // 
-        //      // this.storeSkipped = function(subject, skippedLessons, school_id) {
-        //     return $http.put('/api/schools/' + school_id + '/' + subject + '/skipped', {skipped: skippedLessons}).then(function (result) {
-        //         updateAndGetHW(result, school_id)
-        //     })
-        // }
-
-        // this.getUser = function(username) {
-
-        // }
-        // 
-        //   // this.getSkipped = function(subject, school_id) {
-        //     return $http.get('/api/schools/' + school_id + '/' + subject + '/skipped').then(function(response) {
-        //         console.log(response);
-        //         return response.data;
-        //     })
-        // }
-
-        // this.updateAndGetHW = function(skippedLessons, school_id, subject) {
-            // return $http.put('/api/schools/' + school_id + '/' + subject + '?lessonRef=' + JSON.stringify(skippedLessons)).then(function(results) {
-        //         return results.data;
-        //     })
-        // }
-
+        }
+        return serviceFns;
     }
 })();

@@ -10,15 +10,9 @@
     function algHWCtrl($scope, $rootScope, mainService, $state) {
 
         console.log('skipped', $rootScope.algSkipped);
-        console.log('account type', $rootScope.accountType);
 
-        if (!$rootScope.algSkipped) $rootScope.algSkipped = '';
-
-
-        // mainService.updateAndGetHW($rootScope.algSkipped, $rootScope.school_id, 'alg').then(function(data) {
         var data = mainService.allSkippedData.alg;
 
-        data = mainService.allSkippedData.alg;
         $scope.algAssignedData = {};
         $scope.algSkippedData = {};
 
@@ -47,8 +41,7 @@
             array.sort(function(a, b) {
                 return a - b;
             });
-            var ranges = [],
-                rstart, rend;
+            var ranges = [], rstart, rend;
             for (var i = 0; i < array.length; i++) {
                 rstart = array[i];
                 rend = rstart;
@@ -60,9 +53,10 @@
             }
             return ranges;
         }
-        // console.log($scope.algAssignedData);
-        // console.log(data);
 
-        // })
+        $scope.logout = function() {
+            mainService.logout()
+            $rootScope.user = {};
+        }
     }
 })();

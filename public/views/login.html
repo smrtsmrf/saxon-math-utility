@@ -1,12 +1,8 @@
-<!-- <section id="login-wrapper"> -->
-	<form id="login" ng-submit="login(user); getSkipped()">
-
-		<input class="form-control" type="text" ng-model="user.username" placeholder="username" required autofocus>
-		<input class="form-control" type="password" ng-model="user.password" placeholder="password" required>
-		<br>
-		<!-- <button class="btn btn-primary" ng-click="login(user)" ng-disabled="!user.password || !user.username">Login</button> -->
-		<input class="btn btn-primary" type="submit" value="Login">
-		<br>
-		<a ui-sref="signup">Teachers and administrators click here to register</a>
-	</form>
-<!-- </section> -->
+<form id="login" ng-submit="login(user); getSkipped()">
+	<input class="form-control" type="text" ng-model="user.username" placeholder="username" required autofocus>
+	<input class="form-control" type="password" ng-model="user.password" placeholder="password" required>
+	<br>
+	<input class="btn btn-primary" type="submit" value="Login">
+	<br>
+	<a ui-sref="signup">Teachers and administrators click here to register</a>
+</form>

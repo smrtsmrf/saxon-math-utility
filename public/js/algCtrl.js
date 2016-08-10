@@ -8,19 +8,10 @@
     algCtrl.$inject = ['$scope', '$rootScope', '$state', 'mainService'];
 
     function algCtrl($scope, $rootScope, $state, mainService) {
-        if (!$rootScope.algSkipped) {
-            $rootScope.algSkipped = [];
-        }
 
-        $scope.lessons = [];
-        for (var i = 1; i <= 120; i++) {
-            $scope.lessons.push(i)
-        };
+        $scope.lessons = mainService.lessons;
 
         $scope.show = true;
-        $scope.remove = function(idx) {
-            $scope.show = !$scope.show;
-        }
 
         $scope.updateSkipped = function(lesson) {
             var idx = $rootScope.algSkipped.indexOf(lesson);
@@ -34,12 +25,8 @@
             }
         }
 
-        $scope.printSkipped = function() {
-            console.log($rootScope.algSkipped);
-        }
-
         $scope.storeSkipped = function(subject) {
-            mainService.storeSkipped(subject, $rootScope.algSkipped, $rootScope.school_id).then(function() {
+            mainService.storeSkipped(subject, $rootScope.algSkipped, $rootScope.user.school_id).then(function() {
                 $state.go(subject+'hw')
             });
             
@@ -47,6 +34,11 @@
 
         $scope.reset = function() {
             $rootScope.algSkipped = [];
+        }
+
+        $scope.logout = function() {
+            mainService.logout()
+            $rootScope.user = {};
         }
 
     }

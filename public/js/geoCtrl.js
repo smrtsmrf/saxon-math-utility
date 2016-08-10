@@ -8,19 +8,10 @@
     geoCtrl.$inject = ['$scope', '$rootScope','mainService', '$state'];
 
     function geoCtrl($scope, $rootScope, mainService, $state) {
-        if (!$rootScope.geoSkipped) {
-            $rootScope.geoSkipped = [];
-        }
 
-        $scope.lessons = [];
-        for (var i = 1; i <= 120; i++) {
-            $scope.lessons.push(i)
-        };
+        $scope.lessons = mainService.lessons;
 
         $scope.show = true;
-        $scope.remove = function(idx) {
-            $scope.show = !$scope.show;
-        }
 
         $scope.updateSkipped = function(lesson) {
             var idx = $rootScope.geoSkipped.indexOf(lesson);
@@ -34,18 +25,19 @@
             }
         }
 
-        $scope.printSkipped = function() {
-            console.log($rootScope.geoSkipped);
-        }
-
         $scope.storeSkipped = function(subject) {
-            mainService.storeSkipped(subject, $rootScope.geoSkipped, $rootScope.school_id).then(function() {
+            mainService.storeSkipped(subject, $rootScope.geoSkipped, $rootScope.user.school_id).then(function() {
                 $state.go(subject+'hw')
             });
         }
 
         $scope.reset = function() {
             $rootScope.geoSkipped = [];
+        }
+
+        $scope.logout = function() {
+            mainService.logout()
+            $rootScope.user = {};
         }
 
     }
