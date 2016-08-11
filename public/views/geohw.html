@@ -1,8 +1,8 @@
 User: {{user.username}}
 Type: {{user.type}}
-<h1 ng-if="user.accountType!='student'" class="text-center"><a ui-sref="geohome">Geometry HW</a></h1>
+<h1 ng-if="user.type!='student'" class="text-center"><a ui-sref="geohome">Geometry HW</a></h1>
 
-<h1 ng-if="user.accountType=='student'" class="text-center">Geometry HW</h1>
+<h1 ng-if="user.type=='student'" class="text-center">Geometry HW</h1>
 
 <p class="text-center">Skipped Lessons: {{geoSkipped}}</p>
 
