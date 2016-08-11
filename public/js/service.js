@@ -5,9 +5,9 @@
         .module('saxonApp')
         .service('mainService', mainService);
 
-    mainService.$inject = ['$http', '$cookies'];
+    mainService.$inject = ['$http', '$q', '$cookies'];
 
-    function mainService($http, $cookies) {
+    function mainService($http, $q, $cookies) {
         var user='';
         var lessonButtons = [];
         for (var i = 1; i <= 120; i++) {
@@ -57,12 +57,9 @@
                 });
             },
 
-            testData: null,
-            test: function() {
-                return $http.get('/api/test').then(function(resp) {
-                    console.log(resp);
-                    serviceFns.testData = resp.data.session;
-                    return resp.data.session
+            retrieveSession: function() {
+                return $http.get('/api/session').then(function(resp) {
+                    return resp.data.user;
                 })
             },
 
@@ -70,10 +67,38 @@
                 return $http.get('/api/logout')
             },
 
+            isAuthed: function() {
+                var deferred = $q.defer();
+                return $http.get('/api/isAuthed').then(function(auth) {
+                    var type = auth.data;
+                    if (!type) {
+                        deferred.reject('Not Logged In')
+                    } else if (type !== 'admin') {
+                        deferred.reject('Not Authorized')
+                    } else {
+                        deferred.resolve();
+                    }
+                    return deferred.promise;
+                })
+            },
+
+            isLoggedIn: 
+            function() {
+                var deferred = $q.defer();
+                return $http.get('/api/isAuthed').then(function(auth) {
+                    var type = auth.data;
+                    if (!type) {
+                        deferred.reject('Not Logged In')
+                    } else {
+                        deferred.resolve();
+                    }
+                    return deferred.promise;
+                })
+            },
+
             allSkippedData: null,
             getAllHW: function(school_id) {
                 return $http.get('/api/schools/' + school_id + '/allHW').then(function(results) {
-                    // console.log(results);
                     serviceFns.allSkippedData = results.data;
                     return serviceFns.allSkippedData;
                 })
@@ -101,20 +126,7 @@
                 return $http.put('/api/schools/'+school_id+'/reset', reset).then(function() {
                     return serviceFns.getAllHW(school_id);
                 })
-
-                // return $http.put('/api/schools/' + school_id + '/alg/skipped', {skipped: []}).then(function() {
-                //     return $http.put('/api/schools/' + school_id + '/geo/skipped', {skipped: []}).then(function() {
-                //         return $http.put('/api/schools/' + school_id + '/alg2/skipped', {skipped: []})
-                //     }).then(function() {
-                //         return serviceFns.getAllHW(school_id);
-                //     })
-                // })
-
-                // serviceFns.storeSkipped('alg', [], school_id);
-                // serviceFns.storeSkipped('geo', [], school_id);
-                // serviceFns.storeSkipped('alg2', [], school_id);
             }
-
         }
         return serviceFns;
     }

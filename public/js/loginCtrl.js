@@ -13,10 +13,7 @@
             mainService.login(user).then(function(currUser) {
 
                 if (currUser.userFound !== false) {
-                    $rootScope.user = {};
-                    $rootScope.user.school_id = currUser.school_id;
-                    $rootScope.user.accountType = currUser.type;
-                    $rootScope.user.username = currUser.username;
+                    $rootScope.user = currUser;
                     var username = currUser.username;
 
                     // mainService.setCookieData($rootScope.user)

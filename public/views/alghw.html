@@ -1,6 +1,5 @@
 User: {{user.username}}
-Type: {{user.accountType}}
-{{session.user}}
+Type: {{user.type}}
 <h1 ng-if="user.accountType!='student'" class="text-center"><a ui-sref="alghome">Algebra HW</a></h1>
 
 <h1 ng-if="user.accountType=='student'" class="text-center">Algebra HW</h1>

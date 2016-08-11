@@ -136,7 +136,7 @@ app.get('/email-verification/:URL', function(req, res, next) {
 
 
 
-app.get('/api/test', function(req, res, next) {
+app.get('/api/session', function(req, res, next) {
 	// console.log(req);
 	// res.send(Object.keys(req))
 	res.send(req._passport.session)

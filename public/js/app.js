@@ -14,7 +14,15 @@
       .module('saxonApp')
       .run(function($rootScope, $state) {
           $rootScope.$on('$stateChangeError', function(e, toState, toParams, fromState, fromParams, error){
-                        if (error == "Not Authorized") $state.go($state.current.name)
+                        if (error == "Not Authorized") {
+                            console.log('not authorized');
+                            $state.go($state.current.name);
+                        }
+                        else if (error == "Not Logged In") {
+                            console.log('not logged in');
+                            $state.go('login')
+                        }
+
                     })
       })
 })();
@@ -47,17 +55,8 @@
             templateUrl: './views/alghome.html',
             controller: 'algCtrl',
             resolve: {
-                security: ['$http', '$q', function($http, $q) {
-                    var deferred = $q.defer();
-                    return $http.get('/api/isAuthed').then(function(auth) {
-                        var type = auth.data;
-                        if (type == 'student') {
-                            deferred.reject('Not Authorized')
-                        } else {
-                            deferred.resolve();
-                        }
-                        return deferred.promise;
-                    })
+                security: ['mainService', function(mainService) {
+                    return mainService.isAuthed();
                 }]
             }
         })
@@ -65,7 +64,12 @@
         .state('alghw', {
             url: '/alg/hw',
             templateUrl: '/views/alghw.html',
-            controller: 'algHWCtrl'
+            controller: 'algHWCtrl',
+            resolve: {
+                security: ['mainService', function(mainService) {
+                    return mainService.isLoggedIn();
+                }]
+            }
         })
 
         .state('geohome', {
@@ -73,17 +77,8 @@
             templateUrl: './views/geohome.html',
             controller: 'geoCtrl',
             resolve: {
-                security: ['$http', '$q', function($http, $q) {
-                    var deferred = $q.defer();
-                    return $http.get('/api/isAuthed').then(function(auth) {
-                        var type = auth.data;
-                        if (type == 'student') {
-                            deferred.reject('Not Authorized')
-                        } else {
-                            deferred.resolve();
-                        }
-                        return deferred.promise;
-                    })
+                security: ['mainService', function(mainService) {
+                    return mainService.isAuthed();
                 }]
             }
         })
@@ -91,7 +86,12 @@
         .state('geohw', {
             url: '/geo/hw',
             templateUrl: '/views/geohw.html',
-            controller: 'geoHWCtrl'
+            controller: 'geoHWCtrl',
+            resolve: {
+                security: ['mainService', function(mainService) {
+                    return mainService.isLoggedIn();
+                }]
+            }
         })
 
         .state('alg2home', {
@@ -99,17 +99,8 @@
             templateUrl: './views/alg2home.html',
             controller: 'alg2Ctrl',
             resolve: {
-                security: ['$http', '$q', function($http, $q) {
-                    var deferred = $q.defer();
-                    return $http.get('/api/isAuthed').then(function(auth) {
-                        var type = auth.data;
-                        if (type == 'student') {
-                            deferred.reject('Not Authorized')
-                        } else {
-                            deferred.resolve();
-                        }
-                        return deferred.promise;
-                    })
+                security: ['mainService', function(mainService) {
+                    return mainService.isAuthed();
                 }]
             }
         })
@@ -117,7 +108,12 @@
         .state('alg2hw', {
             url: '/alg2/hw',
             templateUrl: '/views/alg2hw.html',
-            controller: 'alg2HWCtrl'
+            controller: 'alg2HWCtrl',
+            resolve: {
+                security: ['mainService', function(mainService) {
+                    return mainService.isLoggedIn();
+                }]
+            }
         })
 
         .state('admin', {
@@ -125,17 +121,8 @@
             templateUrl: '/views/admin.html',
             controller: 'adminCtrl',
             resolve: {
-                security: ['$http', '$q', function($http, $q) {
-                    var deferred = $q.defer();
-                    return $http.get('/api/isAuthed').then(function(auth) {
-                        var type = auth.data;
-                        if (type !== 'admin') {
-                            deferred.reject('Not Authorized')
-                        } else {
-                            deferred.resolve();
-                        }
-                        return deferred.promise;
-                    })
+                security: ['mainService', function(mainService) {
+                    return mainService.isAuthed();
                 }]
             }
         })

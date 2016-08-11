@@ -8,9 +8,24 @@
     adminCtrl.$inject = ['$scope', '$rootScope', 'mainService', '$state'];
 
     function adminCtrl($scope, $rootScope, mainService, $state) {
-        mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function(data) {
-            $scope.users = data;
-        });
+
+        if (!$rootScope.user) {
+            mainService.retrieveSession().then(function(user) {
+                $rootScope.user = user;
+                mainService.getAllHW($rootScope.user.school_id).then(function(response) {
+                    $rootScope.algSkipped = response.algSkipped;
+                    $rootScope.geoSkipped = response.geoSkipped;
+                    $rootScope.alg2Skipped = response.alg2Skipped;
+                    mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function(data) {
+                        $scope.users = data;
+                    });
+                })
+            })
+        } else {
+            mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function(data) {
+                $scope.users = data;
+            });
+        }
 
         $scope.delete = function(username) {
             mainService.deleteUser(username).then(function(users) {
