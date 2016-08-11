@@ -5,25 +5,37 @@
         .module('saxonApp')
         .service('mainService', mainService);
 
-    mainService.$inject = ['$http'];
+    mainService.$inject = ['$http', '$cookies'];
 
-    function mainService($http) {
-        
-        var lessonButtons = []
+    function mainService($http, $cookies) {
+        var user='';
+        var lessonButtons = [];
         for (var i = 1; i <= 120; i++) {
             lessonButtons.push(i)
+        };
+        for (var i = 1; i <= 12; i++) {
+            lessonButtons.push('INV'+i)
         };
 
         var serviceFns = {
 
-            lessons: lessonButtons,
-
-            // userAvailable: function(username) {
-            //     return $http.get('api/users?username=' + username).then(function(response) {
-            //         // console.log(response);
-            //         return response.data;
-            //     })
+            // setCookieData: function(user) {
+            //     user = 'testing';
+            //     $cookies.put('user', user)
             // },
+
+            // getCookieData: function() {
+            //     user = $cookies.get('user');
+            //     return user;
+            // },
+
+            // clearCookieData: function() {
+            //     // user = {};
+            //     user='';
+            //     $cookies.remove('user');
+            // },
+
+            lessons: lessonButtons,
 
             findUsers: function(query) {
                 return $http.get('api/users'+query).then(function(response) {
@@ -45,12 +57,20 @@
                 });
             },
 
+            testData: null,
+            test: function() {
+                return $http.get('/api/test').then(function(resp) {
+                    console.log(resp);
+                    serviceFns.testData = resp.data.session;
+                    return resp.data.session
+                })
+            },
+
             logout: function() {
                 return $http.get('/api/logout')
             },
 
             allSkippedData: null,
-
             getAllHW: function(school_id) {
                 return $http.get('/api/schools/' + school_id + '/allHW').then(function(results) {
                     // console.log(results);

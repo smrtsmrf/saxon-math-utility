@@ -3,7 +3,7 @@
 
     angular
         .module('saxonApp', [
-            'ui.router'
+            'ui.router', 'ngCookies'
         ]);
 })();
 
@@ -51,7 +51,7 @@
                     var deferred = $q.defer();
                     return $http.get('/api/isAuthed').then(function(auth) {
                         var type = auth.data;
-                        if (type !== 'admin') {
+                        if (type == 'student') {
                             deferred.reject('Not Authorized')
                         } else {
                             deferred.resolve();
@@ -77,7 +77,7 @@
                     var deferred = $q.defer();
                     return $http.get('/api/isAuthed').then(function(auth) {
                         var type = auth.data;
-                        if (type !== 'admin') {
+                        if (type == 'student') {
                             deferred.reject('Not Authorized')
                         } else {
                             deferred.resolve();
@@ -103,7 +103,7 @@
                     var deferred = $q.defer();
                     return $http.get('/api/isAuthed').then(function(auth) {
                         var type = auth.data;
-                        if (type !== 'admin') {
+                        if (type == 'student') {
                             deferred.reject('Not Authorized')
                         } else {
                             deferred.resolve();
@@ -166,5 +166,23 @@
             if (reverse) filtered.reverse();
             return filtered;
         }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+      .module('saxonApp')
+      .directive('autofocus', autofocusDirective);
+
+    function autofocusDirective($timeout) {
+        return{
+            link: function (scope, elem, attrs) {
+                $timeout(function() {
+                    elem[0].focus();
+                })
+            },            
+        };
     }
 })();

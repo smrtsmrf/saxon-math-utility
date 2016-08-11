@@ -11,11 +11,8 @@ module.exports = {
 			if (!user) {return res.send({userFound: false});}
 			req.logIn(user, function(err) {
 				if (err) {return next(err);}
-				return res.send({
-					username: user.username,
-					school_id: user.school_id,
-					type: user.type
-				})
+				return res.send(req._passport.session.user)
+				// next()
 			});
 		})(req, res, next);
 	},
@@ -26,6 +23,7 @@ module.exports = {
 	},
 
 	isAuthed: function(req, res, next) {
+		console.log(req);
 		res.send(req.user.type)
 	},
 

@@ -21,6 +21,9 @@ var userSchema = new Schema ({
 		type: Schema.Types.Mixed,
 		required: true
 	},
+	email: {
+		type: String
+	},
 	school_id: {
 		type: Schema.Types.ObjectId, 
 		ref: 'School',

@@ -1,3 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+h2 {
+	font-family: 'Montserrat', sans-serif !important;
+	color: #3276b1;
+}
+
 #buttons {
 	display: flex;
 	flex-wrap: wrap;
@@ -69,7 +76,7 @@ a {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 90vh;
+	height: 65vh;
 }
 
 input {
@@ -87,4 +94,26 @@ input {
 
 .delete {
 	width: 10vw;
+}
+
+#login-title {
+	width: 90vw;
+	margin: auto;
+	font-size: 8vw;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	color: #3276b1;
+}
+
+.signup {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+#student-accounts {
+	display: flex;
+	justify-content: space-around;
+	width: 90vw;
 }

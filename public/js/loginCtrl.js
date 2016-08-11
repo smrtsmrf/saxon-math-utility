@@ -5,9 +5,9 @@
         .module('saxonApp')
         .controller('loginCtrl', loginCtrl);
 
-    loginCtrl.$inject = ['$scope', '$filter', '$state', 'mainService', '$rootScope', '$q'];
+    loginCtrl.$inject = ['$scope', '$filter', '$state', 'mainService', '$rootScope'];
 
-    function loginCtrl($scope, $filter, $state, mainService, $rootScope, $q) {
+    function loginCtrl($scope, $filter, $state, mainService, $rootScope) {
 
         $scope.login = function(user) {
             mainService.login(user).then(function(currUser) {
@@ -18,6 +18,8 @@
                     $rootScope.user.accountType = currUser.type;
                     $rootScope.user.username = currUser.username;
                     var username = currUser.username;
+
+                    // mainService.setCookieData($rootScope.user)
 
                     mainService.getAllHW($rootScope.user.school_id).then(function(response) {
                         $rootScope.algSkipped = response.algSkipped;

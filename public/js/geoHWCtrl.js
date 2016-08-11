@@ -12,36 +12,40 @@
         console.log('skipped', $rootScope.geoSkipped);
 
         var data = mainService.allSkippedData.geo;
+        var skipped = mainService.allSkippedData.geoSkipped;
 
         $scope.geoAssignedData = {};
         $scope.geoSkippedData = {};
 
         for (var j = 1; j <= 120; j++) {
-            $scope.geoAssignedData[j] = {};
-            $scope.geoAssignedData[j].lesson = j;
-            $scope.geoAssignedData[j].problems = [];
-            $scope.geoSkippedData[j] = {};
-            $scope.geoSkippedData[j].lesson = j;
-            $scope.geoSkippedData[j].problems = [];
+            if (skipped.indexOf(j) == -1) {
+                $scope.geoAssignedData[j] = {};
+                $scope.geoAssignedData[j].lesson = j;
+                $scope.geoAssignedData[j].problems = [];
+                $scope.geoSkippedData[j] = {};
+                $scope.geoSkippedData[j].lesson = j;
+                $scope.geoSkippedData[j].problems = [];
 
-            for (var i = 0; i < data.length; i++) {
-                var problems = data[i];
-                if (problems.lessonNum == j && problems.assigned == true) {
-                    $scope.geoAssignedData[j].problems.push(problems.problemNum)
-                } else if (problems.lessonNum == j && problems.assigned == false) {
-                    $scope.geoSkippedData[j].problems.push(problems.problemNum)
+                for (var i = 0; i < data.length; i++) {
+                    var problems = data[i];
+                    if (problems.lessonNum == j && problems.assigned == true) {
+                        $scope.geoAssignedData[j].problems.push(problems.problemNum)
+                    } else if (problems.lessonNum == j && problems.assigned == false) {
+                        $scope.geoSkippedData[j].problems.push(problems.problemNum)
+                    }
                 }
-            }
 
-            $scope.geoAssignedData[j].problems = getRanges($scope.geoAssignedData[j].problems)
-            $scope.geoSkippedData[j].problems = getRanges($scope.geoSkippedData[j].problems)
+                $scope.geoAssignedData[j].problems = getRanges($scope.geoAssignedData[j].problems)
+                $scope.geoSkippedData[j].problems = getRanges($scope.geoSkippedData[j].problems)
+            }
         }
 
         function getRanges(array) {
             array.sort(function(a, b) {
                 return a - b;
             });
-            var ranges = [], rstart, rend;
+            var ranges = [],
+                rstart, rend;
             for (var i = 0; i < array.length; i++) {
                 rstart = array[i];
                 rend = rstart;
