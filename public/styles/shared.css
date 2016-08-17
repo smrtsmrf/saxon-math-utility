@@ -1,0 +1,36 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+h1, h2 {
+	font-family: 'Montserrat', sans-serif !important;
+	color: #3276b1;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+input {
+	margin: 2px 0;
+	width: 20vw !important;
+}
+
+.adminKeyBtn {
+	float: left;
+}
+
+/*these are in both modify and hw*/
+
+#sidebar {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	font-size: 2vw;
+	width: 15vw;
+	height: 50vh;
+	text-align: center;
+}
+
+.active {
+	color: #5cb85c;
+	font-weight: bold;
+}

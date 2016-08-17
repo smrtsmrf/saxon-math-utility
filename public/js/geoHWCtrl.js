@@ -33,7 +33,7 @@
             $scope.geoSkippedData = {};
 
             for (var j = 1; j <= 120; j++) {
-                if (skipped.indexOf(j) == -1) {
+                if ($rootScope.geoSkipped.indexOf(j) == -1) {
                     $scope.geoAssignedData[j] = {};
                     $scope.geoAssignedData[j].lesson = j;
                     $scope.geoAssignedData[j].problems = [];

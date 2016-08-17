@@ -1,7 +1,8 @@
-<h1 class="text-center">Remove the lessons you want to skip and click update to generate the HW list</h1>
-
+<!-- <h1 class="text-center">Remove the lessons you want to skip and click update to generate the HW list</h1> -->
+<h1 class="text-center">Modify {{subject}} HW</h1>
+<h4 class="text-center">Click the lesson number to skip or unskip</h4>
 <div id="main_container">
-	<div id="sidebar">
+	<section id="sidebar">
 		<div>
 			<a ui-sref="alghome" ui-sref-active="active">Algebra</a>
 			<button class="btn btn-success" ng-click="reset()">Reset</button>
@@ -12,17 +13,35 @@
 		<div>
 			<a ui-sref="alg2home" ui-sref-active="active">Algebra II</a>
 		</div>
+		<div ng-if="user.type=='admin'">
+			<a ui-sref="admin" ui-sref-active="active">Admin Tools</a>
+		</div>
 		<div>
 			<a ui-sref="login" ng-click="logout()">Logout</a>
 		</div>
-	</div>
+	</section>
 
-	<div id="buttons">
+	<!-- <buttons></buttons> -->
+
+	<section ng-show="!saving" id="buttons">
 		<div ng-repeat="lesson in lessons">
-			<button ng-click="show = !show; updateSkipped(lesson)" ng-class="{'btn-primary' : show, 'btn-primary' : algSkipped.indexOf(lesson) === -1}" class="btn">{{lesson}} <i class="fa fa-times-circle" aria-hidden="true"></i></button>
+			<button id="lesson_button" ng-click="show = !show; updateSkipped(lesson)" ng-class="{'btn-primary' : show, 'btn-primary' : algSkipped.indexOf(lesson) === -1}" class="btn">{{lesson}}</button>
 		</div>
-		<div id="update_div">
-			<button id="update" class="btn btn-danger" ng-click="storeSkipped('alg')">Update HW</button>
+		<div ng-if="user.type=='admin'" id="update_div">
+			<button class="btn btn-danger" ng-click="storeSkipped()">{{buttonText}}</button>
 		</div>
-	</div>
+
+		<div ng-if="user.type=='teacher'" id="update_div">
+			<button ng-if="buttonText=='Request Update'" class="btn btn-danger" data-toggle="modal" data-target="#reasoning" ng-click="preReq()">{{buttonText}}</button>
+			<button ng-if="buttonText!='Request Update'" class="btn btn-danger" ng-click="requestUpdate()">{{buttonText}}</button>
+		</div>
+
+		<!-- Modal -->
+		<request></request>
+		
+	</section>
+
+	<section ng-show="saving">
+		<h1 class="text-center saving">Updating <i class="fa fa-spin fa-spinner"></i></h1>
+	</section>
 </div>

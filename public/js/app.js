@@ -3,7 +3,7 @@
 
     angular
         .module('saxonApp', [
-            'ui.router', 'ngCookies'
+            'ui.router'
         ]);
 })();
 
@@ -11,20 +11,20 @@
     'use strict';
 
     angular
-      .module('saxonApp')
-      .run(function($rootScope, $state) {
-          $rootScope.$on('$stateChangeError', function(e, toState, toParams, fromState, fromParams, error){
-                        if (error == "Not Authorized") {
-                            console.log('not authorized');
-                            $state.go($state.current.name);
-                        }
-                        else if (error == "Not Logged In") {
-                            console.log('not logged in');
-                            $state.go('login')
-                        }
+        .module('saxonApp')
+        .run(function($rootScope, $state) {
+            $rootScope.$on('$stateChangeError', function(e, toState, toParams, fromState, fromParams, error) {
+                $rootScope.requestedUrl = toState.name;
+                if (error == "Not Authorized") {
+                    console.log('not authorized');
+                    $state.go($state.current.name);
+                } else if (error == "Not Logged In") {
+                    console.log('not logged in');
+                    $state.go('login')
+                }
 
-                    })
-      })
+            })
+        })
 })();
 
 (function() {
@@ -55,9 +55,11 @@
             templateUrl: './views/alghome.html',
             controller: 'algCtrl',
             resolve: {
-                security: ['mainService', function(mainService) {
-                    return mainService.isAuthed();
-                }]
+                security: ['mainService',
+                    function(mainService) {
+                        return mainService.isAuthed();
+                    }
+                ]
             }
         })
 
@@ -66,9 +68,11 @@
             templateUrl: '/views/alghw.html',
             controller: 'algHWCtrl',
             resolve: {
-                security: ['mainService', function(mainService) {
-                    return mainService.isLoggedIn();
-                }]
+                security: ['mainService',
+                    function(mainService) {
+                        return mainService.isLoggedIn();
+                    }
+                ]
             }
         })
 
@@ -77,9 +81,11 @@
             templateUrl: './views/geohome.html',
             controller: 'geoCtrl',
             resolve: {
-                security: ['mainService', function(mainService) {
-                    return mainService.isAuthed();
-                }]
+                security: ['mainService',
+                    function(mainService) {
+                        return mainService.isAuthed();
+                    }
+                ]
             }
         })
 
@@ -88,9 +94,11 @@
             templateUrl: '/views/geohw.html',
             controller: 'geoHWCtrl',
             resolve: {
-                security: ['mainService', function(mainService) {
-                    return mainService.isLoggedIn();
-                }]
+                security: ['mainService',
+                    function(mainService) {
+                        return mainService.isLoggedIn();
+                    }
+                ]
             }
         })
 
@@ -99,9 +107,11 @@
             templateUrl: './views/alg2home.html',
             controller: 'alg2Ctrl',
             resolve: {
-                security: ['mainService', function(mainService) {
-                    return mainService.isAuthed();
-                }]
+                security: ['mainService',
+                    function(mainService) {
+                        return mainService.isAuthed();
+                    }
+                ]
             }
         })
 
@@ -110,9 +120,11 @@
             templateUrl: '/views/alg2hw.html',
             controller: 'alg2HWCtrl',
             resolve: {
-                security: ['mainService', function(mainService) {
-                    return mainService.isLoggedIn();
-                }]
+                security: ['mainService',
+                    function(mainService) {
+                        return mainService.isLoggedIn();
+                    }
+                ]
             }
         })
 
@@ -121,9 +133,11 @@
             templateUrl: '/views/admin.html',
             controller: 'adminCtrl',
             resolve: {
-                security: ['mainService', function(mainService) {
-                    return mainService.isAuthed();
-                }]
+                security: ['mainService',
+                    function(mainService) {
+                        return mainService.isAuthed();
+                    }
+                ]
             }
         })
 
@@ -160,16 +174,16 @@
     'use strict';
 
     angular
-      .module('saxonApp')
-      .directive('autofocus', autofocusDirective);
+        .module('saxonApp')
+        .directive('autofocus', autofocusDirective);
 
     function autofocusDirective($timeout) {
-        return{
-            link: function (scope, elem, attrs) {
+        return {
+            link: function(scope, elem, attrs) {
                 $timeout(function() {
                     elem[0].focus();
                 })
-            },            
+            },
         };
     }
 })();

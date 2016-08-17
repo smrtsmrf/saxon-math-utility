@@ -1,18 +1,15 @@
 <nav>
-	<ul>
-		<li><a ui-sref="alghome">Modify Algebra</a></li>
-		<li><a ui-sref="alghw">Algebra HW</a></li>
-		<li><a ui-sref="geohome">Modify Geometry</a></li>
-		<li><a ui-sref="geohw">Geometry HW</a></li>
-		<li><a ui-sref="alg2home">Modify Algebra II</a></li>
-		<li><a ui-sref="alg2hw">Algebra II HW</a></li>
-		<li><a ui-sref="login" ng-click="logout()">Logout</a></li>
-	</ul>
+	<div><a ui-sref="alghome">Modify Algebra</a></div>
+	<div><a ui-sref="alghw">Algebra HW</a></div>
+	<div><a ui-sref="geohome">Modify Geometry</a></div>
+	<div><a ui-sref="geohw">Geometry HW</a></div>
+	<div><a ui-sref="alg2home">Modify Algebra II</a></div>
+	<div><a ui-sref="alg2hw">Algebra II HW</a></div>
+	<div><a ui-sref="login" ng-click="logout()">Logout</a></div>
 </nav>
 
-
 <section>
-<h1>Users</h1>
+	<h1>Users</h1>
 	<h3>Admin</h3>
 	<section ng-repeat="user in users | filter: {type: 'admin'}">
 		{{user.username}} <button ng-click="delete(user.username)" class="btn btn-danger delete">Delete  <i class="fa fa-times-circle" aria-hidden="true"></i></button>
@@ -31,3 +28,31 @@
 	<h3>Reset All HW</h3>
 	<button ng-click="reset()" class="btn btn-danger">Reset All HW</button>
 </section>
+
+<form ng-submit="signup(students)">
+	<h2>Create Student Accounts</h2>
+	<section ng-show="!saving" id="student-accounts">
+		<div>
+			<div>Role: Algebra Student</div>
+			<input class="form-control" type="text" ng-model="students.users.alg.username" placeholder="{{user.school_name}}alg">
+			<input class="form-control" type="text" ng-model="students.users.alg.password" placeholder="student password">
+		</div>
+		<div>
+			<div>Role: Geometry Student
+			</div>
+			<input class="form-control" type="text" ng-model="students.users.geo.username" placeholder="{{user.school_name}}geo">
+			<input class="form-control" type="text" ng-model="students.users.geo.password" placeholder="student password">
+		</div>
+		<div>
+			<div>Role: Algebra II Student
+			</div>
+			<input class="form-control" type="text" ng-model="students.users.alg2.username" placeholder="{{user.school_name}}alg2">
+			<input class="form-control" type="text" ng-model="students.users.alg2.password" placeholder="student password">
+		</div>
+		<button class="btn btn-primary" type="submit" value="Signup">Signup</button>
+	</section>
+</form>
+
+<section ng-show="saving">
+		<h1 class="text-center saving">Creating <i class="fa fa-spin fa-spinner"></i></h1>
+	</section>

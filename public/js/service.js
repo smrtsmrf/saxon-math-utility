@@ -5,39 +5,24 @@
         .module('saxonApp')
         .service('mainService', mainService);
 
-    mainService.$inject = ['$http', '$q', '$cookies'];
+    mainService.$inject = ['$http', '$q'];
 
-    function mainService($http, $q, $cookies) {
+    function mainService($http, $q) {
         var user='';
         var lessonButtons = [];
         for (var i = 1; i <= 120; i++) {
             lessonButtons.push(i)
-        };
-        for (var i = 1; i <= 12; i++) {
-            lessonButtons.push('INV'+i)
+            if (i%10 == 0) {
+                lessonButtons.push('INV'+i/10)
+            };
         };
 
         var serviceFns = {
 
-            // setCookieData: function(user) {
-            //     user = 'testing';
-            //     $cookies.put('user', user)
-            // },
-
-            // getCookieData: function() {
-            //     user = $cookies.get('user');
-            //     return user;
-            // },
-
-            // clearCookieData: function() {
-            //     // user = {};
-            //     user='';
-            //     $cookies.remove('user');
-            // },
-
             lessons: lessonButtons,
 
             findUsers: function(query) {
+                // if (!query) query = '';
                 return $http.get('api/users'+query).then(function(response) {
                     // console.log(response);
                     return response.data;
@@ -46,7 +31,10 @@
 
             createSchoolAndUsers: function(user) {
                 return $http.post('/api/schools', user).then(function(result) {
-                    return result;
+                    return {
+                        msg: result.data.msg,
+                        flag: result.data.flag
+                    }
                 })
             },
 
@@ -73,7 +61,7 @@
                     var type = auth.data;
                     if (!type) {
                         deferred.reject('Not Logged In')
-                    } else if (type !== 'admin') {
+                    } else if (type == 'student') {
                         deferred.reject('Not Authorized')
                     } else {
                         deferred.resolve();
@@ -82,8 +70,7 @@
                 })
             },
 
-            isLoggedIn: 
-            function() {
+            isLoggedIn: function() {
                 var deferred = $q.defer();
                 return $http.get('/api/isAuthed').then(function(auth) {
                     var type = auth.data;
@@ -126,6 +113,23 @@
                 return $http.put('/api/schools/'+school_id+'/reset', reset).then(function() {
                     return serviceFns.getAllHW(school_id);
                 })
+            },
+
+            requestUpdate: function(school_id, user, adminEmail, subject, shouldDo, doReason, shouldSkip, skipReason) {
+                var subject = subject.charAt(0).toUpperCase()+subject.slice(1);
+                var doReason = doReason == 'null' ? doReason = null : doReason;
+                var skipReason = skipReason == 'null' ? skipReason = null : skipReason;
+                return $http.post('/api/email', {school_id: school_id, user: user, adminEmail: adminEmail, subject: subject, shouldDo: shouldDo, doReason: doReason, shouldSkip: shouldSkip, skipReason: skipReason})
+            },
+
+            submitAdminKey: function(school_id, adminKey, subject) {
+                return $http.get('/api/schools/'+school_id+'/'+subject +'/adminKeys/'+adminKey).then(function(response) {
+                    return response.data;
+                })
+            },
+
+            deleteAdminKey: function(school_id, adminKey) {
+                return $http.delete('/api/schools/'+school_id+'/adminKeys/'+adminKey)
             }
         }
         return serviceFns;

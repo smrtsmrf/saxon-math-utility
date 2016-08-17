@@ -1,70 +1,35 @@
 var express = require('express');
+var bodyParser = require('body-parser');
+var cors = require('cors');
+
 var session = require('express-session');
 var config = require('./config.json');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+
 var mongoose = require('mongoose');
 var School = require('./models/School');
 var User = require('./models/User');
-// var TempUser = require('./models/TempUser');
+
 var subjectCtrl = require('./controllers/subjectCtrl');
 var userCtrl = require('./controllers/userCtrl');
 var schoolCtrl = require('./controllers/schoolCtrl');
+var emailVerifyCtrl = require('./controllers/emailVerifyCtrl');
+var emailCtrl = require('./controllers/emailCtrl');
+
+var alg = require('./data/saxon_alg.js');
+var geo = require('./data/saxon_geo.js');
+var alg2 = require('./data/saxon_alg2.js');
+
+var bcrypt = require('bcrypt');
+
 var nev = require('email-verification')(mongoose);
+var nodemailer = require("nodemailer");
 
 var port = 3000;
 var corsOptions = {
     origin: 'http://localhost:' + port
-    // origin: 'http://127.0.0.1:8080/#/'
 };
-
-
-// var myHasher = function(password, tempUserData, insertTempUser, callback) {
-//   var hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-//   return insertTempUser(hash, tempUserData, callback);
-// };
-
-// nev.configure({
-//     verificationURL: 'http://localhost:3000/email-verification/${URL}',
-//     // verificationURL: 'http://myawesomewebsite.com/email-verification/${URL}',
-//     persistentUserModel: User,
-//     tempUserCollection: 'temporary_users',
- 
-//     transportOptions: {
-//         service: 'Gmail',
-//         auth: {
-//             user: 'smrtsmrf@gmail.com',
-//             pass: 'Jonathan2'
-//             // user: 'myawesomeemail@gmail.com',
-//             // pass: 'mysupersecretpassword'
-//         }
-//     },
-//     hashingFunction: myHasher,
-//     verifyMailOptions: {
-//         from: 'Do Not Reply <myawesomeemail_do_not_reply@gmail.com>',
-//         subject: 'Please confirm account',
-//         html: 'Click the following link to confirm your account:</p><p>${URL}</p>',
-//         text: 'Please confirm your account by clicking the following link: ${URL}'
-//     }
-// }, function(err, options) {
-//   if (err) {
-//     console.log(err);
-//     return;
-//   }
-
-//   console.log('configured: ' + (typeof options === 'object'));
-// });
-
-// nev.generateTempUserModel(User, function(err, tempUserModel) {
-// 	if (err) {
-// 		console.log(err);
-// 		return
-// 	}
-// });
-
 
 var app = express();
 app.use(bodyParser.json());
@@ -79,24 +44,32 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(function(username, password, done) {
-	User.findOne({username: username}, function(err, user) {
-            if (err) {return done(err);}
-            if (!user) {return done(null, false);}
-            if (!bcrypt.compareSync(password, user.password)) {return done(null, false)}
-            return done(null, user);
-        });
-    }
-));
+    User.findOne({
+        username: username
+    }, function(err, user) {
+        if (err) {
+            return done(err);
+        }
+        if (!user) {
+            return done(null, false);
+        }
+        if (!bcrypt.compareSync(password, user.password)) {
+            return done(null, false)
+        }
+        return done(null, user);
+    });
+}));
 
-// passport.serializeUser(function(user, done) {
-//     done(null, user._id);
-// });
 passport.serializeUser(function(user, done) {
     done(null, {
-    	_id: user._id,
-    	school_id: user.school_id,
-    	username: user.username,
-    	type: user.type
+        _id: user._id,
+        school_id: user.school_id,
+        school_name: user.school_name,
+        school_city: user.school_city,
+        school_state: user.school_state,
+        username: user.username,
+        type: user.type,
+        email: user.email
     });
 });
 
@@ -114,36 +87,15 @@ mongoose.connect('mongodb://localhost:27017/saxon', function(err) {
     if (err) throw err;
 });
 
-app.get('/email-verification/:URL', function(req, res, next) {
-	var url = req.params.URL;
-	nev.confirmTempUser(url,function(err, user) {
-		if (user) {
-			nev.sendConfirmationEmail(user.email, function(err, info) {
-				if (err) {
-					return res.status(404).send('ERROR: sending confirmation email FAILED')
-				}
-				res.json({
-					msg: 'CONFIRMED!',
-					info: info
-				})
-			})
-		} else {
-			return res.status(404).send('ERROR: confirming temp user FAILED');
-		}
-	})
-})
 
-
-
-
-app.get('/api/session', function(req, res, next) {
-	// console.log(req);
-	// res.send(Object.keys(req))
-	res.send(req._passport.session)
-})
+app.get('/email-verification/:URL', emailVerifyCtrl.emailLinkRedirect)
 
 // ----------create school, admin, and student users - called in signupCtrl....................//
-app.post('/api/schools', schoolCtrl.create);
+app.post('/api/schools', emailVerifyCtrl.create);
+
+// -----------------------send email to admin requesting an update................................//
+app.post('/api/email', emailCtrl.sendEmail);
+
 
 // --------------- get all schools or one (query) NOT USED IN FRONT END...................//
 app.get('/api/schools/', schoolCtrl.index);
@@ -152,12 +104,25 @@ app.get('/api/schools/', schoolCtrl.index);
 app.delete('/api/schools/:name', schoolCtrl.destroy);
 
 
+// ---------------------------------- get specific admin keys for school....................................//
+app.get('/api/schools/:id/:subject/adminKeys/:key', schoolCtrl.getKeys);
+
+// ---------------------------------- delete admin key for school....................................//
+app.delete('/api/schools/:id/adminKeys/:key', schoolCtrl.deleteKey);
+
+
 //-------------------------------- login - called in loginCtrl............................................//
 app.post('/api/login', userCtrl.login);
 
-app.get('/api/logout', userCtrl.logout);
+app.get('/api/session', function(req, res, next) {
+    res.send(req._passport.session)
+});
 
 app.get('/api/isAuthed', userCtrl.isAuthed);
+
+app.get('/api/logout', userCtrl.logout);
+
+
 
 // ------------ get all or one (query) users - called in signupCtrl..................................//
 app.get('/api/users', userCtrl.index);
@@ -190,4 +155,3 @@ app.put('/api/schools/:id/reset', schoolCtrl.update)
 // ---------------------------------- get school/subject..............................................//
 // app.get('/api/schools/:id/:subject', subjectCtrl.index)
 // app.get('/api/schools/:name/:subject', subjectCtrl.index)
-

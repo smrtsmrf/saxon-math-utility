@@ -33,7 +33,7 @@
             $scope.algSkippedData = {};
 
             for (var j = 1; j <= 120; j++) {
-                if (skipped.indexOf(j) == -1) {
+                if ($rootScope.algSkipped.indexOf(j) == -1) {
                     $scope.algAssignedData[j] = {};
                     $scope.algAssignedData[j].lesson = j;
                     $scope.algAssignedData[j].problems = [];

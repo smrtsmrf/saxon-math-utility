@@ -1,0 +1,32 @@
+<div class="modal fade" id="reasoning" role="dialog">
+	<div class="modal-dialog">
+		
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button ng-click="resetReason()" type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 ng-show="!showAdminKey" class="modal-title">Reasoning</h4>
+				<h4 ng-show="showAdminKey" class="modal-title">Enter Admin Key</h4>
+			</div>
+			<div ng-show="shouldDo.length > 0 && !showAdminKey" class="modal-body">
+				<h5>Do: {{shouldDo.toString()}}</h5>
+				<textarea autofocus placeholder="Explain your reasoning here..." required rows="3" ng-model="doReason"></textarea>
+			</div>
+			<div ng-show="shouldSkip.length > 0 && !showAdminKey" class="modal-body">
+				<h5>Skip: {{shouldSkip.toString()}}</h5>
+				<textarea autofocus placeholder="Explain your reasoning here..." required rows="3" ng-model="skipReason"></textarea>
+			</div>
+			<div ng-show="showAdminKey" class="modal-body">
+				Admin Key: <input class="form-control" type="text" ng-model="adminKey">
+			</div>
+			<div class="modal-footer">
+				<button ng-show="!showAdminKey" type="button" class="btn btn-default adminKeyBtn" ng-click="showAdminKey = !showAdminKey">Admin Key</button>
+				<button ng-show="showAdminKey" type="button" class="btn btn-default adminKeyBtn" ng-click="showAdminKey = !showAdminKey">Reasoning</button>
+				
+				<button ng-show="!showAdminKey" ng-click="requestUpdate()" type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="!doReason || !skipReason">Submit Request</button>
+				<button ng-show="showAdminKey" ng-click="submitAdminKey(adminKey)" type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="!adminKey">Update HW</button>
+			</div>
+		</div>
+		
+	</div>
+</div>

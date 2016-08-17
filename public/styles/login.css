@@ -1,0 +1,16 @@
+#login-title {
+	width: 90vw;
+	margin: auto;
+	font-size: 8vw;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	color: #3276b1;
+}
+
+#login {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 65vh;
+}

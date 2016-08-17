@@ -1,12 +1,7 @@
 var mongoose = require('mongoose');
 var School = require('../models/School');
 var User = require('../models/User');
-var alg = require('../data/saxon_alg.js');
-var geo = require('../data/saxon_geo.js');
-var alg2 = require('../data/saxon_alg2.js');
-var bcrypt = require('bcrypt');
-var saltRounds = 10;
-var nev = require('email-verification')(mongoose);
+
 
 module.exports = {
     index: function(req, res, next) {
@@ -15,106 +10,6 @@ module.exports = {
         } : {};
         School.find(query, function(err, schools) {
             err ? res.status(500).send(err) : res.send(schools);
-        })
-    },
-
-    create: function(req, res, next) {
-        School.findOne({
-            name: req.body.school.name,
-            city: req.body.school.city,
-            state: req.body.school.state
-        }, function(err, existingSchool) {
-            if (!existingSchool) {
-                var newSchool = new School(req.body.school);
-
-                function ProblemConstructor(subject, lessonNum, problemNum, lessonRef) {
-                    this.subject = subject;
-                    this.lessonNum = lessonNum;
-                    this.problemNum = problemNum;
-                    this.lessonRef = lessonRef;
-                    this.assigned = true;
-                }
-
-                var subjectNames = ['alg', 'geo', 'alg2'];
-                var subjects = [alg, geo, alg2];
-                for (var i = 0; i < subjectNames.length; i++) {
-                    var subjectName = subjectNames[i];
-                    var subject = subjects[i];
-                    for (var j = 1; j <= 20; j++) {
-                        for (var k = 1; k <= 30; k++) {
-                            var problem = new ProblemConstructor(subjectName, j, k, subject[Object.keys(subject)[j - 1]][k]);
-                            switch (subjectName) {
-                                case 'alg':
-                                    newSchool.algProblems.push(problem)
-                                    break;
-                                case 'geo':
-                                    newSchool.geoProblems.push(problem)
-                                    break;
-                                case 'alg2':
-                                    newSchool.alg2Problems.push(problem)
-                                    break;
-                            }
-                        }
-                    }
-                }
-
-                newSchool.save(function(err, new_school) {
-                    var users = [req.body.user, req.body.alg, req.body.geo, req.body.alg2];
-                    users = users.filter(function(el, idx) {
-                    	return users[idx] !== undefined
-                    });
-                    for (var i = 0; i < users.length; i++) {
-                        var user = users[i];
-                        user.password = bcrypt.hashSync(user.password, saltRounds);
-                        var newUser = new User(user);
-
-
-                        // nev.createTempUser(newUser, function(err, existing, newTempUser) {
-                        //     if (err) {
-                        //         return res.status(404).send('ERROR: creating temp user FAILED');
-                        //     }
-
-                        //     if (existing) {
-                        //         return res.json({
-                        //             msg: 'You have already signed up and confirmed your account. Did you forget your password?'
-                        //         });
-                        //     }
-
-                        //     if (newTempUser) {
-                        //         var URL = newTempUser[nev.option.URLFieldName];
-                        //         nev.sendVerificationEmail(newUser.email, URL, function(err, info) {
-                        //             if (err) {
-                        //                 return res.status(404).send('ERROR: sending verification email FAILED');
-                        //             }
-                        //             res.json({
-                        //                 msg: 'An email has been sent to you. Please check it to verify your account.',
-                        //                 info: info
-                        //             });
-                        //         })
-                        //     } else {
-                        //         res.json({
-                        //             msg: 'You have already signed up. Please check your email to verify your account.'
-                        //         });
-                        //     }
-                        // })
-
-
-                        newUser.school_id = new_school._id;
-                        newUser.save(function(err, result) {
-                            if (err) console.log(err);
-                        })
-                    };
-
-                    err ? res.status(500).send(err) : res.send(new_school);
-                })
-            } else {
-                req.body.user.password = bcrypt.hashSync(req.body.user.password, saltRounds);
-                var newUser = new User(req.body.user)
-                newUser.school_id = existingSchool._id;
-                newUser.save(function(err, user) {
-                    err ? res.status(500).send(err) : res.send(user);
-                })
-            }
         })
     },
 
@@ -152,6 +47,40 @@ module.exports = {
             school.save()
 
             err ? res.status(500).send(err) : res.send(school);
+        })
+    },
+
+    getKeys: function(req, res, next) {
+        School.findOne({
+            _id: req.params.id
+        }, function(err, school) {
+            var adminKey = school.adminKeys.filter(function(el, idx) {
+                return el.key === req.params.key
+            })[0];
+            if (!adminKey) return res.send({
+                failure: "Invalid key"
+            })
+            if (adminKey.subject != req.params.subject) return res.send({
+                failure: "This key is not valid for " + req.params.subject
+            })
+            err ? res.status(500).send(err) : res.send(adminKey)
+        })
+    },
+
+    deleteKey: function(req, res, next) {
+        School.findByIdAndUpdate({
+            _id: req.params.id
+        }, {
+            '$pull': {
+                'adminKeys': {
+                    'key': req.params.key
+                }
+            }
+        }, function(err, school) {
+
+            school.save(function(err, result) {
+                err ? res.send(err) : res.send('key deleted')
+            })
         })
     }
 

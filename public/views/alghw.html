@@ -17,6 +17,9 @@ Type: {{user.type}}
 		<div>
 			<a ui-sref="alg2hw" ui-sref-active="active">Algebra II</a>
 		</div>
+		<div ng-if="user.type=='admin'">
+			<a ui-sref="admin" ui-sref-active="active">Admin Tools</a>
+		</div>
 		<div>
 			<a ui-sref="login" ng-click="logout()">Logout</a>
 		</div>

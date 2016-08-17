@@ -6,16 +6,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="./styles/homestyles.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/default.min.css"/>
+		<link rel="stylesheet" href="./styles/shared.css">
+		<link rel="stylesheet" href="./styles/login.css">
+		<link rel="stylesheet" href="./styles/signup.css">
+		<link rel="stylesheet" href="./styles/modify.css">
+		<link rel="stylesheet" href="./styles/hw.css">
+		<link rel="stylesheet" href="./styles/admin.css">
+
 	</head>
 	<body ng-app="saxonApp">
 
 		<ui-view></ui-view>
 		
-		<!--<script src="https://code.jquery.com/jquery-3.1.0.min.js"</script>-->
+		
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular-cookies.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/app.js"></script>
 
 		<script type="text/javascript" src="/js/algCtrl.js"></script>
@@ -31,6 +40,11 @@
 		<script type="text/javascript" src="/js/signupCtrl.js"></script>
 		<script type="text/javascript" src="/js/adminCtrl.js"></script>
 
-		<script type="text/javascript" src="/js/service.js"></script>	
+		<script type="text/javascript" src="/js/service.js"></script>
+
+		<script type="text/javascript" src="/js/requestDirective.js"></script>	
+		<script type="text/javascript" src="/js/buttonsDirective.js"></script>	
+
+		 <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
 	</body>
 </html>

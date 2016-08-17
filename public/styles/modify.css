@@ -1,0 +1,40 @@
+#main_container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	width: 100vw;
+}
+
+#buttons {
+	display: flex;
+	flex-wrap: wrap;
+	width: 80vw;
+	height: 78vh;
+	justify-content: space-around;
+	align-content: space-between;
+	/*border: solid;*/
+}
+
+.saving {
+	width: 80vw;
+}
+
+#lesson_button {
+	width: 7vw;
+}
+
+#update_div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 9vw;
+}
+
+textarea {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+}

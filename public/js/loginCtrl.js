@@ -16,28 +16,31 @@
                     $rootScope.user = currUser;
                     var username = currUser.username;
 
-                    // mainService.setCookieData($rootScope.user)
-
                     mainService.getAllHW($rootScope.user.school_id).then(function(response) {
                         $rootScope.algSkipped = response.algSkipped;
                         $rootScope.geoSkipped = response.geoSkipped;
                         $rootScope.alg2Skipped = response.alg2Skipped;
                         switch (true) {
+                            case $rootScope.requestedUrl != undefined:
+                                $state.go($rootScope.requestedUrl);
+                                break;
                             case username.includes('alg2'):
                                 $state.go('alg2hw');
                                 break;
                             case username.includes('geo'):
                                 $state.go('geohw');
                                 break;
+                            case $rootScope.user.type == 'admin':
+                                $state.go('admin');
+                                break;
                             default:
                                 $state.go('alghw');
-                                // $state.go('admin')
                                 break;
                         }
                     });
                 } else {
-                    // change this look/feel
-                    alert('Invalid username/password')
+                    alertify.error('Invalid username/password', 5);
+                    // alertify.alert('Error', 'Invalid username/password')
                 }
             })
         }
