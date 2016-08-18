@@ -11,7 +11,22 @@ a {
 
 input {
 	margin: 2px 0;
-	width: 20vw !important;
+	/*width: 20vw !important;*/
+}
+
+#user_info {
+	background-color: #3276b1;
+	color: #fff;
+	font-size: 3vh;
+	height: 10vh;
+	text-align: end;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 12px 24px 0 rgba(0,20,60,1.12);
+}
+
+#user_info div {
+	margin-right: 10px;
 }
 
 .adminKeyBtn {
@@ -24,13 +39,35 @@ input {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+	align-items: center;
 	font-size: 2vw;
 	width: 15vw;
-	height: 50vh;
+	height: 90vh;
 	text-align: center;
+	background-color: #D4D4D4;
+	box-shadow: 0 12px 24px 0 rgba(0,0,0,1.12);
 }
 
 .active {
 	color: #5cb85c;
 	font-weight: bold;
+}
+
+.saving {
+	/*width: 80vw;*/
+}
+
+@media (max-width: 770px) {
+	.sidebar_links {
+		font-size: 3vw;
+	}
+
+	#user_info {
+		flex-direction: row;
+		justify-content: flex-end;
+	}
+
+	.user_divs {
+		padding: 4px;
+	}
 }

@@ -17,7 +17,7 @@
 				<textarea autofocus placeholder="Explain your reasoning here..." required rows="3" ng-model="skipReason"></textarea>
 			</div>
 			<div ng-show="showAdminKey" class="modal-body">
-				Admin Key: <input class="form-control" type="text" ng-model="adminKey">
+				Admin Key: <input id="adminkey_input" class="form-control" type="text" ng-model="adminKey">
 			</div>
 			<div class="modal-footer">
 				<button ng-show="!showAdminKey" type="button" class="btn btn-default adminKeyBtn" ng-click="showAdminKey = !showAdminKey">Admin Key</button>

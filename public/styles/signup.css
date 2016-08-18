@@ -4,3 +4,24 @@
 	flex-direction: column;
 	align-items: center;
 }
+
+.signup_input {
+	width: 15vw;
+}
+
+/*smaller than 430px*/
+@media (max-width: 430px) {
+	.signup_input {
+		width: 41vw;
+	}
+}
+
+@media (device-width: 768px) {
+	.signup_title {
+		font-size: 8vw;
+	}
+
+	.signup_input {
+		width: 30vw;
+	}
+}

@@ -1,10 +1,12 @@
-<h1 class="text-center" id="login-title">Saxon Math Homework</h1>
+<main id="login_wrapper">
+	<h1 class="text-center" id="login-title">Saxon Math Homework</h1>
 
-<form id="login" ng-submit="login(user); getSkipped()">
-	<input class="form-control" type="text" ng-model="user.username" placeholder="username" required autofocus>
-	<input class="form-control" type="password" ng-model="user.password" placeholder="password" required>
-	<br>
-	<input class="btn btn-primary" type="submit" value="Login">
-	<br>
-	<a ui-sref="signup">Teachers and administrators click here to register</a>
-</form>
+	<form id="login" ng-submit="login(user); getSkipped()">
+		<input class="form-control login_input" type="text" ng-model="user.username" placeholder="username" required autofocus>
+		<input class="form-control login_input" type="password" ng-model="user.password" placeholder="password" required>
+		<br>
+		<input class="btn btn-primary" type="submit" value="Login">
+		<br>
+		<a ui-sref="signup">Teachers and administrators click here to register</a>
+	</form>
+</main>

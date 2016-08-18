@@ -1,6 +1,14 @@
+#login_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 80vh;
+}
+
 #login-title {
 	width: 90vw;
-	margin: auto;
+	/*margin: auto;*/
 	font-size: 8vw;
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 600;
@@ -10,7 +18,35 @@
 #login {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	/*justify-content: center;*/
 	align-items: center;
-	height: 65vh;
+	/*height: 65vh;*/
+}
+
+.login_input {
+	width: 60%;
+}
+
+/*ipad and smaller*/
+@media (max-width: 770px) {
+	#login-title {
+		font-size: 13vw;
+		/*margin-top: 30px;*/
+	}
+
+	#login_wrapper {
+		height: 70vh;
+	}
+}
+
+/*ipad*/
+@media (device-width: 768px) {
+	#login {
+		width: 87vw;
+		font-size: 30px;
+	}
+
+	.login_input {
+		width: 30%;
+	}
 }

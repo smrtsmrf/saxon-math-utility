@@ -1,10 +1,89 @@
-nav {
+#admin_nav {
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
+	height: 10vh;
+	background-color: #3276b1;
+	/*color: #fff;*/
+	font-size: 3vh;
+	box-shadow: 0 12px 24px 0 rgba(0,20,60,1.12);
+}
+
+#admin_nav div a {
+	color: #fff;
+	cursor: pointer;
+}
+
+#admin_main {
+	display: flex;
+}
+
+#admin_sidebar {
+	width: 15vw;
+	height: 90vh;
+	background-color: #D4D4D4;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
+	box-shadow: 0 12px 24px 0 rgba(0,0,0,1.12);
+}
+
+#admin_content {
+	width: 86vw;
+	height: 90vh;
+	/*border: solid;*/
+}
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 40.2vw; 
+    /*height: 300px;*/
+    text-align: center;
+    align-self: center;
+}
+
+.ngViewport {
+	height: auto !important;
+	width: auto !important;
+}
+
+.ngRow {
+	width: 40vw !important;
+}
+.ngTopPanel {
+	width: auto;
+}
+
+#create_header {
+	margin-bottom: 10px;
+}
+
+#section_contents {
+	width: 45vw;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	text-align: center;
+	/*justify-content: space-between;*/
 }
 
 #student-accounts {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-around;
-	width: 90vw;
+	align-items: center;
+	width: 20vw;
+	margin: auto;
+}
+
+#reset {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#instructions {
+	width: 90%;
+	margin: auto;
 }

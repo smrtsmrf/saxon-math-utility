@@ -1,58 +1,69 @@
-<nav>
+<nav id="admin_nav">
 	<div><a ui-sref="alghome">Modify Algebra</a></div>
 	<div><a ui-sref="alghw">Algebra HW</a></div>
 	<div><a ui-sref="geohome">Modify Geometry</a></div>
 	<div><a ui-sref="geohw">Geometry HW</a></div>
 	<div><a ui-sref="alg2home">Modify Algebra II</a></div>
 	<div><a ui-sref="alg2hw">Algebra II HW</a></div>
-	<div><a ui-sref="login" ng-click="logout()">Logout</a></div>
 </nav>
-
-<section>
-	<h1>Users</h1>
-	<h3>Admin</h3>
-	<section ng-repeat="user in users | filter: {type: 'admin'}">
-		{{user.username}} <button ng-click="delete(user.username)" class="btn btn-danger delete">Delete  <i class="fa fa-times-circle" aria-hidden="true"></i></button>
-	</section>
-	<h3>Teachers</h3>
-	<section ng-repeat="user in users | filter: {type: 'teacher'}">
-		{{user.username}} <button ng-click="delete(user.username)" class="btn btn-danger delete">Delete  <i class="fa fa-times-circle" aria-hidden="true"></i></button>
-	</section>
-	<h3>Students</h3>
-	<section ng-repeat="user in users | filter: {type: 'student'}">
-		{{user.username}} <button ng-click="delete(user.username)" class="btn btn-danger delete">Delete  <i class="fa fa-times-circle" aria-hidden="true"></i></button>
-	</section>
+<main id="admin_main">
+<section id="admin_sidebar">
+	<h3><a href="" ng-click="showDetails('usersLink')">Users</a></h3>
+	<h3><a href="" ng-click="showDetails('createLink')">Create Student Accounts</a></h3>
+	<h3><a  href=""ng-click="showDetails('resetLink')">Reset HW</a></h3>
+	<h3><a  href="" ng-click="showDetails('instructions')">Instructions</a></h3>
+	<h3><a ui-sref="login" ng-click="logout()">Logout</a></h3>
 </section>
 
-<section>
-	<h3>Reset All HW</h3>
-	<button ng-click="reset()" class="btn btn-danger">Reset All HW</button>
+<section id="admin_content">
+	<!-- display users div -->
+	<section ng-if="usersLink" id="section_contents">
+		<h1 class="text-center">Users for {{user.school_name}}</h1>
+		<div class="gridStyle" ng-grid="gridOptions"></div>
+	</section>
+
+	<!-- create student accounts div -->
+	<section ng-if="createLink" id="section_contents">
+		<section id="create_header">
+			<h1 class="text-center">Create Student Accounts</h1>
+			<h5>Create 1, 2, or 3 generic student accounts at a time. Usernames must be unique, so consider putting your school name in the username.</h5>
+			<h5>If "alg", "geo", or "alg2" is part of the username, students will be taken directly to their homework page when they login. Otherwise, the default is the algebra page.</h5>
+		</section>
+		<section ng-show="!saving" >
+			<form ng-submit="signup(students)" id="student-accounts">
+				<div>
+					<div>Role: Algebra Student</div>
+					<input class="form-control" type="text" ng-model="students.users.alg.username" placeholder="{{user.school_name}}alg" autofocus>
+					<input class="form-control" type="text" ng-model="students.users.alg.password" placeholder="student password">
+				</div>
+				<div>
+					<div>Role: Geometry Student</div>
+					<input class="form-control" type="text" ng-model="students.users.geo.username" placeholder="{{user.school_name}}geo">
+					<input class="form-control" type="text" ng-model="students.users.geo.password" placeholder="student password">
+				</div>
+				<div>
+					<div>Role: Algebra II Student</div>
+					<input class="form-control" type="text" ng-model="students.users.alg2.username" placeholder="{{user.school_name}}alg2">
+					<input class="form-control" type="text" ng-model="students.users.alg2.password" placeholder="student password">
+				</div>
+				<button class="btn btn-primary" type="submit" value="Signup">Signup</button>
+			</form>
+		</section>
+		<div ng-show="saving">
+			<h1 class="text-center saving">Creating <i class="fa fa-spin fa-spinner"></i></h1>
+		</div>
+	</section>
+
+	<!-- reset all HW div -->
+	<section ng-if="resetLink" id="section_contents">
+		<h1 class="text-center">Reset All HW</h1>
+		<h5>If, for whatever reason, you want to quickly go back to not skipping ANY lessons in ANY subject, then this button is for you. Otherwise, this is not the button you're looking for.</h5>
+		<button ng-click="reset()" class="btn btn-danger" id="reset">Reset All HW</button>
+	</section>
+	
+	<!-- instructions div -->
+	<section ng-if="instructions" id="instructions">
+		<instructions></instructions>
+	</section>
 </section>
-
-<form ng-submit="signup(students)">
-	<h2>Create Student Accounts</h2>
-	<section ng-show="!saving" id="student-accounts">
-		<div>
-			<div>Role: Algebra Student</div>
-			<input class="form-control" type="text" ng-model="students.users.alg.username" placeholder="{{user.school_name}}alg">
-			<input class="form-control" type="text" ng-model="students.users.alg.password" placeholder="student password">
-		</div>
-		<div>
-			<div>Role: Geometry Student
-			</div>
-			<input class="form-control" type="text" ng-model="students.users.geo.username" placeholder="{{user.school_name}}geo">
-			<input class="form-control" type="text" ng-model="students.users.geo.password" placeholder="student password">
-		</div>
-		<div>
-			<div>Role: Algebra II Student
-			</div>
-			<input class="form-control" type="text" ng-model="students.users.alg2.username" placeholder="{{user.school_name}}alg2">
-			<input class="form-control" type="text" ng-model="students.users.alg2.password" placeholder="student password">
-		</div>
-		<button class="btn btn-primary" type="submit" value="Signup">Signup</button>
-	</section>
-</form>
-
-<section ng-show="saving">
-		<h1 class="text-center saving">Creating <i class="fa fa-spin fa-spinner"></i></h1>
-	</section>
+</main>

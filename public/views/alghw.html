@@ -1,42 +1,52 @@
-User: {{user.username}}
-Type: {{user.type}}
-<h1 ng-if="user.type!='student'" class="text-center"><a ui-sref="alghome">Algebra HW</a></h1>
+<nav id="user_info">
+	<div class="user_divs">
+		<span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{user.username}} 
+	</div>
+	<div class="user_divs">Role: {{user.type}}</div>
+</nav>
 
-<h1 ng-if="user.type=='student'" class="text-center">Algebra HW</h1>
-
-<p class="text-center">Skipped Lessons: {{algSkipped}}</p>
-
-<div id="container">
-	<div id="sidebar">
+<main id="container">
+	<section id="sidebar">
 		<div>
-			<a ui-sref="alghw" ui-sref-active="active">Algebra</a>
+			<a ui-sref="alghw" ui-sref-active="active" class="sidebar_links">Algebra</a>
 		</div>
 		<div>
-			<a ui-sref="geohw" ui-sref-active="active">Geometry</a>
+			<a ui-sref="geohw" ui-sref-active="active" class="sidebar_links">Geometry</a>
 		</div>
 		<div>
-			<a ui-sref="alg2hw" ui-sref-active="active">Algebra II</a>
+			<a ui-sref="alg2hw" ui-sref-active="active" class="sidebar_links">Algebra II</a>
 		</div>
 		<div ng-if="user.type=='admin'">
-			<a ui-sref="admin" ui-sref-active="active">Admin Tools</a>
+			<a ui-sref="admin" ui-sref-active="active" class="sidebar_links">Admin Tools</a>
 		</div>
 		<div>
-			<a ui-sref="login" ng-click="logout()">Logout</a>
+			<a ui-sref="login" ng-click="logout()" class="sidebar_links">Logout</a>
 		</div>
-	</div>
+	</section>
 
-<section class="assigned">
-	<div>
-		<h2>Assigned</h2>
-		<div ng-repeat="alg in algAssignedData | orderObjectBy: 'lesson'">
-			<strong>L{{alg.lesson}}: </strong>{{alg.problems}}
-		</div>
-	</div>
-	<div>
-		<h2>Skipped</h2>
-		<div ng-repeat="alg in algSkippedData | orderObjectBy: 'lesson'">
-			<strong>L{{alg.lesson}}: </strong>{{alg.problems}}
-		</div>
-	</div>
-</section>
-</div>
+	<section class="hw_container">
+		<h1 ng-if="user.type!='student'" class="text-center"><a ui-sref="alghome">Algebra HW</a></h1>
+		<h1 ng-if="user.type=='student'" class="text-center">Algebra HW</h1>
+
+		<p class="text-center">Skipped Lessons: {{algSkipped}}</p>
+
+		<section class="hw_content">
+			<div class="hw">
+				<div class="problems">
+					<h2>Assigned</h2>
+					<div ng-repeat="alg in algAssignedData | orderObjectBy: 'lesson'">
+						<strong>L{{alg.lesson}}: </strong>{{alg.problems}}
+					</div>
+				</div>
+			</div>
+			<div class="hw">
+				<div class="problems">
+					<h2>Skipped</h2>
+					<div ng-repeat="alg in algSkippedData | orderObjectBy: 'lesson'">
+						<strong>L{{alg.lesson}}: </strong>{{alg.problems}}
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
+</main>

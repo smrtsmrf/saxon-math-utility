@@ -3,7 +3,7 @@
 
     angular
         .module('saxonApp', [
-            'ui.router'
+            'ui.router', 'ngGrid'
         ]);
 })();
 

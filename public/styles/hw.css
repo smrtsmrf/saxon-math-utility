@@ -2,8 +2,43 @@
 	display: flex;
 }
 
-.assigned {
+.hw_container {
+	/*display: flex;*/
+	/*justify-content: space-around;*/
+	width: 85vw;
+	height: 90vh;
+    	/*overflow: auto;*/
+}
+
+.hw_content {
 	display: flex;
 	justify-content: space-around;
-	width: 70vw;
+	overflow: auto;
+	/*width: 80%;*/
+	width: 85vw;
+	margin: auto;
+	height: 77vh;
+}
+
+.hw {
+	width: 37%;
+	padding-left: 26px;
+	text-align: center;
+}
+
+.problems {
+	width: 71%; 
+	margin: auto;
+	text-align: left;
+	display: inline-block;
+}
+
+@media (max-width: 430px) {
+	#container {
+		justify-content: space-around;
+	}
+	.hw_container {
+		flex-direction: column;
+		justify-content: flex-start;
+	}
 }

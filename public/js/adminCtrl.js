@@ -8,7 +8,49 @@
     adminCtrl.$inject = ['$scope', '$rootScope', 'mainService', '$state'];
 
     function adminCtrl($scope, $rootScope, mainService, $state) {
+
+
+
+        function resetLinks() {
+            $scope.usersLink = false;
+            $scope.createLink = false;
+            $scope.resetLink = false;
+            $scope.instructions = false;
+        }
+
+        $scope.showDetails = function(str) {
+            resetLinks();
+            $scope[str] = true;
+        }
+
         $scope.saving = false;
+
+        function setGridOptions(data) {
+            $scope.gridOptions = {
+                enableColumnResize: true,
+                data: data,
+                enableSorting: true,
+                sortInfo: {
+                    fields: ['type'],
+                    directions: ['asc']
+                },
+                rowHeight: 35,
+                columnDefs: [{
+                    field: 'username',
+                    displayName: 'User',
+                    width: '*'
+                }, {
+                    field: 'type',
+                    displayName: 'Role',
+                    width: '*'
+                }, {
+                    field: 'username',
+                    displayName: 'Delete',
+                    cellTemplate: '<button ng-click="delete(row.getProperty(col.field))" class="btn btn-danger delete"><i class="fa fa-times-circle" aria-hidden="true"></i></button>',
+                    width: '*'
+                }, ]
+            }
+        }
 
         if (!$rootScope.user) {
             mainService.retrieveSession().then(function(user) {
@@ -19,14 +61,20 @@
                     $rootScope.alg2Skipped = response.alg2Skipped;
                     mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function(data) {
                         $scope.users = data;
+                        setGridOptions('users');
+                        $scope.usersLink = true;
                     });
                 })
             })
         } else {
             mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function(data) {
                 $scope.users = data;
+                setGridOptions('users');
+                $scope.usersLink = true;
             });
         }
+
+
 
         $scope.signup = function(students) {
             $scope.saving = true;
@@ -57,8 +105,10 @@
                                         mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function(users) {
                                             $scope.saving = false;
                                             $scope.users = users;
+                                            setGridOptions('users');
                                         })
                                         alertify.notify(data.msg, 'success', 5);
+                                        $scope.showDetails('usersLink')
                                     });
                                 }
                             })
@@ -70,9 +120,14 @@
         }
 
         $scope.delete = function(username) {
-            mainService.deleteUser(username).then(function(users) {
-                $scope.users = users;
-            })
+            var msg = 'Are you sure you want to delete ' + username + '?'
+            alertify.confirm('Delete User', msg, function() {
+                mainService.deleteUser(username).then(function(users) {
+                    $scope.users = users;
+                    setGridOptions('users');
+                })
+            }, function() {})
+
         };
 
         $scope.reset = function() {
