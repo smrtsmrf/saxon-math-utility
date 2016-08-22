@@ -26,7 +26,8 @@ var bcrypt = require('bcrypt');
 var nev = require('email-verification')(mongoose);
 var nodemailer = require("nodemailer");
 
-var port = 3000;
+// var port = 3000;
+var port = config.serverPort;
 var corsOptions = {
     origin: 'http://localhost:' + port
 };
