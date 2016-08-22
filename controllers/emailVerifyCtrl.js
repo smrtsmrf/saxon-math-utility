@@ -11,7 +11,7 @@ var myHasher = function(password, tempUserData, insertTempUser, callback) {
 };
 
 nev.configure({
-    verificationURL: 'http://localhost:3000/email-verification/${URL}',
+    verificationURL: 'http://'+config.domain+'/email-verification/${URL}',
     persistentUserModel: User,
     tempUserCollection: 'temporary_users',
 

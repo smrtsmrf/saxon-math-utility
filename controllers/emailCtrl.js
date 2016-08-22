@@ -18,7 +18,7 @@ module.exports = {
         var preSkip = req.body.shouldSkip ? '<h4><b> I suggest that we skip ' : '';
         var shouldSkip = preSkip ? (req.body.shouldSkip.indexOf(',') > -1 ? 'lessons ' + req.body.shouldSkip + '.</b></h4>' : 'lesson ' + req.body.shouldSkip + '.</b></h4>') : '';
         var postSkip = req.body.skipReason ? 'Reasoning: ' + req.body.skipReason : '';
-        var href = "http://localhost:3000/#/" + req.body.subject.toLowerCase();
+        var href = "http://"+config.domain+"/#/" + req.body.subject.toLowerCase();
 
         function randomString(length, chars) {
             var result = '';
