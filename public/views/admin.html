@@ -8,10 +8,10 @@
 </nav>
 <main id="admin_main">
 <section id="admin_sidebar">
-	<h3><a href="" ng-click="showDetails('usersLink')">Users</a></h3>
-	<h3><a href="" ng-click="showDetails('createLink')">Create Student Accounts</a></h3>
-	<h3><a  href=""ng-click="showDetails('resetLink')">Reset HW</a></h3>
-	<h3><a  href="" ng-click="showDetails('instructions')">Instructions</a></h3>
+	<h3><a href="" ng-click="showDetails('usersLink')" ng-class="{'active' : usersLinkActive}">Users</a></h3>
+	<h3><a href="" ng-click="showDetails('createLink')" ng-class="{'active' : createLinkActive}">Create Student Accounts</a></h3>
+	<h3><a  href=""ng-click="showDetails('resetLink')" ng-class="{'active' : resetLinkActive}">Reset HW</a></h3>
+	<h3><a  href="" ng-click="showDetails('instructions')" ng-class="{'active' : instructionsActive}">Getting Started</a></h3>
 	<h3><a ui-sref="login" ng-click="logout()">Logout</a></h3>
 </section>
 
@@ -23,7 +23,7 @@
 	</section>
 
 	<!-- create student accounts div -->
-	<section ng-if="createLink" id="section_contents">
+	<section ng-if="createLink" id="section_contents" class="create">
 		<section id="create_header">
 			<h1 class="text-center">Create Student Accounts</h1>
 			<h5>Create 1, 2, or 3 generic student accounts at a time. Usernames must be unique, so consider putting your school name in the username.</h5>

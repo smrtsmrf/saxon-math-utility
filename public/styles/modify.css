@@ -10,14 +10,29 @@
 	width: 85vw;
 	height: 90vh;
 	/*overflow: auto;*/
+	position: relative;
+}
+
+.modify_container::after {
+	background: url('../img/login-background-min.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	content : "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity : 0.4;
+	z-index: -1;
 }
 
 .modify_content {
 	overflow: auto;
-	height: 71vh;
-	/*margin-top: 35px;*/
+	height: 72vh;
 	width: 93%;
-	margin: 35px auto 0 auto;
+	margin: 25px auto 0 auto;
 }
 
 #buttons {
@@ -41,7 +56,7 @@
 	justify-content: center;
 	align-items: center;
 	width: 100vw;
-	height: 5vw;
+	height: 4vw;
 }
 
 textarea {
@@ -57,8 +72,12 @@ textarea {
 }
 
 @media (max-width: 770px) {
+	#update_div {
+		margin-top: 10px;
+	}
+
 	#lesson_button {
-		width: 13vw;
+		width: 12vw;
 		font-size: 3vw;
 		height: 8vw;
 	}
@@ -74,7 +93,30 @@ textarea {
 	}
 
 	.modify_title {
-		font-size: 25px;
+		/*font-size: 25px;*/
+		font-size: 29px;
+	}
+
+	.modify_content {
+		height: 80vh;
+	}
+
+	.modify_container {
+		height: 91vh;
 	}
 }
 
+@media (max-width: 430px) {
+	.modify_container {
+		height: 95vh;
+		/*height: 101vh;*/
+	}
+
+	.modify_title {
+		font-size: 23px;
+	}
+
+	.modify_content {
+		height: 74vh;
+	}
+}

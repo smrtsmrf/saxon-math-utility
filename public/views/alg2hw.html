@@ -33,16 +33,16 @@
 		<section class="hw_content">
 			<div class="hw">
 				<div class="problems">
-					<h2>Assigned</h2>
-					<div ng-repeat="alg2 in alg2AssignedData | orderObjectBy: 'lesson'">
+					<h2 class="text-center">Assigned</h2>
+					<div ng-repeat="alg2 in alg2AssignedData | orderObjectBy: 'lesson'" class="numbers">
 						<strong>L{{alg2.lesson}}: </strong>{{alg2.problems}}
 					</div>
 				</div>
 			</div>
 			<div class="hw">
 				<div class="problems">
-					<h2>Skipped</h2>
-					<div ng-repeat="alg2 in alg2SkippedData | orderObjectBy: 'lesson'">
+					<h2 class="text-center">Skipped</h2>
+					<div ng-repeat="alg2 in alg2SkippedData | orderObjectBy: 'lesson'" class="numbers">
 						<strong>L{{alg2.lesson}}: </strong>{{alg2.problems}}
 					</div>
 				</div>

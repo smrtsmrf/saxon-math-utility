@@ -9,18 +9,21 @@
 
     function adminCtrl($scope, $rootScope, mainService, $state) {
 
-
-
         function resetLinks() {
             $scope.usersLink = false;
             $scope.createLink = false;
             $scope.resetLink = false;
             $scope.instructions = false;
+            $scope.usersLinkActive = false;
+            $scope.createLinkActive = false;
+            $scope.resetLinkActive = false;
+            $scope.instructionsActive = false;
         }
 
         $scope.showDetails = function(str) {
             resetLinks();
             $scope[str] = true;
+            $scope[str+'Active'] = true;
         }
 
         $scope.saving = false;
@@ -62,7 +65,8 @@
                     mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function(data) {
                         $scope.users = data;
                         setGridOptions('users');
-                        $scope.usersLink = true;
+                        $scope.instructions = true;
+                        $scope.instructionsActive = true;
                     });
                 })
             })
@@ -70,7 +74,8 @@
             mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function(data) {
                 $scope.users = data;
                 setGridOptions('users');
-                $scope.usersLink = true;
+                $scope.instructions = true;
+                $scope.instructionsActive = true;
             });
         }
 

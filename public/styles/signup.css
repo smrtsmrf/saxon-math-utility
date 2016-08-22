@@ -1,12 +1,16 @@
 .signup {
 	display: flex;
-	justify-content: center;
+	/*justify-content: center;*/
 	flex-direction: column;
 	align-items: center;
 }
 
 .signup_input {
 	width: 15vw;
+}
+
+.saving {
+	align-self: center;
 }
 
 /*smaller than 430px*/

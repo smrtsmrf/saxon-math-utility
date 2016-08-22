@@ -145,14 +145,9 @@
 
                     mainService.requestUpdate($rootScope.user.school_id, $rootScope.user, admin.email, subject, $scope.shouldDo.toString(), $scope.doReason, $scope.shouldSkip.toString(), $scope.skipReason).then(function() {
                         var msg = 'Your message was sent to ' + admin.email;
-                        // alertify.alert('Success!', msg, function() {
-                        //     $state.go(subject + 'hw')
-                        // });
-                        // alertify.notify(msg, 'success', 5, function() {
-                        //     $state.go(subject + 'hw');
-                        // });
+                        $state.go(subject + 'hw')
                         alertify.success(msg, 5, function() {
-                            $state.go(subject + 'hw')
+
                         })
                     })
                 })

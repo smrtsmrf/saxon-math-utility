@@ -13,7 +13,7 @@
 		</div>
 		<div>
 			<a ui-sref="geohome" ui-sref-active="active" class="sidebar_links">Geometry</a> <br>
-			<button class="btn btn-success reset" ng-click="reset()">Reset</button>
+			<button class="btn btn-danger reset" ng-click="reset()">Reset</button>
 		</div>
 		<div>
 			<a ui-sref="alg2home" ui-sref-active="active" class="sidebar_links">Algebra II</a>
@@ -37,12 +37,12 @@
 					<button id="lesson_button" ng-click="show = !show; updateSkipped(lesson)" ng-class="{'btn-primary' : show, 'btn-primary' : geoSkipped.indexOf(lesson) === -1}" class="btn">{{lesson}}</button>
 				</div>
 				<div ng-if="user.type=='admin'" id="update_div">
-					<button class="btn btn-danger" id="update" ng-click="storeSkipped()">{{buttonText}}</button>
+					<button class="btn btn-success" id="update" ng-click="storeSkipped()">{{buttonText}}</button>
 				</div>
 			
 				<div ng-if="user.type=='teacher'" id="update_div">
-					<button ng-if="buttonText=='Request Update'" class="btn btn-danger" id="update" data-toggle="modal" data-target="#reasoning" ng-click="preReq()">{{buttonText}}</button>
-					<button ng-if="buttonText!='Request Update'" class="btn btn-danger" id="update" ng-click="requestUpdate()">{{buttonText}}</button>
+					<button ng-if="buttonText=='Request Update'" class="btn btn-success" id="update" data-toggle="modal" data-target="#reasoning" ng-click="preReq()">{{buttonText}}</button>
+					<button ng-if="buttonText!='Request Update'" class="btn btn-success" id="update" ng-click="requestUpdate()">{{buttonText}}</button>
 				</div>
 			
 				<!-- Modal -->

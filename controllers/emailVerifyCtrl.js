@@ -37,7 +37,7 @@ nev.configure({
         replyTo: 'Do Not Reply <do_not_reply@gmail.com>',
         subject: 'Successfully verified!',
         html: '<p>Your account has been successfully verified.</p>',
-        text: 'Your account has been successfully verified.'
+        // text: 'Your account has been successfully verified.'
     }
 }, function(err, options) {
     if (err) {
@@ -61,7 +61,7 @@ module.exports = {
         var url = req.params.URL;
         nev.confirmTempUser(url, function(err, user) {
             if (user) {
-                res.redirect('/')
+                res.redirect('/success')
             } else {
                 return res.status(404).send('ERROR: confirming temp user FAILED');
             }

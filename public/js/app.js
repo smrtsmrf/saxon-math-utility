@@ -50,6 +50,14 @@
             controller: 'signupCtrl'
         })
 
+        // .state('success', {
+        //     url: '/success',
+        //     templateUrl: '/views/success.html',
+        //     controller: function($state) {
+        //         setTimeout($state.go('login'), 2000)
+        //     }
+        // })
+
         .state('alghome', {
             url: '/alg',
             templateUrl: './views/alghome.html',

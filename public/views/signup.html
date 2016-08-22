@@ -1,29 +1,32 @@
-<section ng-show="!saving">
-	<form class="signup" ng-submit="signup(user)">
-		<h2 class="signup_title">School Info</h2>
-		<input class="form-control signup_input" type="text" ng-model="user.school.name" placeholder="School Name" required autofocus>
-		<input class="form-control signup_input" type="text" ng-model="user.school.city" placeholder="City" required >
-		<div>State:
-			<select class="input-medium" ng-model="user.school.state" ng-options="opt.value as opt.name for opt in options">
-			</select>
-		</div>
+<main class="start">
 
-		<h2 class="signup_title">Create an Account</h2>
-		<div>Role:
-			<select class="input-medium" ng-model="user.users.self.type" ng-init="user.users.self.type='teacher'"> 
-				<option value="admin">Admin</option>
-				<option value="teacher">Teacher</option>
-			</select>
-		</div>
-		<input class="form-control signup_input" type="text" ng-model="user.users.self.verificationCode" placeholder="verification code" required>
-		<input class="form-control signup_input" type="text" ng-model="user.users.self.username" placeholder="username" required>
-		<input class="form-control signup_input" type="password" ng-model="user.users.self.password" placeholder="password" required>
-		<input class="form-control signup_input" type="email" ng-model="user.users.self.email" placeholder="email" required>
-		
-		<button class="btn btn-primary" type="submit" value="Signup">Signup</button>
-	</form>
-</section>
+	<section ng-if="saving==false">
+		<form class="signup" ng-submit="signup(user)">
+			<h2 class="signup_title">School Info</h2>
+			<input class="form-control signup_input" type="text" ng-model="user.school.name" placeholder="School Name" required autofocus>
+			<input class="form-control signup_input" type="text" ng-model="user.school.city" placeholder="City" required >
+			<div>State:
+				<select class="input-medium" ng-model="user.school.state" ng-options="opt.value as opt.name for opt in options">
+				</select>
+			</div>
 
-<section ng-show="saving">
-	<h1  class="text-center">Saving <i class="fa fa-spin fa-spinner"></i></h1>
-</section>
+			<h2 class="signup_title">Create an Account</h2>
+			<div>Role:
+				<select class="input-medium" ng-model="user.users.self.type" ng-init="user.users.self.type='teacher'"> 
+					<option value="admin">Admin</option>
+					<option value="teacher">Teacher</option>
+				</select>
+			</div>
+			<input class="form-control signup_input" type="text" ng-model="user.users.self.verificationCode" placeholder="verification code" required>
+			<input class="form-control signup_input" type="text" ng-model="user.users.self.username" placeholder="username" required>
+			<input class="form-control signup_input" type="password" ng-model="user.users.self.password" placeholder="password" required>
+			<input class="form-control signup_input" type="email" ng-model="user.users.self.email" placeholder="email" required>
+			
+			<button class="btn btn-primary" type="submit" value="Signup">Signup</button>
+		</form>
+	</section>
+
+	<section ng-if="saving==true" class="saving">
+		<h1  class="text-center">Saving <i class="fa fa-spin fa-spinner"></i></h1>
+	</section>
+</main>

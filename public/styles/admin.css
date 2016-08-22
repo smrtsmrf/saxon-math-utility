@@ -17,11 +17,11 @@
 #admin_main {
 	display: flex;
 }
-
+	
 #admin_sidebar {
 	width: 15vw;
 	height: 90vh;
-	background-color: #D4D4D4;
+	/*background-color: #D4D4D4;*/
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -29,10 +29,36 @@
 	box-shadow: 0 12px 24px 0 rgba(0,0,0,1.12);
 }
 
+#admin_sidebar h3 a:hover {
+	/*color: #fff;*/
+	color: #000;
+}
+
+#admin_sidebar h3 a:focus {
+	/*color: #fff;*/
+	color: #000;
+}
+
 #admin_content {
 	width: 86vw;
 	height: 90vh;
-	/*border: solid;*/
+	position: relative;
+	display: flex;
+}
+
+#admin_content::after {
+	background: url('../img/admin-background-min.jpeg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	content : "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity : 0.4;
+	z-index: -1;
 }
 
 .gridStyle {
@@ -64,9 +90,12 @@
 	margin: auto;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
+	/*height: 100%;*/
 	text-align: center;
-	/*justify-content: space-between;*/
+	background-color: #fff;
+	border-radius: 3px;
+	opacity: 0.9;
+	padding-bottom: 15px;
 }
 
 #student-accounts {
@@ -86,4 +115,42 @@
 #instructions {
 	width: 90%;
 	margin: auto;
+	background-color: #fff;
+	border-radius: 3px;
+	/*opacity: 0.95;*/
+	padding-bottom: 15px;
+	overflow: auto;
+	height: 95%;
+}
+
+@media (device-width: 768px) {
+	#admin_nav {
+		font-size: 2vh;
+		text-align: center;
+	}
+}
+
+@media (max-width: 430px) {
+	#admin_nav {
+		font-size: 3vw;
+		text-align: center;
+	}
+
+	#admin_sidebar h3 a {
+		font-size: 10px;
+	}
+
+	#admin_sidebar h3 {
+		line-height: 0.7;
+	}
+
+	#section_contents {
+		width: 90%;
+		overflow: auto;
+	}
+
+	.create {
+		height: 95%;
+	}
+
 }

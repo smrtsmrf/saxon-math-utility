@@ -22,9 +22,7 @@
             lessons: lessonButtons,
 
             findUsers: function(query) {
-                // if (!query) query = '';
                 return $http.get('api/users'+query).then(function(response) {
-                    // console.log(response);
                     return response.data;
                 })
             },
@@ -40,7 +38,6 @@
 
             login: function(user) {
                 return $http.post('/api/login', user).then(function(response) {
-                    // console.log(response.data);
                     return response.data;
                 });
             },

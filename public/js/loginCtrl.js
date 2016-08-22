@@ -24,10 +24,10 @@
                             case $rootScope.requestedUrl != undefined:
                                 $state.go($rootScope.requestedUrl);
                                 break;
-                            case username.includes('alg2'):
+                            case username.toLowerCase().includes('alg2'):
                                 $state.go('alg2hw');
                                 break;
-                            case username.includes('geo'):
+                            case username.toLowerCase().includes('geo'):
                                 $state.go('geohw');
                                 break;
                             case $rootScope.user.type == 'admin':
