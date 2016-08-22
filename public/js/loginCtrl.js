@@ -31,6 +31,8 @@
                                 $state.go('geohw');
                                 break;
                             case $rootScope.user.type == 'admin':
+                                var today = new Date();
+                                mainService.removeOldKeys($rootScope.user.school_id, today)
                                 $state.go('admin');
                                 break;
                             default:

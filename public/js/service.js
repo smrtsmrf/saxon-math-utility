@@ -127,6 +127,10 @@
 
             deleteAdminKey: function(school_id, adminKey) {
                 return $http.delete('/api/schools/'+school_id+'/adminKeys/'+adminKey)
+            }, 
+
+            removeOldKeys: function(school_id, today) {
+            return $http.delete('/api/schools/'+school_id+'/removeOldKeys/'+encodeURI(today))
             }
         }
         return serviceFns;

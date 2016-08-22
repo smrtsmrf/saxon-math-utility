@@ -82,6 +82,23 @@ module.exports = {
                 err ? res.send(err) : res.send('key deleted')
             })
         })
+    }, 
+
+    removeOldKeys: function(req, res, next) {
+        School.findByIdAndUpdate({
+            _id: req.params.id
+        }, {
+            '$pull': {
+                'adminKeys': {
+                    'createdAt': {'$lt' : new Date(req.params.today) - 604800000}
+                }
+            }
+        }, function(err, school) {
+
+            school.save(function(err, result) {
+                err ? res.send(err) : res.send('key deleted')
+            })
+        })
     }
 
     // storeSkipped: function(req, res, next) {

@@ -61,7 +61,7 @@ module.exports = {
         var url = req.params.URL;
         nev.confirmTempUser(url, function(err, user) {
             if (user) {
-                res.redirect('/success')
+                res.redirect('/')
             } else {
                 return res.status(404).send('ERROR: confirming temp user FAILED');
             }

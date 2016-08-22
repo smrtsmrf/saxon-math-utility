@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var problemSchema = require('./Problem');
+var adminKeySchema = require('./AdminKey');
 
 var schoolSchema = new Schema ({
 	name: {type: String, required: true},
@@ -12,7 +13,8 @@ var schoolSchema = new Schema ({
 	algSkipped: Array,
 	geoSkipped: Array,
 	alg2Skipped: Array,
-	adminKeys: Array
+	// adminKeys: Array
+	adminKeys: [adminKeySchema]
 })
 
 module.exports = mongoose.model('School', schoolSchema)

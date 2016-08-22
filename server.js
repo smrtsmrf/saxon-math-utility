@@ -110,6 +110,9 @@ app.get('/api/schools/:id/:subject/adminKeys/:key', schoolCtrl.getKeys);
 // ---------------------------------- delete admin key for school....................................//
 app.delete('/api/schools/:id/adminKeys/:key', schoolCtrl.deleteKey);
 
+// -------------------------------- delete unused/old admin keys for school.................................//
+app.delete('/api/schools/:id/removeOldKeys/:today', schoolCtrl.removeOldKeys)
+
 
 //-------------------------------- login - called in loginCtrl............................................//
 app.post('/api/login', userCtrl.login);
