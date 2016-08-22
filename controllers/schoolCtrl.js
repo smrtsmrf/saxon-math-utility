@@ -91,6 +91,7 @@ module.exports = {
             '$pull': {
                 'adminKeys': {
                     'createdAt': {'$lt' : new Date(req.params.today) - 604800000}
+                    // 'createdAt': {'$lt' : new Date(req.params.today) - 10000}
                 }
             }
         }, function(err, school) {
@@ -100,23 +101,5 @@ module.exports = {
             })
         })
     }
-
-    // storeSkipped: function(req, res, next) {
-    // 	var update = {};
-    // 	update[req.params.subject+'Skipped'] = req.body.skipped;
-    // 	School.findByIdAndUpdate({_id: req.params.id}, update, function(err, school) {
-    // 		// err ? res.status(500).send(err) : res.send(req.body.skipped);
-    // 		next();
-    // 	})
-    // },
-
-
-
-    // getOne: function(req, res, next) {
-    // 	School.findById({_id: req.params.id}, function(err, school) {
-    // 		err ? res.status(500).send(err) : res.send(school);
-    // 	})
-    // },
-
-
+    
 }

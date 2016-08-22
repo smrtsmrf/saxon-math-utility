@@ -30,8 +30,7 @@ module.exports = {
             key: randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
             subject: req.body.subject.toLowerCase(),
             shouldDo: req.body.shouldDo,
-            shouldSkip: req.body.shouldSkip,
-            used: false
+            shouldSkip: req.body.shouldSkip
         }
 
         School.findOne({
