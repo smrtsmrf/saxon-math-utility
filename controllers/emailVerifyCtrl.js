@@ -86,7 +86,7 @@ module.exports = {
                 for (var i = 0; i < subjectNames.length; i++) {
                     var subjectName = subjectNames[i];
                     var subject = subjects[i];
-                    for (var j = 1; j <= 50; j++) {
+                    for (var j = 1; j <= 120; j++) {
                         for (var k = 1; k <= 30; k++) {
                             var problem = new ProblemConstructor(subjectName, j, k, subject[Object.keys(subject)[j - 1]][k]);
                             switch (subjectName) {
