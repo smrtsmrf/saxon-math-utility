@@ -40,19 +40,19 @@
         $stateProvider
             .state('login', {
                 url: '/',
-                templateUrl: '/views/login.html',
+                templateUrl: '/components/login/login.html',
                 controller: 'loginCtrl'
             })
 
             .state('signup', {
                 url: '/signup',
-                templateUrl: '/views/signup.html',
+                templateUrl: '/components/signup/signup.html',
                 controller: 'signupCtrl'
             })
 
             .state('modify', {
                 url: '/:subject/modify',
-                templateUrl: '/views/modify.html',
+                templateUrl: '/components/modify/modify.html',
                 controller: 'modifyCtrl',
                 resolve: {
                     security: ['mainService',
@@ -65,7 +65,7 @@
 
             .state('hw', {
                 url: '/:subject/hw',
-                templateUrl: '/views/hw.html',
+                templateUrl: '/components/hw/hw.html',
                 controller: 'hwCtrl',
                 resolve: {
                     security: ['mainService',
@@ -78,7 +78,7 @@
 
             .state('admin', {
                 url: '/admin',
-                templateUrl: '/views/admin.html',
+                templateUrl: '/components/admin/admin.html',
                 controller: 'adminCtrl',
                 resolve: {
                     security: ['mainService',
@@ -90,48 +90,5 @@
             })
 
         $urlRouterProvider.otherwise('/')
-    }
-})();
-
-(function() {
-
-    'use strict';
-
-    angular
-        .module('saxonApp')
-        .filter('orderObjectBy', orderObjectByFilter);
-
-    // orderObjectByFilter.$inject = [''];
-
-    function orderObjectByFilter() {
-        return function(items, field, reverse) {
-            var filtered = [];
-            angular.forEach(items, function(item) {
-                filtered.push(item);
-            });
-            filtered.sort(function(a, b) {
-                return (a[field] > b[field] ? 1 : -1);
-            })
-            if (reverse) filtered.reverse();
-            return filtered;
-        }
-    }
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('saxonApp')
-        .directive('autofocus', autofocusDirective);
-
-    function autofocusDirective($timeout) {
-        return {
-            link: function(scope, elem, attrs) {
-                $timeout(function() {
-                    elem[0].focus();
-                })
-            },
-        };
     }
 })();

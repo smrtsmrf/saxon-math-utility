@@ -14,7 +14,7 @@
 }
 
 .modify_container::after {
-	background: url('../img/login-background-min.jpg');
+	background: url('../../img/login-background-min.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	content : "";

@@ -13,7 +13,7 @@
 }
 
 .hw_container::after {
-	background: url('../img/hw-background.png');
+	background: url('../../img/hw-background.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 	content : "";
