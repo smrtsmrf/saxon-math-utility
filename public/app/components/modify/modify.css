@@ -9,7 +9,6 @@
 .modify_container {
 	width: 85vw;
 	height: 90vh;
-	/*overflow: auto;*/
 	position: relative;
 }
 
@@ -93,7 +92,6 @@ textarea {
 	}
 
 	.modify_title {
-		/*font-size: 25px;*/
 		font-size: 29px;
 	}
 
@@ -109,7 +107,6 @@ textarea {
 @media (max-width: 430px) {
 	.modify_container {
 		height: 95vh;
-		/*height: 101vh;*/
 	}
 
 	.modify_title {

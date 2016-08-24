@@ -68,6 +68,7 @@ module.exports = {
     },
 
     deleteKey: function(req, res, next) {
+        res.status(200).send('deleting key')
         School.findByIdAndUpdate({
             _id: req.params.id
         }, {
@@ -78,27 +79,21 @@ module.exports = {
             }
         }, function(err, school) {
 
-            school.save(function(err, result) {
-                err ? res.send(err) : res.send('key deleted')
-            })
         })
     }, 
 
     removeOldKeys: function(req, res, next) {
+        res.status(200).send('deleting keys')
         School.findByIdAndUpdate({
             _id: req.params.id
         }, {
             '$pull': {
                 'adminKeys': {
                     'createdAt': {'$lt' : new Date(req.params.today) - 604800000}
-                    // 'createdAt': {'$lt' : new Date(req.params.today) - 10000}
                 }
             }
         }, function(err, school) {
 
-            school.save(function(err, result) {
-                err ? res.send(err) : res.send('key deleted')
-            })
         })
     }
     

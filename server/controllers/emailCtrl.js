@@ -18,7 +18,7 @@ module.exports = {
         var preSkip = req.body.shouldSkip ? '<h4><b> I suggest that we skip ' : '';
         var shouldSkip = preSkip ? (req.body.shouldSkip.indexOf(',') > -1 ? 'lessons ' + req.body.shouldSkip + '.</b></h4>' : 'lesson ' + req.body.shouldSkip + '.</b></h4>') : '';
         var postSkip = req.body.skipReason ? 'Reasoning: ' + req.body.skipReason : '';
-        var href = "http://"+config.domain+"/#/" + req.body.subject.toLowerCase();
+        var href = "http://"+config.domain+"/#/" + req.body.subject.toLowerCase() + "/modify";
 
         function randomString(length, chars) {
             var result = '';
@@ -33,11 +33,10 @@ module.exports = {
             shouldSkip: req.body.shouldSkip
         }
 
-        School.findOne({
+        School.findByIdAndUpdate({
             _id: req.body.school_id
-        }, function(err, school) {
-            school.adminKeys.push(newAdminKey);
-            school.save();
+        }, { '$push': {'adminKeys': newAdminKey}}, function(err, resp) {
+            if (err) console.log(err);
         })
 
         var mailOptions = {

@@ -8,7 +8,7 @@
 	function instructionsDirective() {
 		return{
 			restrict: 'E',
-			templateUrl: '../views/instructions.html',		
+			templateUrl: './app/directives/instructions/instructions.html',		
 		};
 	}
 })();

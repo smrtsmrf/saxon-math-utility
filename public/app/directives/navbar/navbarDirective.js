@@ -8,7 +8,7 @@
 	function navbarDirective() {
 		return{
 			restrict: 'E',
-			templateUrl: '../views/navbar.html',			
+			templateUrl: './app/directives/navbar/navbar.html',			
 		};
 	}
 })();

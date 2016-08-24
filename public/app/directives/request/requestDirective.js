@@ -8,7 +8,7 @@
 	function requestDirective() {
 		return{
 			restrict: 'E',
-			templateUrl: '../views/request.html',
+			templateUrl: './app/directives/request/request.html',
 		};
 	}
 })();

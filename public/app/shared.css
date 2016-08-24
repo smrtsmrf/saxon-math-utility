@@ -2,13 +2,12 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:400,700';
 
 .start {
-	background: url('../img/login-background-min.jpg');
+	background: url('./img/login-background-min.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 100vh;
 	display: flex;
 	justify-content: center;
-	/*align-items: flex-start;*/
 }
 
 h1, h2 {
@@ -27,7 +26,6 @@ a {
 
 input {
 	margin: 2px 0;
-	/*width: 20vw !important;*/
 }
 
 #user_info {
@@ -70,8 +68,6 @@ input {
 }
 
 .active {
-	/*color: #5cb85c;*/
-	/*color: #fff;*/
 	color: #000;
 	font-weight: bold;
 }
@@ -96,7 +92,6 @@ input {
 
 	#sidebar {
 		height: 95vh;
-		/*height: 101vh;*/
 	}
 }
 

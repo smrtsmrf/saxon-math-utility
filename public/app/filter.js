@@ -6,8 +6,6 @@
         .module('saxonApp')
         .filter('orderObjectBy', orderObjectByFilter);
 
-    // orderObjectByFilter.$inject = [''];
-
     function orderObjectByFilter() {
         return function(items, field, reverse) {
             var filtered = [];

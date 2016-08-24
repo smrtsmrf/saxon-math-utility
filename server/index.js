@@ -26,7 +26,6 @@ var bcrypt = require('bcrypt');
 var nev = require('email-verification')(mongoose);
 var nodemailer = require("nodemailer");
 
-// var port = 3000;
 var port = config.serverPort;
 var corsOptions = {
     origin: 'http://localhost:' + port
@@ -35,7 +34,7 @@ var corsOptions = {
 var app = express();
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
-app.use(express.static(__dirname + '/public/'));
+app.use(express.static(__dirname + '/../public/'));
 app.use(session({
     secret: config.sessionSecret,
     saveUninitialized: true,
@@ -147,6 +146,8 @@ app.put('/api/schools/:id/:subject/skipped', subjectCtrl.storeSkipped, subjectCt
 // app.get('/api/schools/:id/:subject/skipped', subjectCtrl.getSkipped);
 
 app.get('/api/schools/:id/allHW', subjectCtrl.getAllHW);
+
+// app.get('/api/schools/:id/HW/:subject', subjectCtrl.getOneHW);
 
 
 

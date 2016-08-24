@@ -13,8 +13,6 @@
         var subject = $scope.subject;
         $scope.subjectTitle = subject == 'alg' ? 'Algebra' : (subject == 'geo' ? 'Geometry' : 'Algebra II')
 
-        console.log('skipped', $rootScope[subject+'Skipped']);
-
         if (!$rootScope.user) {
             mainService.retrieveSession().then(function(user) {
                 $rootScope.user = user;
@@ -31,14 +29,12 @@
 
         function populateData() {
             var data = mainService.allSkippedData[subject];
-            var skipped = mainService.allSkippedData[subject+'Skipped'];
-
+            // var skipped = mainService.allSkippedData[subject+'Skipped'];
             $scope[subject+'AssignedData'] = {};
             $scope[subject+'SkippedData'] = {};
 
             var assignedData = $scope[subject+'AssignedData'];
             var skippedData = $scope[subject+'SkippedData'];
-
 
             for (var j = 1; j <= 120; j++) {
                 if ($rootScope[subject+'Skipped'].indexOf(j) == -1) {
@@ -51,9 +47,10 @@
 
                     for (var i = 0; i < data.length; i++) {
                         var problems = data[i];
-                        if (problems.lessonNum == j && problems.assigned == true) {
+                        var inSkipped = $rootScope[subject+'Skipped'].indexOf(problems.lessonRef);
+                        if (problems.lessonNum == j && inSkipped == -1) {
                             assignedData[j].problems.push(problems.problemNum)
-                        } else if (problems.lessonNum == j && problems.assigned == false) {
+                        } else if (problems.lessonNum == j && inSkipped > -1) {
                             skippedData[j].problems.push(problems.problemNum)
                         }
                     }
@@ -63,8 +60,8 @@
                 };
             }
             
-            $scope.assigned = $scope[subject+'AssignedData'];
-            $scope.skipped = $scope[subject+'SkippedData'];
+            $scope.assignedLessons = assignedData;
+            $scope.skippedLessons = skippedData;
         }
 
         function getRanges(array) {

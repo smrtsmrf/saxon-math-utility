@@ -34,7 +34,7 @@
 			<div class="hw">
 				<div class="problems">
 					<h2 class="">Assigned</h2>
-					<div ng-repeat="data in assigned | orderObjectBy: 'lesson'" class="numbers">
+					<div ng-repeat="data in assignedLessons | orderObjectBy: 'lesson'" class="numbers">
 						<strong>L{{data.lesson}}: </strong>{{data.problems}}
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 			<div class="hw">
 				<div class="problems">
 					<h2 class="">Skipped</h2>
-					<div ng-repeat="data in skipped | orderObjectBy: 'lesson'" class="numbers">
+					<div ng-repeat="data in skippedLessons | orderObjectBy: 'lesson'" class="numbers">
 						<strong>L{{data.lesson}}: </strong>{{data.problems}}
 					</div>
 				</div>

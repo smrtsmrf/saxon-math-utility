@@ -14,7 +14,11 @@
         .module('saxonApp')
         .run(function($rootScope, $state) {
             $rootScope.$on('$stateChangeError', function(e, toState, toParams, fromState, fromParams, error) {
-                $rootScope.requestedUrl = toState.name;
+                $rootScope.requested = {
+                    url: toState.name,
+                    subject: toParams.subject
+                }
+                console.log($rootScope.requested);
                 if (error == "Not Authorized") {
                     console.log('not authorized');
                     $state.go($state.current.name);
@@ -40,19 +44,19 @@
         $stateProvider
             .state('login', {
                 url: '/',
-                templateUrl: '/components/login/login.html',
+                templateUrl: '/app/components/login/login.html',
                 controller: 'loginCtrl'
             })
 
             .state('signup', {
                 url: '/signup',
-                templateUrl: '/components/signup/signup.html',
+                templateUrl: '/app/components/signup/signup.html',
                 controller: 'signupCtrl'
             })
 
             .state('modify', {
                 url: '/:subject/modify',
-                templateUrl: '/components/modify/modify.html',
+                templateUrl: '/app/components/modify/modify.html',
                 controller: 'modifyCtrl',
                 resolve: {
                     security: ['mainService',
@@ -65,7 +69,7 @@
 
             .state('hw', {
                 url: '/:subject/hw',
-                templateUrl: '/components/hw/hw.html',
+                templateUrl: '/app/components/hw/hw.html',
                 controller: 'hwCtrl',
                 resolve: {
                     security: ['mainService',
@@ -78,7 +82,7 @@
 
             .state('admin', {
                 url: '/admin',
-                templateUrl: '/components/admin/admin.html',
+                templateUrl: '/app/components/admin/admin.html',
                 controller: 'adminCtrl',
                 resolve: {
                     security: ['mainService',

@@ -5,14 +5,16 @@
         .module('saxonApp')
         .controller('loginCtrl', loginCtrl);
 
-    loginCtrl.$inject = ['$scope', '$filter', '$state', 'mainService', '$rootScope'];
+    loginCtrl.$inject = ['$scope', '$filter', '$state', 'mainService', '$rootScope', 'loginService'];
 
-    function loginCtrl($scope, $filter, $state, mainService, $rootScope) {
+    function loginCtrl($scope, $filter, $state, mainService, $rootScope, loginService) {
+
         $scope.loading = false;
         
         $scope.login = function(user) {
             $scope.loading = true
-            mainService.login(user).then(function(currUser) {
+            // mainService.login(user).then(function(currUser) {
+            loginService.login(user).then(function(currUser) {
 
                 if (currUser.userFound !== false) {
                     $rootScope.user = currUser;
@@ -23,8 +25,8 @@
                         $rootScope.geoSkipped = response.geoSkipped;
                         $rootScope.alg2Skipped = response.alg2Skipped;
                         switch (true) {
-                            case $rootScope.requestedUrl != undefined:
-                                $state.go($rootScope.requestedUrl);
+                            case $rootScope.requested != undefined:
+                                $state.go($rootScope.requested.url, {subject: $rootScope.requested.subject});
                                 break;
                             case username.toLowerCase().includes('alg2'):
                                 $state.go('hw', {subject: 'alg2'});
@@ -34,7 +36,8 @@
                                 break;
                             case $rootScope.user.type == 'admin':
                                 var today = new Date();
-                                mainService.removeOldKeys($rootScope.user.school_id, today)
+                                // mainService.removeOldKeys($rootScope.user.school_id, today)
+                                loginService.removeOldKeys($rootScope.user.school_id, today)
                                 $state.go('admin');
                                 break;
                             default:
@@ -44,7 +47,8 @@
                     });
                 } else {
                     alertify.error('Invalid username/password', 5);
-                    // alertify.alert('Error', 'Invalid username/password')
+                    $scope.loading = false;
+                    $scope.user = {};
                 }
             })
         }

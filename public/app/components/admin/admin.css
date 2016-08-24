@@ -4,7 +4,6 @@
 	align-items: center;
 	height: 10vh;
 	background-color: #3276b1;
-	/*color: #fff;*/
 	font-size: 3vh;
 	box-shadow: 0 12px 24px 0 rgba(0,20,60,1.12);
 }
@@ -21,7 +20,6 @@
 #admin_sidebar {
 	width: 15vw;
 	height: 90vh;
-	/*background-color: #D4D4D4;*/
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -30,7 +28,6 @@
 }
 
 #admin_sidebar h3 a:hover {
-	/*color: #fff;*/
 	color: #000;
 }
 
@@ -64,7 +61,6 @@
 .gridStyle {
     border: 1px solid rgb(212,212,212);
     width: 40.2vw; 
-    /*height: 300px;*/
     text-align: center;
     align-self: center;
 }
@@ -90,7 +86,6 @@
 	margin: auto;
 	display: flex;
 	flex-direction: column;
-	/*height: 100%;*/
 	text-align: center;
 	background-color: #fff;
 	border-radius: 3px;
@@ -117,7 +112,6 @@
 	margin: auto;
 	background-color: #fff;
 	border-radius: 3px;
-	/*opacity: 0.95;*/
 	padding-bottom: 15px;
 	overflow: auto;
 	height: 95%;

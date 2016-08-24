@@ -4,26 +4,11 @@ var School = require('../models/School');
 
 module.exports = {
 	update: function(req, res, next) {
-		// var skippedLessons = req.query.lessonRef ? JSON.parse(req.query.lessonRef) : [];
-		
 		School.findById({_id: req.params.id}, function(err, school) {
-			switch (req.params.subject) {
-				case 'alg':
-					var problems = school.algProblems;
-					var skippedLessons = school.algSkipped;
-					break;
-				case 'geo':
-					var problems = school.geoProblems;
-					var skippedLessons = school.geoSkipped;
-					break;
-				case 'alg2':
-					var problems = school.alg2Problems;
-					var skippedLessons = school.alg2Skipped;
-					break;
-			}
-			console.log(skippedLessons);
+			var problems = school[req.params.subject+'Problems'];
+			var skippedLessons = school[req.params.subject+'Skipped'];
+
 			problems.forEach(function(el, idx) {
-				// also el.subject === req.params.subject
 				if (skippedLessons.indexOf(el.lessonRef) < 0 && el.assigned == false) {
 					el.assigned = true;
 				}
@@ -31,12 +16,14 @@ module.exports = {
 					el.assigned = false;
 				}
 			})
-			school.save(function(err, resp) {
-				console.log('update');
-				// err ? res.status(500).send(err) : res.send(resp[req.params.subject+'Problems']);
-				res.send('updated')
-				// next()
-			});
+
+			school.save();
+
+			var sub = req.params.subject, subSkipped = sub+'Skipped', result = {};
+			result[sub] = school[sub+'Problems'];
+			result[subSkipped] = school[subSkipped];
+			res.send(result)
+			
 		})
 	}, 
 
@@ -44,7 +31,6 @@ module.exports = {
 		var update = {};
 		update[req.params.subject+'Skipped'] = req.body.skipped;
 		School.findByIdAndUpdate({_id: req.params.id}, update, function(err, school) {
-			// err ? res.status(500).send(err) : res.send(req.body.skipped);
 			next();
 		})
 	},
@@ -60,35 +46,6 @@ module.exports = {
 					alg2Skipped: school.alg2Skipped,}
 			);
 		})
-	}
-
-		// School.aggregate(
-		//       {$match: {_id: ObjectId(req.params.id)}}, 
-		//       {$unwind: '$algproblems'},
-		//       {$match: {'algproblems.subject': req.params.subject}}
-		//       )
-		//       .exec(function(err, result) {
-		//       	console.log('index');
-		// 		err ? res.status(500).send(err) : res.send(result);
-		// })
-	// }, 
-
-	// reset: function(req, res, next) {
-		
-	// 	// maybe an aggregate here? 
-	// 	// some way to make this faster, and only loop over the subject
-	// 	// maybe have geoproblems, algproblems, alg2problems subdocs
-	// 	School.findOne({name: req.params.name}, function(err, result) {
-	// 		result.problems.forEach(function(el, idx) {
-	// 			if (el.subject === req.params.subject && el.assigned == false) {
-	// 				el.assigned = true;
-	// 			}
-	// 		})
-	// 		result.save(function(err, resp) {
-	// 			console.log('reset');
-	// 			res.send(resp)
-	// 			// next();
-	// 		});
-	// 	})
-	// }
+	}, 
+	
 }

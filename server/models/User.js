@@ -22,7 +22,8 @@ var userSchema = new Schema ({
 		required: true
 	},
 	email: {
-		type: String
+		type: String,
+		validate: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 
 	},
 	school_id: {
 		type: Schema.Types.ObjectId, 
@@ -48,7 +49,7 @@ var userSchema = new Schema ({
 		// 	],
 		match: /1234/,
 		required: true
-	}
+	}, 
 })
 
 module.exports = mongoose.model('User', userSchema)

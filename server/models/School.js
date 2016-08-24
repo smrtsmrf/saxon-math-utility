@@ -13,8 +13,7 @@ var schoolSchema = new Schema ({
 	algSkipped: Array,
 	geoSkipped: Array,
 	alg2Skipped: Array,
-	// adminKeys: Array
-	adminKeys: [adminKeySchema]
+	adminKeys: [adminKeySchema],
 })
 
 module.exports = mongoose.model('School', schoolSchema)

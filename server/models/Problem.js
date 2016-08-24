@@ -6,7 +6,7 @@ var problemSchema = new Schema({
 	lessonNum: Number,
 	problemNum: Number,
 	lessonRef: Schema.Types.Mixed,
-	assigned: Boolean
+	assigned: Boolean,
 });
 
 module.exports = problemSchema;

@@ -8,7 +8,7 @@
 	function sidebarDirective() {
 		return{
 			restrict: 'E',
-			templateUrl: '../views/sidebar.html',		
+			templateUrl: './app/directives/sidebar/sidebar.html',		
 		};
 	}
 })();

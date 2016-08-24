@@ -37,7 +37,6 @@ nev.configure({
         replyTo: 'Do Not Reply <do_not_reply@gmail.com>',
         subject: 'Successfully verified!',
         html: '<p>Your account has been successfully verified.</p>',
-        // text: 'Your account has been successfully verified.'
     }
 }, function(err, options) {
     if (err) {
@@ -134,7 +133,7 @@ module.exports = {
                     if (user.type == 'student') {
                         if (count == Object.keys(req.body.users).length) {
                             newUser.save(function(err, user) {
-                                console.log(err);
+                                if (err) console.log(err);
                                 return err ? res.send({
                                     msg: err.errors.verificationCode.message,
                                     flag: 'error'

@@ -9,7 +9,7 @@ var adminKeySchema = new Schema({
 	createdAt: {
 		type: Date,
 		default: Date.now,
-	}
+	}, 
 });
 
 module.exports = adminKeySchema;

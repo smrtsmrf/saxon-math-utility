@@ -5,9 +5,9 @@
         .module('saxonApp')
         .controller('modifyCtrl', modifyCtrl);
 
-    modifyCtrl.$inject = ['$scope', '$rootScope', '$state', 'mainService', '$stateParams'];
+    modifyCtrl.$inject = ['$scope', '$rootScope', '$state', 'mainService', '$stateParams', 'modifyService'];
 
-    function modifyCtrl($scope, $rootScope, $state, mainService, $stateParams) {
+    function modifyCtrl($scope, $rootScope, $state, mainService, $stateParams, modifyService) {
         if (!$rootScope.user) {
             mainService.retrieveSession().then(function(user) {
                 $rootScope.user = user;
@@ -29,7 +29,6 @@
 
         $scope.subjectTitle = subject == 'alg' ? 'Algebra' : (subject == 'geo' ? 'Geometry' : 'Algebra II')
 
-        // var original = mainService.allSkippedData.algSkipped;
         var original = mainService.allSkippedData[subject+'Skipped'];
 
         revert();
@@ -46,7 +45,8 @@
 
         setButtonText();
 
-        $scope.lessons = mainService.lessons;
+        // $scope.lessons = mainService.lessons;
+        $scope.lessons = modifyService.lessons;
 
         $scope.show = true;
 
@@ -68,7 +68,8 @@
                 $state.go('hw', {subject: subject})
             } else {
                 $scope.saving = true;
-                mainService.storeSkipped(subject, $rootScope[subject+'Skipped'], $rootScope.user.school_id).then(function() {
+                // mainService.storeSkipped(subject, $rootScope[subject+'Skipped'], $rootScope.user.school_id).then(function() {
+                modifyService.storeSkipped(subject, $rootScope[subject+'Skipped'], $rootScope.user.school_id).then(function() {
                     $state.go('hw', {subject: subject})
                 });
             }
@@ -76,7 +77,8 @@
         }
 
         $scope.submitAdminKey = function(adminKey) {
-            mainService.submitAdminKey($rootScope.user.school_id, adminKey, subject).then(function(result) {
+            // mainService.submitAdminKey($rootScope.user.school_id, adminKey, subject).then(function(result) {
+            modifyService.submitAdminKey($rootScope.user.school_id, adminKey, subject).then(function(result) {
                 if (!result.failure) {
                     var shouldDo = JSON.parse("[" + result.shouldDo + "]");
                     var shouldSkip = JSON.parse("[" + result.shouldSkip + "]");
@@ -102,7 +104,8 @@
 
                     $scope.storeSkipped()
 
-                    mainService.deleteAdminKey($rootScope.user.school_id, adminKey)
+                    // mainService.deleteAdminKey($rootScope.user.school_id, adminKey)
+                    modifyService.deleteAdminKey($rootScope.user.school_id, adminKey)
 
                 } else {
                     alertify.error(result.failure, 5);
@@ -157,7 +160,8 @@
                         return user.type === 'admin';
                     })[0]
 
-                    mainService.requestUpdate($rootScope.user.school_id, $rootScope.user, admin.email, subject, $scope.shouldDo.toString(), $scope.doReason, $scope.shouldSkip.toString(), $scope.skipReason).then(function() {
+                    // mainService.requestUpdate($rootScope.user.school_id, $rootScope.user, admin.email, subject, $scope.shouldDo.toString(), $scope.doReason, $scope.shouldSkip.toString(), $scope.skipReason).then(function() {
+                    modifyService.requestUpdate($rootScope.user.school_id, $rootScope.user, admin.email, subject, $scope.shouldDo.toString(), $scope.doReason, $scope.shouldSkip.toString(), $scope.skipReason).then(function() {
                         var msg = 'Your message was sent to ' + admin.email;
                         $state.go('hw', {subject: subject})
                         alertify.success(msg, 5, function() {})
