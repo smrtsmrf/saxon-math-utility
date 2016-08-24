@@ -8,8 +8,10 @@
     loginCtrl.$inject = ['$scope', '$filter', '$state', 'mainService', '$rootScope'];
 
     function loginCtrl($scope, $filter, $state, mainService, $rootScope) {
-
+        $scope.loading = false;
+        
         $scope.login = function(user) {
+            $scope.loading = true
             mainService.login(user).then(function(currUser) {
 
                 if (currUser.userFound !== false) {
@@ -25,10 +27,10 @@
                                 $state.go($rootScope.requestedUrl);
                                 break;
                             case username.toLowerCase().includes('alg2'):
-                                $state.go('alg2hw');
+                                $state.go('hw', {subject: 'alg2'});
                                 break;
                             case username.toLowerCase().includes('geo'):
-                                $state.go('geohw');
+                                $state.go('hw', {subject: 'geo'});
                                 break;
                             case $rootScope.user.type == 'admin':
                                 var today = new Date();
@@ -36,7 +38,7 @@
                                 $state.go('admin');
                                 break;
                             default:
-                                $state.go('alghw');
+                                $state.go('hw', {subject: 'alg'});
                                 break;
                         }
                     });

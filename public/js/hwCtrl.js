@@ -3,13 +3,17 @@
 
     angular
         .module('saxonApp')
-        .controller('algHWCtrl', algHWCtrl);
+        .controller('hwCtrl', hwCtrl);
 
-    algHWCtrl.$inject = ['$scope', '$rootScope', 'mainService', '$state'];
+    hwCtrl.$inject = ['$scope', '$rootScope', 'mainService', '$state', '$stateParams'];
 
-    function algHWCtrl($scope, $rootScope, mainService, $state) {
+    function hwCtrl($scope, $rootScope, mainService, $state, $stateParams) {
 
-        console.log('skipped', $rootScope.algSkipped);
+        $scope.subject = $stateParams.subject;
+        var subject = $scope.subject;
+        $scope.subjectTitle = subject == 'alg' ? 'Algebra' : (subject == 'geo' ? 'Geometry' : 'Algebra II')
+
+        console.log('skipped', $rootScope[subject+'Skipped']);
 
         if (!$rootScope.user) {
             mainService.retrieveSession().then(function(user) {
@@ -26,34 +30,41 @@
         }
 
         function populateData() {
-            var data = mainService.allSkippedData.alg;
-            var skipped = mainService.allSkippedData.algSkipped;
+            var data = mainService.allSkippedData[subject];
+            var skipped = mainService.allSkippedData[subject+'Skipped'];
 
-            $scope.algAssignedData = {};
-            $scope.algSkippedData = {};
+            $scope[subject+'AssignedData'] = {};
+            $scope[subject+'SkippedData'] = {};
+
+            var assignedData = $scope[subject+'AssignedData'];
+            var skippedData = $scope[subject+'SkippedData'];
+
 
             for (var j = 1; j <= 120; j++) {
-                if ($rootScope.algSkipped.indexOf(j) == -1) {
-                    $scope.algAssignedData[j] = {};
-                    $scope.algAssignedData[j].lesson = j;
-                    $scope.algAssignedData[j].problems = [];
-                    $scope.algSkippedData[j] = {};
-                    $scope.algSkippedData[j].lesson = j;
-                    $scope.algSkippedData[j].problems = [];
+                if ($rootScope[subject+'Skipped'].indexOf(j) == -1) {
+                    assignedData[j] = {};
+                    assignedData[j].lesson = j;
+                    assignedData[j].problems = [];
+                    skippedData[j] = {};
+                    skippedData[j].lesson = j;
+                    skippedData[j].problems = [];
 
                     for (var i = 0; i < data.length; i++) {
                         var problems = data[i];
                         if (problems.lessonNum == j && problems.assigned == true) {
-                            $scope.algAssignedData[j].problems.push(problems.problemNum)
+                            assignedData[j].problems.push(problems.problemNum)
                         } else if (problems.lessonNum == j && problems.assigned == false) {
-                            $scope.algSkippedData[j].problems.push(problems.problemNum)
+                            skippedData[j].problems.push(problems.problemNum)
                         }
                     }
 
-                    $scope.algAssignedData[j].problems = getRanges($scope.algAssignedData[j].problems)
-                    $scope.algSkippedData[j].problems = getRanges($scope.algSkippedData[j].problems)
+                    assignedData[j].problems = getRanges(assignedData[j].problems)
+                    skippedData[j].problems = getRanges(skippedData[j].problems)
                 };
             }
+            
+            $scope.assigned = $scope[subject+'AssignedData'];
+            $scope.skipped = $scope[subject+'SkippedData'];
         }
 
         function getRanges(array) {

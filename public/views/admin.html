@@ -1,10 +1,10 @@
 <nav id="admin_nav">
-	<div><a ui-sref="alghome">Modify Algebra</a></div>
-	<div><a ui-sref="alghw">Algebra HW</a></div>
-	<div><a ui-sref="geohome">Modify Geometry</a></div>
-	<div><a ui-sref="geohw">Geometry HW</a></div>
-	<div><a ui-sref="alg2home">Modify Algebra II</a></div>
-	<div><a ui-sref="alg2hw">Algebra II HW</a></div>
+	<div><a ui-sref="modify({subject: 'alg'})">Modify Algebra</a></div>
+	<div><a ui-sref="hw({subject: 'alg'})">Algebra HW</a></div>
+	<div><a ui-sref="modify({subject: 'geo'})">Modify Geometry</a></div>
+	<div><a ui-sref="hw({subject: 'geo'})">Geometry HW</a></div>
+	<div><a ui-sref="modify({subject: 'alg2'})">Modify Algebra II</a></div>
+	<div><a ui-sref="hw({subject: 'alg2'})">Algebra II HW</a></div>
 </nav>
 <main id="admin_main">
 <section id="admin_sidebar">
@@ -58,7 +58,10 @@
 	<section ng-if="resetLink" id="section_contents">
 		<h1 class="text-center">Reset All HW</h1>
 		<h5>If, for whatever reason, you want to quickly go back to not skipping ANY lessons in ANY subject, then this button is for you. Otherwise, this is not the button you're looking for.</h5>
-		<button ng-click="reset()" class="btn btn-danger" id="reset">Reset All HW</button>
+		<button ng-if="!resetting"ng-click="reset()" class="btn btn-danger" id="reset">Reset All HW</button>
+		<div ng-if="resetting">
+			<h2 class="text-center">Resetting <i class="fa fa-spin fa-spinner"></i></h2>
+		</div>
 	</section>
 	
 	<!-- instructions div -->

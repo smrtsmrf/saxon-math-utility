@@ -44,110 +44,50 @@
                 controller: 'loginCtrl'
             })
 
-        .state('signup', {
-            url: '/signup',
-            templateUrl: '/views/signup.html',
-            controller: 'signupCtrl'
-        })
+            .state('signup', {
+                url: '/signup',
+                templateUrl: '/views/signup.html',
+                controller: 'signupCtrl'
+            })
 
-        // .state('success', {
-        //     url: '/success',
-        //     templateUrl: '/views/success.html',
-        //     controller: function($state) {
-        //         setTimeout($state.go('login'), 2000)
-        //     }
-        // })
+            .state('modify', {
+                url: '/:subject/modify',
+                templateUrl: '/views/modify.html',
+                controller: 'modifyCtrl',
+                resolve: {
+                    security: ['mainService',
+                        function(mainService) {
+                            return mainService.isAuthed();
+                        }
+                    ]
+                }
+            })
 
-        .state('alghome', {
-            url: '/alg',
-            templateUrl: './views/alghome.html',
-            controller: 'algCtrl',
-            resolve: {
-                security: ['mainService',
-                    function(mainService) {
-                        return mainService.isAuthed();
-                    }
-                ]
-            }
-        })
+            .state('hw', {
+                url: '/:subject/hw',
+                templateUrl: '/views/hw.html',
+                controller: 'hwCtrl',
+                resolve: {
+                    security: ['mainService',
+                        function(mainService) {
+                            return mainService.isLoggedIn();
+                        }
+                    ]
+                }
+            })
 
-        .state('alghw', {
-            url: '/alg/hw',
-            templateUrl: '/views/alghw.html',
-            controller: 'algHWCtrl',
-            resolve: {
-                security: ['mainService',
-                    function(mainService) {
-                        return mainService.isLoggedIn();
-                    }
-                ]
-            }
-        })
-
-        .state('geohome', {
-            url: '/geo',
-            templateUrl: './views/geohome.html',
-            controller: 'geoCtrl',
-            resolve: {
-                security: ['mainService',
-                    function(mainService) {
-                        return mainService.isAuthed();
-                    }
-                ]
-            }
-        })
-
-        .state('geohw', {
-            url: '/geo/hw',
-            templateUrl: '/views/geohw.html',
-            controller: 'geoHWCtrl',
-            resolve: {
-                security: ['mainService',
-                    function(mainService) {
-                        return mainService.isLoggedIn();
-                    }
-                ]
-            }
-        })
-
-        .state('alg2home', {
-            url: '/alg2',
-            templateUrl: './views/alg2home.html',
-            controller: 'alg2Ctrl',
-            resolve: {
-                security: ['mainService',
-                    function(mainService) {
-                        return mainService.isAuthed();
-                    }
-                ]
-            }
-        })
-
-        .state('alg2hw', {
-            url: '/alg2/hw',
-            templateUrl: '/views/alg2hw.html',
-            controller: 'alg2HWCtrl',
-            resolve: {
-                security: ['mainService',
-                    function(mainService) {
-                        return mainService.isLoggedIn();
-                    }
-                ]
-            }
-        })
-
-        .state('admin', {
-            url: '/admin',
-            templateUrl: '/views/admin.html',
-            controller: 'adminCtrl',
-            resolve: {
-                security: ['mainService',
-                    function(mainService) {
-                        return mainService.isAuthed();
-                    }
-                ]
-            }
-        })
+            .state('admin', {
+                url: '/admin',
+                templateUrl: '/views/admin.html',
+                controller: 'adminCtrl',
+                resolve: {
+                    security: ['mainService',
+                        function(mainService) {
+                            return mainService.isAuthed();
+                        }
+                    ]
+                }
+            })
 
         $urlRouterProvider.otherwise('/')
     }

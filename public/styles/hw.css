@@ -34,16 +34,20 @@
 	width: 100%;
 	margin: auto;
 	margin-top: -6px;
+
+	padding-left: 65px;
 }
 
 .hw {
-	width: 39%;
+	/*width: 39%;*/
+	width: 43%;
 	text-align: center;
 	height: 100%;
 }
 
 .problems {
-	width: 71%; 
+	/*width: 71%; */
+	width: 100%;
 	margin: auto;
 	text-align: left;
 	display: inline-block;
@@ -74,11 +78,38 @@
 
 	.hw { 
 		width: 100%;
-		padding-left: 26px;
+		/*padding-left: 26px;*/
+		padding-left: 0;
 	}
 
 	.numbers {
 		font-size: 14px;
 		line-height: 21px;
+	}
+}
+
+@media (max-width: 320px) {
+	.hw_content {
+		padding-left: 53px;
+	}
+}
+
+@media (device-width: 414px) {
+	.hw_content: {
+		padding-left: 70px;
+	}
+}
+
+@media (device-width: 768px) {
+	.hw_content {
+		padding-left: 0;
+	}
+
+	.hw {
+		width: 39%;
+	}
+
+	.problems {
+		width: 71%;
 	}
 }

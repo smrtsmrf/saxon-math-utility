@@ -9,6 +9,8 @@
 
     function adminCtrl($scope, $rootScope, mainService, $state) {
 
+        $scope.resetting = false;
+
         function resetLinks() {
             $scope.usersLink = false;
             $scope.createLink = false;
@@ -136,13 +138,16 @@
         };
 
         $scope.reset = function() {
+            $scope.resetting = true;
             mainService.resetAllHW($rootScope.user.school_id).then(function() {
-                $state.reload('alghw');
-                $state.reload('geohw');
-                $state.reload('alg2hw');
+                $state.reload('hw', {subject: 'alg'});
+                $state.reload('hw', {subject: 'geo'});
+                $state.reload('hw', {subject: 'alg2'});
                 $rootScope.algSkipped = [];
                 $rootScope.geoSkipped = [];
                 $rootScope.alg2Skipped = [];
+                $scope.resetting = false;
+                alertify.alert('Homework reset successfully', function() {})
             });
         }
 

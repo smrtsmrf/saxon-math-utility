@@ -1,34 +1,17 @@
 <navbar></navbar>
 
 <div id="main_container">
-	<section id="sidebar">
-		<div>
-			<a ui-sref="alghome" ui-sref-active="active" class="sidebar_links">Algebra</a> <br>
-			<button class="btn btn-danger reset" ng-click="reset()">Reset</button>
-		</div>
-		<div>
-			<a ui-sref="geohome" ui-sref-active="active" class="sidebar_links">Geometry</a>
-		</div>
-		<div>
-			<a ui-sref="alg2home" ui-sref-active="active" class="sidebar_links">Algebra II</a>
-		</div>
-		<div ng-if="user.type=='admin'">
-			<a ui-sref="admin" ui-sref-active="active" class="sidebar_links">Admin Tools</a>
-		</div>
-		<div>
-			<a ui-sref="login" ng-click="logout()" class="sidebar_links">Logout</a>
-		</div>
-	</section>
+	<sidebar></sidebar>
 
 	<!-- <buttons></buttons> -->
 	<section class="modify_container">
-		<h1 class="text-center modify_title">Modify {{subject}} HW</h1>
+		<h1 class="text-center modify_title">Modify {{subjectTitle}} HW</h1>
 		<h4 class="text-center">Click the lesson number to skip or unskip that lesson</h4>
 
 		<section class="modify_content">
 			<section ng-show="!saving" id="buttons">
 				<div ng-repeat="lesson in lessons">
-					<button id="lesson_button" ng-click="show = !show; updateSkipped(lesson)" ng-class="{'btn-primary' : show, 'btn-primary' : algSkipped.indexOf(lesson) === -1}" class="btn">{{lesson}}</button>
+					<button id="lesson_button" ng-click="show = !show; updateSkipped(lesson)" ng-class="{'btn-primary' : show, 'btn-primary' : $root[subject+'Skipped'].indexOf(lesson) === -1}" class="btn">{{lesson}}</button>
 				</div>
 				<div ng-if="user.type=='admin'" id="update_div">
 					<button class="btn btn-success" id="update" ng-click="storeSkipped()">{{buttonText}}</button>

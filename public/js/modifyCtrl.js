@@ -3,27 +3,41 @@
 
     angular
         .module('saxonApp')
-        .controller('algCtrl', algCtrl);
+        .controller('modifyCtrl', modifyCtrl);
 
-    algCtrl.$inject = ['$scope', '$rootScope', '$state', 'mainService'];
+    modifyCtrl.$inject = ['$scope', '$rootScope', '$state', 'mainService', '$stateParams'];
 
-    function algCtrl($scope, $rootScope, $state, mainService) {
+    function modifyCtrl($scope, $rootScope, $state, mainService, $stateParams) {
+        if (!$rootScope.user) {
+            mainService.retrieveSession().then(function(user) {
+                $rootScope.user = user;
+                mainService.getAllHW($rootScope.user.school_id).then(function(response) {
+                    $rootScope.algSkipped = response.algSkipped;
+                    $rootScope.geoSkipped = response.geoSkipped;
+                    $rootScope.alg2Skipped = response.alg2Skipped;
+                    populateData();
+                })
+            })
+        }
+
         $scope.saving = false;
 
         $scope.showAdminKey = false;
 
-        $scope.subject = 'Algebra';
+        $scope.subject = $stateParams.subject;
+        var subject = $scope.subject;
 
-        var subject = 'alg';
+        $scope.subjectTitle = subject == 'alg' ? 'Algebra' : (subject == 'geo' ? 'Geometry' : 'Algebra II')
 
-        var original = mainService.allSkippedData.algSkipped;
+        // var original = mainService.allSkippedData.algSkipped;
+        var original = mainService.allSkippedData[subject+'Skipped'];
 
         revert();
 
         var unchanged;
 
         function setButtonText() {
-            unchanged = (original.length == $rootScope.algSkipped.length) && $rootScope.algSkipped.every(function(el, idx) {
+            unchanged = (original.length == $rootScope[subject+'Skipped'].length) && $rootScope[subject+'Skipped'].every(function(el, idx) {
                 return el == original[idx]
             })
             var update = $rootScope.user.type == 'admin' ? 'Update HW' : 'Request Update';
@@ -37,12 +51,12 @@
         $scope.show = true;
 
         $scope.updateSkipped = function(lesson) {
-            var idx = $rootScope.algSkipped.indexOf(lesson);
+            var idx = $rootScope[subject+'Skipped'].indexOf(lesson);
             if (idx > -1) {
-                $rootScope.algSkipped.splice(idx, 1)
+                $rootScope[subject+'Skipped'].splice(idx, 1)
             } else {
-                $rootScope.algSkipped.push(lesson)
-                $rootScope.algSkipped.sort(function(a, b) {
+                $rootScope[subject+'Skipped'].push(lesson)
+                $rootScope[subject+'Skipped'].sort(function(a, b) {
                     return a - b;
                 })
             }
@@ -51,11 +65,11 @@
 
         $scope.storeSkipped = function() {
             if (unchanged) {
-                $state.go(subject + 'hw')
+                $state.go('hw', {subject: subject})
             } else {
                 $scope.saving = true;
-                mainService.storeSkipped(subject, $rootScope.algSkipped, $rootScope.user.school_id).then(function() {
-                    $state.go(subject + 'hw')
+                mainService.storeSkipped(subject, $rootScope[subject+'Skipped'], $rootScope.user.school_id).then(function() {
+                    $state.go('hw', {subject: subject})
                 });
             }
 
@@ -66,23 +80,23 @@
                 if (!result.failure) {
                     var shouldDo = JSON.parse("[" + result.shouldDo + "]");
                     var shouldSkip = JSON.parse("[" + result.shouldSkip + "]");
-                    $rootScope.algSkipped = mainService.allSkippedData.algSkipped;
+                    $rootScope[subject+'Skipped'] = mainService.allSkippedData[subject+'Skipped'];
 
                     shouldDo.forEach(function(element) {
-                        var idx = $rootScope.algSkipped.indexOf(element);
+                        var idx = $rootScope[subject+'Skipped'].indexOf(element);
                         if (idx >= 0) {
-                            $rootScope.algSkipped.splice(idx, 1)
+                            $rootScope[subject+'Skipped'].splice(idx, 1)
                         }
                     });
 
                     shouldSkip.forEach(function(element) {
-                        var idx = $rootScope.algSkipped.indexOf(element);
+                        var idx = $rootScope[subject+'Skipped'].indexOf(element);
                         if (idx < 0) {
-                            $rootScope.algSkipped.push(element)
+                            $rootScope[subject+'Skipped'].push(element)
                         }
                     });
 
-                    $rootScope.algSkipped.sort(function(a, b) {
+                    $rootScope[subject+'Skipped'].sort(function(a, b) {
                         return a - b;
                     })
 
@@ -100,7 +114,7 @@
 
         $scope.reset = function() {
             if ($rootScope.user.type == 'admin') {
-                $rootScope.algSkipped = [];
+                $rootScope[subject+'Skipped'] = [];
             } else {
                 revert();
             }
@@ -116,13 +130,13 @@
 
         $scope.preReq = function() {
             $scope.shouldDo = original.filter(function(el, idx) {
-                return $rootScope.algSkipped.indexOf(el) == -1
+                return $rootScope[subject+'Skipped'].indexOf(el) == -1
             });
 
             if ($scope.shouldDo == false) {
                 $scope.doReason = 'null';
             }
-            $scope.shouldSkip = $rootScope.algSkipped.filter(function(el) {
+            $scope.shouldSkip = $rootScope[subject+'Skipped'].filter(function(el) {
                 return original.indexOf(el) == -1
             });
 
@@ -145,19 +159,19 @@
 
                     mainService.requestUpdate($rootScope.user.school_id, $rootScope.user, admin.email, subject, $scope.shouldDo.toString(), $scope.doReason, $scope.shouldSkip.toString(), $scope.skipReason).then(function() {
                         var msg = 'Your message was sent to ' + admin.email;
-                        $state.go(subject + 'hw')
+                        $state.go('hw', {subject: subject})
                         alertify.success(msg, 5, function() {})
                     })
                 })
             } else {
-                $state.go(subject + 'hw')
+                $state.go('hw', {subject: subject})
             }
         }
 
         function revert() {
-            $rootScope.algSkipped = [];
+            $rootScope[subject+'Skipped'] = [];
             original.forEach(function(el) {
-                $rootScope.algSkipped.push(el);
+                $rootScope[subject+'Skipped'].push(el);
             });
         }
         $scope.resetReason = function() {

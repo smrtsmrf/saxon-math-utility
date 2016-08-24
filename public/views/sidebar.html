@@ -1,0 +1,20 @@
+<section id="sidebar">
+	<div>
+		<a ui-sref="modify({subject: 'alg'})" ui-sref-active="active" class="sidebar_links">Algebra</a> <br>
+		<button ng-if="subject=='alg'" class="btn btn-danger reset" ng-click="reset()">Reset</button>
+	</div>
+	<div>
+		<a ui-sref="modify({subject: 'geo'})" ui-sref-active="active" class="sidebar_links">Geometry</a> <br>
+		<button ng-if="subject=='geo'" class="btn btn-danger reset" ng-click="reset()">Reset</button>
+	</div>
+	<div>
+		<a ui-sref="modify({subject: 'alg2'})" ui-sref-active="active" class="sidebar_links">Algebra II</a> <br>
+		<button ng-if="subject=='alg2'" class="btn btn-danger reset" ng-click="reset()">Reset</button>
+	</div>
+	<div ng-if="user.type=='admin'">
+		<a ui-sref="admin" ui-sref-active="active" class="sidebar_links">Admin Tools</a>
+	</div>
+	<div>
+		<a ui-sref="login" ng-click="logout()" class="sidebar_links">Logout</a>
+	</div>
+</section>

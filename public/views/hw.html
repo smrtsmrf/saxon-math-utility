@@ -1,0 +1,52 @@
+<nav id="user_info">
+	<div class="user_divs">
+		<span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{user.username}} 
+	</div>
+	<div class="user_divs">Role: {{user.type}}</div>
+</nav>
+
+<main id="container">
+	<section id="sidebar">
+		<div>
+			<a ui-sref="hw({subject: 'alg'})" ui-sref-active="active" class="sidebar_links">Algebra</a>
+		</div>
+		<div>
+			<a ui-sref="hw({subject: 'geo'})" ui-sref-active="active" class="sidebar_links">Geometry</a>
+		</div>
+		<div>
+			<a ui-sref="hw({subject: 'alg2'})" ui-sref-active="active" class="sidebar_links">Algebra II</a>
+		</div>
+		<div ng-if="user.type=='admin'">
+			<a ui-sref="admin" ui-sref-active="active" class="sidebar_links">Admin Tools</a>
+		</div>
+		<div>
+			<a ui-sref="login" ng-click="logout()" class="sidebar_links">Logout</a>
+		</div>
+	</section>
+
+	<section class="hw_container">
+		<h1 ng-if="user.type!='student'" class="text-center"><a ui-sref="modify({subject: subject})">{{subjectTitle}} HW</a></h1>
+		<h1 ng-if="user.type=='student'" class="text-center">{{subjectTitle}} HW</h1>
+
+		<p class="text-center">Skipped Lessons: {{$root[subject+'Skipped']}}</p>
+
+		<section class="hw_content">
+			<div class="hw">
+				<div class="problems">
+					<h2 class="">Assigned</h2>
+					<div ng-repeat="data in assigned | orderObjectBy: 'lesson'" class="numbers">
+						<strong>L{{data.lesson}}: </strong>{{data.problems}}
+					</div>
+				</div>
+			</div>
+			<div class="hw">
+				<div class="problems">
+					<h2 class="">Skipped</h2>
+					<div ng-repeat="data in skipped | orderObjectBy: 'lesson'" class="numbers">
+						<strong>L{{data.lesson}}: </strong>{{data.problems}}
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
+</main>
