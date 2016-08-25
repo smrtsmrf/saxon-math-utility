@@ -45,6 +45,7 @@
 
 #admin_content::after {
 	background: url('../../img/admin-background-min.jpeg');
+	/*background: url('../app/img/admin-background-min.jpeg');*/
 	background-size: cover;
 	background-repeat: no-repeat;
 	content : "";

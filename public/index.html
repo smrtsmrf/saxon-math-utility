@@ -4,19 +4,16 @@
 		<title>Saxon HW Utility</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="./app/img/math.png">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/default.min.css"/>
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.css">
-		<link rel="stylesheet" href="./app/shared.css">
-		<link rel="stylesheet" href="./app/components/login/login.css">
-		<link rel="stylesheet" href="./app/components/signup/signup.css">
-		<link rel="stylesheet" href="./app/components/modify/modify.css">
-		<link rel="stylesheet" href="./app/components/hw/hw.css">
-		<link rel="stylesheet" href="./app/components/admin/admin.css">
 
+		<link rel="stylesheet" type="text/css" href="./dist/bundle.css">
 	</head>
+
 	<body ng-app="saxonApp">
 
 		<ui-view></ui-view>
@@ -30,21 +27,6 @@
 
 		 <script src="http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js"></script>
 
-		<script type="text/javascript" src="/app/app.js"></script>
-		<script type="text/javascript" src="/app/filter.js"></script>
-		<script type="text/javascript" src="/app/components/modify/modifyCtrl.js"></script>
-		<script type="text/javascript" src="/app/components/modify/modifyService.js"></script>
-		<script type="text/javascript" src="/app/components/hw/hwCtrl.js"></script>
-		<script type="text/javascript" src="/app/components/login/loginCtrl.js"></script>
-		<script type="text/javascript" src="/app/components/login/loginService.js"></script>
-		<script type="text/javascript" src="/app/components/signup/signupCtrl.js"></script>
-		<script type="text/javascript" src="/app/components/admin/adminCtrl.js"></script>
-		<script type="text/javascript" src="/app/components/admin/adminService.js"></script>
-		<script type="text/javascript" src="/app/service.js"></script>
-		<script type="text/javascript" src="/app/directives/request/requestDirective.js"></script>	
-		<script type="text/javascript" src="/app/directives/instructions/instructionsDirective.js"></script>
-		<script type="text/javascript" src="/app/directives/navbar/navbarDirective.js"></script>
-		<script type="text/javascript" src="/app/directives/sidebar/sidebarDirective.js"></script>
-		<script type="text/javascript" src="/app/directives/autofocus/autofocusDirective.js"></script>		
+		 <script type="text/javascript" src="./dist/bundle.js"></script>
 	</body>
 </html>

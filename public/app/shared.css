@@ -3,6 +3,7 @@
 
 .start {
 	background: url('./img/login-background-min.jpg');
+	/*background: url('../app/img/login-background-min.jpg');*/
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 100vh;

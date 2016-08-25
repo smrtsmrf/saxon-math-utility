@@ -87,76 +87,74 @@ mongoose.connect('mongodb://localhost:27017/saxon', function(err) {
     if (err) throw err;
 });
 
-
-app.get('/email-verification/:URL', emailVerifyCtrl.emailLinkRedirect)
-
-// ----------create school, admin, and student users - called in signupCtrl....................//
-app.post('/api/schools', emailVerifyCtrl.create);
-
-// -----------------------send email to admin requesting an update................................//
-app.post('/api/email', emailCtrl.sendEmail);
-
-
-// --------------- get all schools or one (query) NOT USED IN FRONT END...................//
-app.get('/api/schools/', schoolCtrl.index);
-
-// -------------- delete school & assoc. users NOT USED IN FRONT END..................//
-app.delete('/api/schools/:name', schoolCtrl.destroy);
-
-
-// ---------------------------------- get specific admin keys for school....................................//
-app.get('/api/schools/:id/:subject/adminKeys/:key', schoolCtrl.getKeys);
-
-// ---------------------------------- delete admin key for school....................................//
-app.delete('/api/schools/:id/adminKeys/:key', schoolCtrl.deleteKey);
-
-// -------------------------------- delete unused/old admin keys for school.................................//
-app.delete('/api/schools/:id/removeOldKeys/:today', schoolCtrl.removeOldKeys)
-
-
-//-------------------------------- login - called in loginCtrl............................................//
+// ------------------------- loginService ------------------------- //
+// login
 app.post('/api/login', userCtrl.login);
 
+// remove unused admin keys if they're a week old
+app.delete('/api/schools/:id/removeOldKeys/:today', schoolCtrl.removeOldKeys)
+// ------------------------- loginService ------------------------- //
+
+
+
+// ------------------------- modifyService ------------------------- //
+// get admin key info when submitting admin key
+app.get('/api/schools/:id/:subject/adminKeys/:key', schoolCtrl.getKeys);
+
+// delete admin key after it's been used
+app.delete('/api/schools/:id/adminKeys/:key', schoolCtrl.deleteKey);
+
+// send email to admin requesting update
+app.post('/api/email', emailCtrl.sendEmail);
+
+// store skipped lessons, update HW, and retrieve (1 subject)
+app.put('/api/schools/:id/:subject/skipped', subjectCtrl.storeSkipped, subjectCtrl.update);
+// ------------------------- modifyService ------------------------- //
+
+
+
+// ------------------------- adminService ------------------------- //
+// delete user
+app.delete('/api/users/:username', userCtrl.destroy);
+
+// reset all HW
+app.put('/api/schools/:id/reset', schoolCtrl.update)
+// ------------------------- adminService ------------------------- //
+
+
+
+// ------------------------- mainService ------------------------- //
+// check if user is authenticated
+app.get('/api/isAuthed', userCtrl.isAuthed);
+
+// get all or one (query) users
+app.get('/api/users', userCtrl.index);
+
+// create school, admin, and student users
+app.post('/api/schools', emailVerifyCtrl.create);
+
+// get session data
 app.get('/api/session', function(req, res, next) {
     res.send(req._passport.session)
 });
 
-app.get('/api/isAuthed', userCtrl.isAuthed);
-
-app.get('/api/logout', userCtrl.logout);
-
-
-
-// ------------ get all or one (query) users - called in signupCtrl..................................//
-app.get('/api/users', userCtrl.index);
-
-// ------------------------ delete user NOT USED IN FRONT END........................................//
-app.delete('/api/users/:username', userCtrl.destroy);
-
-
-
-// ----------------------- update school/subject - called in HW Ctrls.......................................//
-// app.put('/api/schools/:id/:subject', subjectCtrl.update)
-// app.put('/api/schools/:name/:subject', subjectCtrl.update, subjectCtrl.index)
-
-// -------------------- store school/subjectSkipped - called in subCtrls...................................//
-app.put('/api/schools/:id/:subject/skipped', subjectCtrl.storeSkipped, subjectCtrl.update);
-
-// ---------------------------------- get school/subjectSkipped............................................//
-// app.get('/api/schools/:id/:subject/skipped', subjectCtrl.getSkipped);
-
+// get all HW
 app.get('/api/schools/:id/allHW', subjectCtrl.getAllHW);
 
-// app.get('/api/schools/:id/HW/:subject', subjectCtrl.getOneHW);
+// logout
+app.get('/api/logout', userCtrl.logout);
+
+// redirect after verify email
+app.get('/email-verification/:URL', emailVerifyCtrl.emailLinkRedirect)
+// ------------------------- mainService ------------------------- //
 
 
 
-// ---------------------------------- reset school/subject..............................................//
+// ------------------------- Not used in front end ------------------------- //
 
+// get all schools or one (query)
+app.get('/api/schools/', schoolCtrl.index);
 
-app.put('/api/schools/:id/reset', schoolCtrl.update)
-
-
-// ---------------------------------- get school/subject..............................................//
-// app.get('/api/schools/:id/:subject', subjectCtrl.index)
-// app.get('/api/schools/:name/:subject', subjectCtrl.index)
+// delete school and associated users
+app.delete('/api/schools/:name', schoolCtrl.destroy);
+// ------------------------- Not used in front end ------------------------- //
