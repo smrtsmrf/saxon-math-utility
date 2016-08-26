@@ -53,6 +53,9 @@ module.exports = {
             } else {
                 res.send(response)
             }
+
+            transporter.close();
+            
         });
     }
 }

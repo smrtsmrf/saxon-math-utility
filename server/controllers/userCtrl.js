@@ -5,7 +5,6 @@ var passport = require('passport');
 var alg = require('../data/saxon_alg.js');
 var geo = require('../data/saxon_geo.js');
 var alg2 = require('../data/saxon_alg2.js');
-var bcrypt = require('bcrypt');
 
 module.exports = {
     login: function(req, res, next) {
