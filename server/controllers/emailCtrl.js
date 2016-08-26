@@ -54,7 +54,8 @@ module.exports = {
                 res.send(response)
             }
 
-	    transporter.close()
+	    transporter.close();
+            
         });
     }
 }
