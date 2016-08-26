@@ -26,7 +26,7 @@ nev.configure({
     verifyMailOptions: {
         from: 'Do Not Reply <saxonApp.do.not.reply@gmail.com>',
         replyTo: 'Do Not Reply <do_not_reply@gmail.com>',
-        subject: 'Please confirm account',
+        subject: 'Please confirm your saxonmathhw.org account',
         html: 'Click the following link to confirm your account:</p><p>${URL}</p>',
         text: 'Please confirm your account by clicking the following link: ${URL}'
     },
@@ -35,7 +35,7 @@ nev.configure({
     confirmMailOptions: {
         from: 'Do Not Reply <saxonApp.do.not.reply@gmail.com>',
         replyTo: 'Do Not Reply <do_not_reply@gmail.com>',
-        subject: 'Successfully verified!',
+        subject: 'saxonmathhw.org account verified!',
         html: '<p>Your account has been successfully verified.</p>',
     }
 }, function(err, options) {
