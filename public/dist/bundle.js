@@ -187,6 +187,14 @@
 
     function adminCtrl($scope, $rootScope, mainService, $state, adminService) {
 
+        $scope.students = {
+            users: {
+                alg: {},
+                geo: {},
+                alg2: {}
+            }
+        };
+
         $scope.resetting = false;
 
         function resetLinks() {
@@ -298,14 +306,13 @@
                         }
                     });
                 }
+                $scope.students = {};
             });
-            $scope.students = {};
         };
 
         $scope.delete = function (username) {
             var msg = 'Are you sure you want to delete ' + username + '?';
             alertify.confirm('Delete User', msg, function () {
-                // mainService.deleteUser(username).then(function(users) {
                 adminService.deleteUser(username).then(function (users) {
                     $scope.users = users;
                     setGridOptions('users');
@@ -315,7 +322,6 @@
 
         $scope.reset = function () {
             $scope.resetting = true;
-            // mainService.resetAllHW($rootScope.user.school_id).then(function() {
             adminService.resetAllHW($rootScope.user.school_id).then(function () {
                 $state.reload('hw', { subject: 'alg' });
                 $state.reload('hw', { subject: 'geo' });
@@ -364,95 +370,6 @@
 (function () {
     'use strict';
 
-    angular.module('saxonApp').controller('hwCtrl', hwCtrl);
-
-    hwCtrl.$inject = ['$scope', '$rootScope', 'mainService', '$state', '$stateParams'];
-
-    function hwCtrl($scope, $rootScope, mainService, $state, $stateParams) {
-
-        $scope.subject = $stateParams.subject;
-        var subject = $scope.subject;
-        $scope.subjectTitle = subject == 'alg' ? 'Algebra' : subject == 'geo' ? 'Geometry' : 'Algebra II';
-
-        if (!$rootScope.user) {
-            mainService.retrieveSession().then(function (user) {
-                $rootScope.user = user;
-                mainService.getAllHW($rootScope.user.school_id).then(function (response) {
-                    $rootScope.algSkipped = response.algSkipped;
-                    $rootScope.geoSkipped = response.geoSkipped;
-                    $rootScope.alg2Skipped = response.alg2Skipped;
-                    populateData();
-                });
-            });
-        } else {
-            populateData();
-        }
-
-        function populateData() {
-            var data = mainService.allSkippedData[subject];
-            // var skipped = mainService.allSkippedData[subject+'Skipped'];
-            $scope[subject + 'AssignedData'] = {};
-            $scope[subject + 'SkippedData'] = {};
-
-            var assignedData = $scope[subject + 'AssignedData'];
-            var skippedData = $scope[subject + 'SkippedData'];
-
-            for (var j = 1; j <= 120; j++) {
-                if ($rootScope[subject + 'Skipped'].indexOf(j) == -1) {
-                    assignedData[j] = {};
-                    assignedData[j].lesson = j;
-                    assignedData[j].problems = [];
-                    skippedData[j] = {};
-                    skippedData[j].lesson = j;
-                    skippedData[j].problems = [];
-
-                    for (var i = 0; i < data.length; i++) {
-                        var problems = data[i];
-                        var inSkipped = $rootScope[subject + 'Skipped'].indexOf(problems.lessonRef);
-                        if (problems.lessonNum == j && inSkipped == -1) {
-                            assignedData[j].problems.push(problems.problemNum);
-                        } else if (problems.lessonNum == j && inSkipped > -1) {
-                            skippedData[j].problems.push(problems.problemNum);
-                        }
-                    }
-
-                    assignedData[j].problems = getRanges(assignedData[j].problems);
-                    skippedData[j].problems = getRanges(skippedData[j].problems);
-                };
-            }
-
-            $scope.assignedLessons = assignedData;
-            $scope.skippedLessons = skippedData;
-        }
-
-        function getRanges(array) {
-            array.sort(function (a, b) {
-                return a - b;
-            });
-            var ranges = [],
-                rstart,
-                rend;
-            for (var i = 0; i < array.length; i++) {
-                rstart = array[i];
-                rend = rstart;
-                while (array[i + 1] - array[i] == 1) {
-                    rend = array[i + 1]; // increment the index if the numbers sequential
-                    i++;
-                }
-                ranges.push(rstart == rend ? rstart + '' : rstart + '-' + rend);
-            }
-            return ranges;
-        }
-
-        $scope.logout = function () {
-            mainService.logout();
-            $rootScope.user = {};
-        };
-    }
-})();
-(function () {
-    'use strict';
-
     angular.module('saxonApp').controller('loginCtrl', loginCtrl);
 
     loginCtrl.$inject = ['$scope', '$filter', '$state', 'mainService', '$rootScope', 'loginService'];
@@ -463,7 +380,6 @@
 
         $scope.login = function (user) {
             $scope.loading = true;
-            // mainService.login(user).then(function(currUser) {
             loginService.login(user).then(function (currUser) {
 
                 if (currUser.userFound !== false) {
@@ -486,7 +402,6 @@
                                 break;
                             case $rootScope.user.type == 'admin':
                                 var today = new Date();
-                                // mainService.removeOldKeys($rootScope.user.school_id, today)
                                 loginService.removeOldKeys($rootScope.user.school_id, today);
                                 $state.go('admin');
                                 break;
@@ -568,7 +483,6 @@
 
         setButtonText();
 
-        // $scope.lessons = mainService.lessons;
         $scope.lessons = modifyService.lessons;
 
         $scope.show = true;
@@ -591,7 +505,6 @@
                 $state.go('hw', { subject: subject });
             } else {
                 $scope.saving = true;
-                // mainService.storeSkipped(subject, $rootScope[subject+'Skipped'], $rootScope.user.school_id).then(function() {
                 modifyService.storeSkipped(subject, $rootScope[subject + 'Skipped'], $rootScope.user.school_id).then(function () {
                     $state.go('hw', { subject: subject });
                 });
@@ -599,7 +512,6 @@
         };
 
         $scope.submitAdminKey = function (adminKey) {
-            // mainService.submitAdminKey($rootScope.user.school_id, adminKey, subject).then(function(result) {
             modifyService.submitAdminKey($rootScope.user.school_id, adminKey, subject).then(function (result) {
                 if (!result.failure) {
                     var shouldDo = JSON.parse("[" + result.shouldDo + "]");
@@ -626,7 +538,6 @@
 
                     $scope.storeSkipped();
 
-                    // mainService.deleteAdminKey($rootScope.user.school_id, adminKey)
                     modifyService.deleteAdminKey($rootScope.user.school_id, adminKey);
                 } else {
                     alertify.error(result.failure, 5);
@@ -678,7 +589,6 @@
                         return user.type === 'admin';
                     })[0];
 
-                    // mainService.requestUpdate($rootScope.user.school_id, $rootScope.user, admin.email, subject, $scope.shouldDo.toString(), $scope.doReason, $scope.shouldSkip.toString(), $scope.skipReason).then(function() {
                     modifyService.requestUpdate($rootScope.user.school_id, $rootScope.user, admin.email, subject, $scope.shouldDo.toString(), $scope.doReason, $scope.shouldSkip.toString(), $scope.skipReason).then(function () {
                         var msg = 'Your message was sent to ' + admin.email;
                         $state.go('hw', { subject: subject });
@@ -946,27 +856,89 @@
 (function () {
     'use strict';
 
-    angular.module('saxonApp').directive('autofocus', autofocusDirective);
+    angular.module('saxonApp').controller('hwCtrl', hwCtrl);
 
-    function autofocusDirective($timeout) {
-        return {
-            link: function link(scope, elem, attrs) {
-                $timeout(function () {
-                    elem[0].focus();
+    hwCtrl.$inject = ['$scope', '$rootScope', 'mainService', '$state', '$stateParams'];
+
+    function hwCtrl($scope, $rootScope, mainService, $state, $stateParams) {
+
+        $scope.subject = $stateParams.subject;
+        var subject = $scope.subject;
+        $scope.subjectTitle = subject == 'alg' ? 'Algebra' : subject == 'geo' ? 'Geometry' : 'Algebra II';
+
+        if (!$rootScope.user) {
+            mainService.retrieveSession().then(function (user) {
+                $rootScope.user = user;
+                mainService.getAllHW($rootScope.user.school_id).then(function (response) {
+                    $rootScope.algSkipped = response.algSkipped;
+                    $rootScope.geoSkipped = response.geoSkipped;
+                    $rootScope.alg2Skipped = response.alg2Skipped;
+                    populateData();
                 });
+            });
+        } else {
+            populateData();
+        }
+
+        function populateData() {
+            var data = mainService.allSkippedData[subject];
+            // var skipped = mainService.allSkippedData[subject+'Skipped'];
+            $scope[subject + 'AssignedData'] = {};
+            $scope[subject + 'SkippedData'] = {};
+
+            var assignedData = $scope[subject + 'AssignedData'];
+            var skippedData = $scope[subject + 'SkippedData'];
+
+            for (var j = 1; j <= 120; j++) {
+                if ($rootScope[subject + 'Skipped'].indexOf(j) == -1) {
+                    assignedData[j] = {};
+                    assignedData[j].lesson = j;
+                    assignedData[j].problems = [];
+                    skippedData[j] = {};
+                    skippedData[j].lesson = j;
+                    skippedData[j].problems = [];
+
+                    for (var i = 0; i < data.length; i++) {
+                        var problems = data[i];
+                        var inSkipped = $rootScope[subject + 'Skipped'].indexOf(problems.lessonRef);
+                        if (problems.lessonNum == j && inSkipped == -1) {
+                            assignedData[j].problems.push(problems.problemNum);
+                        } else if (problems.lessonNum == j && inSkipped > -1) {
+                            skippedData[j].problems.push(problems.problemNum);
+                        }
+                    }
+
+                    assignedData[j].problems = getRanges(assignedData[j].problems);
+                    skippedData[j].problems = getRanges(skippedData[j].problems);
+                };
             }
-        };
-    }
-})();
-(function () {
-    'use strict';
 
-    angular.module('saxonApp').directive('instructions', instructionsDirective);
+            $scope.assignedLessons = assignedData;
+            $scope.skippedLessons = skippedData;
+        }
 
-    function instructionsDirective() {
-        return {
-            restrict: 'E',
-            templateUrl: './app/directives/instructions/instructions.html'
+        function getRanges(array) {
+            array.sort(function (a, b) {
+                return a - b;
+            });
+            var ranges = [],
+                rstart,
+                rend;
+            for (var i = 0; i < array.length; i++) {
+                rstart = array[i];
+                rend = rstart;
+                while (array[i + 1] - array[i] == 1) {
+                    rend = array[i + 1]; // increment the index if the numbers sequential
+                    i++;
+                }
+                ranges.push(rstart == rend ? rstart + '' : rstart + '-' + rend);
+            }
+            return ranges;
+        }
+
+        $scope.logout = function () {
+            mainService.logout();
+            $rootScope.user = {};
         };
     }
 })();
@@ -1003,6 +975,33 @@
         return {
             restrict: 'E',
             templateUrl: './app/directives/sidebar/sidebar.html'
+        };
+    }
+})();
+(function () {
+    'use strict';
+
+    angular.module('saxonApp').directive('instructions', instructionsDirective);
+
+    function instructionsDirective() {
+        return {
+            restrict: 'E',
+            templateUrl: './app/directives/instructions/instructions.html'
+        };
+    }
+})();
+(function () {
+    'use strict';
+
+    angular.module('saxonApp').directive('autofocus', autofocusDirective);
+
+    function autofocusDirective($timeout) {
+        return {
+            link: function link(scope, elem, attrs) {
+                $timeout(function () {
+                    elem[0].focus();
+                });
+            }
         };
     }
 })();

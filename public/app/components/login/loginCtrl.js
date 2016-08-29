@@ -13,7 +13,6 @@
         
         $scope.login = function(user) {
             $scope.loading = true
-            // mainService.login(user).then(function(currUser) {
             loginService.login(user).then(function(currUser) {
 
                 if (currUser.userFound !== false) {
@@ -36,7 +35,6 @@
                                 break;
                             case $rootScope.user.type == 'admin':
                                 var today = new Date();
-                                // mainService.removeOldKeys($rootScope.user.school_id, today)
                                 loginService.removeOldKeys($rootScope.user.school_id, today)
                                 $state.go('admin');
                                 break;

@@ -9,6 +9,14 @@
 
     function adminCtrl($scope, $rootScope, mainService, $state, adminService) {
 
+           $scope.students = {
+            users: {
+                alg: {},
+                geo: {},
+                alg2: {},
+            }
+        }
+
         $scope.resetting = false;
 
         function resetLinks() {
@@ -81,8 +89,6 @@
             });
         }
 
-
-
         $scope.signup = function(students) {
             students.school = {
                 name: $rootScope.user.school_name,
@@ -122,14 +128,13 @@
                         }
                     })
                 }
+                $scope.students = {};
             })
-            $scope.students = {};
         }
 
         $scope.delete = function(username) {
             var msg = 'Are you sure you want to delete ' + username + '?'
             alertify.confirm('Delete User', msg, function() {
-                // mainService.deleteUser(username).then(function(users) {
                 adminService.deleteUser(username).then(function(users) {
                     $scope.users = users;
                     setGridOptions('users');
@@ -140,7 +145,6 @@
 
         $scope.reset = function() {
             $scope.resetting = true;
-            // mainService.resetAllHW($rootScope.user.school_id).then(function() {
             adminService.resetAllHW($rootScope.user.school_id).then(function() {
                 $state.reload('hw', {subject: 'alg'});
                 $state.reload('hw', {subject: 'geo'});
