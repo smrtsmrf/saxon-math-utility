@@ -183,9 +183,9 @@
 
     angular.module('saxonApp').controller('adminCtrl', adminCtrl);
 
-    adminCtrl.$inject = ['$scope', '$rootScope', 'mainService', '$state'];
+    adminCtrl.$inject = ['$scope', '$rootScope', 'mainService', '$state', 'adminService'];
 
-    function adminCtrl($scope, $rootScope, mainService, $state) {
+    function adminCtrl($scope, $rootScope, mainService, $state, adminService) {
 
         $scope.resetting = false;
 
