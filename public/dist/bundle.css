@@ -2,8 +2,8 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:400,700';
 
 .start {
-	background: url('./img/login-background-min.jpg');
-	/*background: url('../app/img/login-background-min.jpg');*/
+	/*background: url('./img/login-background-min.jpg');*/
+	background: url('../app/img/login-background-min.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 100vh;
@@ -147,8 +147,8 @@ input {
 }
 
 #admin_content::after {
-	background: url('../../img/admin-background-min.jpeg');
-	/*background: url('../app/img/admin-background-min.jpeg');*/
+	/*background: url('../../img/admin-background-min.jpeg');*/
+	background: url('../app/img/admin-background-min.jpeg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	content : "";
@@ -267,8 +267,8 @@ input {
 }
 
 .hw_container::after {
-	background: url('../../img/hw-background.png');
-	/*background: url('../app/img/hw-background.png');*/
+	/*background: url('../../img/hw-background.png');*/
+	background: url('../app/img/hw-background.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 	content : "";
@@ -433,8 +433,8 @@ input {
 }
 
 .modify_container::after {
-	background: url('../../img/login-background-min.jpg');
-	/*background: url('../app/img/login-background-min.jpg');*/
+	/*background: url('../../img/login-background-min.jpg');*/
+	background: url('../app/img/login-background-min.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	content : "";
