@@ -274,14 +274,17 @@
 
             mainService.findUsers('?username=' + usernames[0]).then(function (user) {
                 if (user[0].available === false) {
+                    $scope.saving = false;
                     alertify.error('Username ' + usernames[0] + ' not available', 5);
                 } else {
                     mainService.findUsers('?username=' + usernames[1]).then(function (user) {
                         if (user[0].available === false) {
+                            $scope.saving = false;
                             alertify.error('Username ' + usernames[1] + ' not available', 5);
                         } else {
                             mainService.findUsers('?username=' + usernames[2]).then(function (user) {
                                 if (user[0].available === false) {
+                                    $scope.saving = false;
                                     alertify.error('Username ' + usernames[2] + ' not available', 5);
                                 } else {
                                     mainService.createSchoolAndUsers(students).then(function (data) {
