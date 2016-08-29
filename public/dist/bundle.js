@@ -260,7 +260,6 @@
         }
 
         $scope.signup = function (students) {
-            $scope.saving = true;
             students.school = {
                 name: $rootScope.user.school_name,
                 city: $rootScope.user.school_city,
@@ -274,19 +273,17 @@
 
             mainService.findUsers('?username=' + usernames[0]).then(function (user) {
                 if (user[0].available === false) {
-                    $scope.saving = false;
                     alertify.error('Username ' + usernames[0] + ' not available', 5);
                 } else {
                     mainService.findUsers('?username=' + usernames[1]).then(function (user) {
                         if (user[0].available === false) {
-                            $scope.saving = false;
                             alertify.error('Username ' + usernames[1] + ' not available', 5);
                         } else {
                             mainService.findUsers('?username=' + usernames[2]).then(function (user) {
                                 if (user[0].available === false) {
-                                    $scope.saving = false;
                                     alertify.error('Username ' + usernames[2] + ' not available', 5);
                                 } else {
+                                    $scope.saving = true;
                                     mainService.createSchoolAndUsers(students).then(function (data) {
                                         mainService.findUsers('?school_id=' + $rootScope.user.school_id).then(function (users) {
                                             $scope.saving = false;
@@ -772,12 +769,12 @@
         $scope.saving = false;
 
         $scope.signup = function (user) {
-            $scope.saving = true;
             var username = user.users.self.username;
             mainService.findUsers('?username=' + username).then(function (data) {
                 if (data[0].available === false) {
                     alertify.error('Username not available', 5);
                 } else {
+                    $scope.saving = true;
                     mainService.createSchoolAndUsers(user).then(function (resp) {
                         $scope.saving = false;
                         alertify.alert('Status', resp.msg, function () {

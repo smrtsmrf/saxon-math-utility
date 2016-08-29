@@ -11,12 +11,12 @@
         $scope.saving = false;
 
         $scope.signup = function(user) {
-            $scope.saving = true;
             var username = user.users.self.username;
             mainService.findUsers('?username=' + username).then(function(data) {
                 if (data[0].available === false) {
                     alertify.error('Username not available', 5);
                 } else {
+                    $scope.saving = true;
                     mainService.createSchoolAndUsers(user).then(function(resp) {
                         $scope.saving = false;
                         alertify.alert('Status', resp.msg, function() {
