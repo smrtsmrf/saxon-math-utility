@@ -28,7 +28,7 @@ var nodemailer = require("nodemailer");
 
 var port = config.serverPort;
 var corsOptions = {
-    origin: 'http://localhost:' + port
+  origin: 'http://localhost:' + port
 };
 
 var app = express();
@@ -36,56 +36,60 @@ app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(express.static(__dirname + '/../public/'));
 app.use(session({
-    secret: config.sessionSecret,
-    saveUninitialized: true,
-    resave: true
+  secret: config.sessionSecret,
+  saveUninitialized: true,
+  resave: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(function(username, password, done) {
-    User.findOne({
-        username: username
-    }, function(err, user) {
-        if (err) {
-            return done(err);
-        }
-        if (!user) {
-            return done(null, false);
-        }
-        if (!bcrypt.compareSync(password, user.password)) {
-            return done(null, false)
-        }
-        return done(null, user);
-    });
+  User.findOne({
+    username: username
+  }, function(err, user) {
+    if (err) {
+      return done(err);
+    }
+    if (!user) {
+      return done(null, false);
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+      return done(null, false)
+    }
+    return done(null, user);
+  });
 }));
 
 passport.serializeUser(function(user, done) {
-    done(null, {
-        _id: user._id,
-        school_id: user.school_id,
-        school_name: user.school_name,
-        school_city: user.school_city,
-        school_state: user.school_state,
-        username: user.username,
-        type: user.type,
-        email: user.email
-    });
+  done(null, {
+    _id: user._id,
+    school_id: user.school_id,
+    school_name: user.school_name,
+    school_city: user.school_city,
+    school_state: user.school_state,
+    username: user.username,
+    type: user.type,
+    email: user.email
+  });
 });
 
 passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-        done(err, user);
-    });
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 app.listen(port, function() {
-    console.log('server running on port', port);
+  console.log('server running on port', port);
 })
 
-mongoose.connect('mongodb://localhost:27017/saxon', function(err) {
+mongoose.connect('mongodb://localhost:27017/saxon', 
+{
+  useMongoClient: true,
+},
+  function(err) {
     if (err) throw err;
-});
+  });
 
 // ------------------------- loginService ------------------------- //
 // login
@@ -93,7 +97,7 @@ app.post('/api/login', userCtrl.login);
 
 // remove unused admin keys if they're a week old
 app.delete('/api/schools/:id/removeOldKeys/:today', schoolCtrl.removeOldKeys)
-// ------------------------- loginService ------------------------- //
+  // ------------------------- loginService ------------------------- //
 
 
 
@@ -119,7 +123,7 @@ app.delete('/api/users/:username', userCtrl.destroy);
 
 // reset all HW
 app.put('/api/schools/:id/reset', schoolCtrl.update)
-// ------------------------- adminService ------------------------- //
+  // ------------------------- adminService ------------------------- //
 
 
 
@@ -135,7 +139,7 @@ app.post('/api/schools', emailVerifyCtrl.create);
 
 // get session data
 app.get('/api/session', function(req, res, next) {
-    res.send(req._passport.session)
+  res.send(req._passport.session)
 });
 
 // get all HW
@@ -146,7 +150,7 @@ app.get('/api/logout', userCtrl.logout);
 
 // redirect after verify email
 app.get('/email-verification/:URL', emailVerifyCtrl.emailLinkRedirect)
-// ------------------------- mainService ------------------------- //
+  // ------------------------- mainService ------------------------- //
 
 
 
